@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF2F3"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".To_Do">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Header Section with Background Image -->
+        <RelativeLayout
+            android:id="@+id/headertitletodo"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/angled_bottom_background"
+            android:clipToOutline="true"
+            android:outlineProvider="background">
+
+            <!-- Background Image -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/todopic"
+                android:scaleType="centerCrop"
+                android:src="@drawable/to_do" />
+
+            <!-- Blurred container under To-Do Overview -->
+            <RelativeLayout
+                android:layout_width="350dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/todoTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/pinkblurr"
+                android:elevation="5dp">
+
+                <!-- Task Progress Bar -->
+                <ProgressBar
+                    android:id="@+id/todoProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="300dp"
+                    android:layout_height="15dp"
+                    android:layout_centerInParent="true"
+                    android:max="100"
+                    android:progress="10"
+                    android:progressTint="#EDABAD" />
+
+                <!-- Tasks Completed and Remaining -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/completedTasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="140dp"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/madimi"
+                        android:text="Completed: 5"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/remainingTasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/madimi"
+                        android:text="Remaining: 10"
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- Total Tasks Count -->
+                <TextView
+                    android:id="@+id/totalTasks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/madimi"
+                    android:text="Total Tasks: 15"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <!-- To-Do Overview Title -->
+            <TextView
+                android:id="@+id/todoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/carattere"
+                android:text="To-Do List "
+                android:textColor="@color/black"
+                android:textSize="40sp" />
+        </RelativeLayout>
+
+        <!-- Add Task Icon -->
+        <LinearLayout
+            android:id="@+id/addTaskIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="40dp"
+            android:elevation="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Add Task Icon"
+                android:src="@drawable/plus1" />
+        </LinearLayout>
+
+        <!-- Scroll View for Task Categories -->
+        <ScrollView
+            android:id="@+id/scrollView_ToDo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:layout_below="@id/headertitletodo"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Include Categories -->
+                <include layout="@layout/fragment_task__category" />
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+</FrameLayout>

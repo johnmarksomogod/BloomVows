@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="10dp">
+
+    <!-- Dot Container with vertical line below it -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- Dot (Circular Shape) -->
+        <View
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/heartdot" />
+
+        <!-- Line connecting the dots (vertical) -->
+        <View
+            android:id="@+id/timelineLine"
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+        android:background="#FF4081"
+        />
+    </LinearLayout>
+
+    <!-- Text beside the Dot -->
+    <TextView
+        android:id="@+id/activityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Activity"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:layout_marginStart="10dp" />
+</LinearLayout>

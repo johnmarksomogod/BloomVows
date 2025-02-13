@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF2F3"
+    tools:context=".TimelineFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/timelineBackButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/back_icon"
+            android:contentDescription="Back Button" />
+
+        <!-- Timeline Title -->
+        <TextView
+            android:id="@+id/TimelineTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/carattere"
+            android:text="Timeline of Events "
+            android:textColor="@color/black"
+            android:textSize="40sp" />
+
+        <!-- Floating Button to Add an Event -->
+        <LinearLayout
+            android:id="@+id/addEventButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Add Event Icon"
+                android:src="@drawable/plus1" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="130dp"
+            android:background="#EDABAD"
+            android:foregroundGravity="center" />
+    </RelativeLayout>
+
+    <!-- RecyclerView for displaying the timeline of events -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/timelineRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/TimelineTitle"
+        android:layout_marginTop="150dp"/>
+
+</FrameLayout>

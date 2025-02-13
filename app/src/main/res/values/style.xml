@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="BoldHintText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Set the background color for the dialog header -->
+        <item name="android:datePickerStyle">@style/CustomDatePickerStyle</item>
+    </style>
+
+    <!-- Custom style for the DatePicker header -->
+    <style name="CustomDatePickerStyle">
+        <item name="android:background">#EDABAD</item> <!-- Change header background -->
+        <item name="android:textColor">#FFFFFF</item>  <!-- Change text color to white for better contrast -->
+    </style>
+
+    <style name="BottomNavItemStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemHorizontalTranslationEnabled">true</item>
+        <item name="itemIconSize">30dp</item>
+        <item name="itemIconPadding">0dp</item>
+    </style>
+
+</resources>

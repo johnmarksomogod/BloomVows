@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF2F3"
+    tools:context=".CalendarFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Header Section -->
+        <RelativeLayout
+            android:id="@+id/header_title"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:clipToOutline="true"
+            android:outlineProvider="background">
+
+            <!-- Background Image -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/budget"
+                android:scaleType="centerCrop"
+                android:src="@drawable/wed28" />
+
+            <TextView
+                android:id="@+id/calendarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="Calendar "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="40sp"
+                android:fontFamily="@font/carattere" />
+
+            <!-- Add Event Button -->
+            <ImageView
+                android:id="@+id/addEventIcon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="35dp"
+                android:src="@drawable/plus1"
+                android:contentDescription="Add Event" />
+        </RelativeLayout>
+
+        <!-- Calendar View -->
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_below="@id/header_title"
+             />
+
+        <!-- Upcoming Events Section -->
+        <ScrollView
+            android:id="@+id/scrollView_Calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calendarView"
+            android:layout_marginTop="10dp"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/upcomingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upcoming Schedules"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/sansita2"
+                    android:layout_marginBottom="10dp" />
+
+                <LinearLayout
+                    android:id="@+id/upcomingSchedules"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- Events will be added dynamically -->
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</FrameLayout>

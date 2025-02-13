@@ -1,0 +1,255 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!-- PRIORITY -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Priority Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Priority"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/priorityContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- WEDDING VENUE -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Wedding Venue Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wedding Venue"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weddingVenueContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- ENTERTAINMENT -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Entertainment Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Entertainment"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/entertainmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- FOOD & BEVERAGES -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Food and Beverages Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food and Beverages"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/foodContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- DECORATIONS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Decorations Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decorations"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/decorationsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- BRIDE'S OUTFIT -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Bride's Outfit Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bride's Outfit"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/brideOutfitContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- GROOM'S OUTFIT -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Groom's Outfit Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Groom's Outfit"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/groomOutfitContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <!-- OTHER EXPENSES -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/catepic"
+            android:contentDescription="Other Expenses Icon"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other Expenses"
+            android:textSize="18sp"
+            android:fontFamily="@font/pattaya"
+            android:textStyle="bold"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/otherContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+</LinearLayout>
