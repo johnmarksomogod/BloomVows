@@ -1,0 +1,118 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/getStarted">
+
+<!-- Get Started Screen (First Screen) -->
+    <fragment
+        android:id="@+id/getStarted"
+        android:name="com.example.plannerwedding.Get_Started"
+        android:label="Get Started"
+        tools:layout="@layout/fragment_get__started">
+
+        <action
+            android:id="@+id/action_getStarted_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <!-- Login Fragment -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.plannerwedding.LogIn"
+        android:label="Login"
+        tools:layout="@layout/fragment_log_in">
+
+        <action
+            android:id="@+id/action_login_to_enterDate"
+            app:destination="@id/enterDateFragment" />
+
+        <action
+            android:id="@+id/action_login_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <!-- Sign Up Fragment -->
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.plannerwedding.SIgnUp"
+        android:label="Sign Up"
+        tools:layout="@layout/fragment_s_ign_up">
+
+        <action
+            android:id="@+id/action_signUp_to_Login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <!-- Enter Date Fragment -->
+    <fragment
+        android:id="@+id/enterDateFragment"
+        android:name="com.example.plannerwedding.EnterDate"
+        android:label="Enter Date"
+        tools:layout="@layout/fragment_enter_date">
+
+        <action
+            android:id="@+id/action_enterDate_to_enterBudget"
+            app:destination="@id/enterBudgetFragment" />
+    </fragment>
+
+    <!-- Enter Budget Fragment -->
+    <fragment
+        android:id="@+id/enterBudgetFragment"
+        android:name="com.example.plannerwedding.EnterBudget"
+        android:label="Enter Budget"
+        tools:layout="@layout/fragment_enter_budget">
+
+        <action
+            android:id="@+id/action_enterBudget_to_enterVenue"
+            app:destination="@id/enterVenueFragment" />
+    </fragment>
+
+    <!-- Enter Venue Fragment -->
+    <fragment
+        android:id="@+id/enterVenueFragment"
+        android:name="com.example.plannerwedding.EnterVenue"
+        android:label="Enter Venue"
+        tools:layout="@layout/fragment_enter_venue">
+
+        <action
+            android:id="@+id/action_enterVenue_to_homePage"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <!-- Home Fragment (Main App UI after Setup) -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.plannerwedding.HomePage"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_page">
+    </fragment>
+
+    <!-- Budget Fragment -->
+    <fragment
+        android:id="@+id/budgetFragment"
+        android:name="com.example.plannerwedding.Budget"
+        android:label="Budget"
+        tools:layout="@layout/fragment_budget" />
+
+    <!-- To-Do List Fragment -->
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.example.plannerwedding.To_Do"
+        android:label="To-Do"
+        tools:layout="@layout/fragment_to__do" />
+
+    <!-- Calendar Fragment -->
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.plannerwedding.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar" />
+
+    <!-- User Profile Fragment -->
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.plannerwedding.Users"
+        android:label="User Profile"
+        tools:layout="@layout/fragment_users" />
+
+</navigation>

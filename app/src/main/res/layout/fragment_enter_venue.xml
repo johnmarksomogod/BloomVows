@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EnterVenue">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <!-- Background Image -->
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/venuepic" />
+
+        <!-- Venue Information Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/blurred_background"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:padding="32dp"
+            app:hintTextAppearance="@style/BoldHintText">
+
+            <!-- Text Description -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/carattere"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="25dp"
+                android:text="Add the name of the venue and\n enjoy the rest of the planning process"
+                android:textColor="@android:color/black"
+                android:textSize="30dp"
+                android:textAlignment="center" />
+
+            <!-- Venue Name Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/venueInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Venue Name"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:hintTextColor="@color/black"
+                app:boxBackgroundColor="#33EDABAD"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/venueNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:backgroundTint="#33EDABAD"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Next Button -->
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="#EDABAD"
+                android:gravity="center"
+                android:text="All Done!"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:elevation="10dp"
+                android:layout_marginTop="12dp"
+                android:padding="10dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>
+
+

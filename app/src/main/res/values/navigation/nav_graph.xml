@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/get_Started">
+
+    <fragment
+        android:id="@+id/get_Started"
+        android:name="com.example.weddingplanner.Get_Started"
+        android:label="fragment_get__started"
+        tools:layout="@layout/fragment_get__started" >
+        <action
+            android:id="@+id/action_get_Started_to_logIn"
+            app:destination="@id/logIn" />
+    </fragment>
+    <fragment
+        android:id="@+id/logIn"
+        android:name="com.example.weddingplanner.LogIn"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logIn_to_SIgnUp"
+            app:destination="@id/SIgnUp" />
+    </fragment>
+    <fragment
+        android:id="@+id/SIgnUp"
+        android:name="com.example.weddingplanner.SIgnUp"
+        android:label="fragment_s_ign_up"
+        tools:layout="@layout/fragment_s_ign_up" >
+        <action
+            android:id="@+id/action_SIgnUp_to_mainActivity"
+            app:destination="@id/Budget" />
+    </fragment>
+    <fragment
+        android:id="@+id/Budget"
+        android:name="com.example.weddingplanner.Budget"
+        android:label="fragment_budget"
+        tools:layout="@layout/fragment_budget" />
+</navigation>
