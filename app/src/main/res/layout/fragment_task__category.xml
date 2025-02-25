@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,6 +8,23 @@
 
 
 <LinearLayout
+=======
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Task_Category">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- PRIORITY -->
+        <LinearLayout
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -34,11 +52,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
     android:focusableInTouchMode="true" />
 
 
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- WEDDING VENUE -->
         <LinearLayout
@@ -69,10 +91,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"
             />
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- ENTERTAINMENT -->
         <LinearLayout
@@ -103,9 +129,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- FOOD & BEVERAGES -->
         <LinearLayout
@@ -136,9 +166,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- CEREMONY ESSENTIALS TASKS -->
         <LinearLayout
@@ -169,9 +203,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- FAVORS & GIFTS TASKS -->
         <LinearLayout
@@ -202,14 +240,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
 
         <!-- DECORATIONS -->
         <LinearLayout
+<<<<<<< HEAD
             android:id="@+id/task_decorationsContainer"
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -237,9 +282,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- PHOTOGRAPHY & VIDEOGRAPHY TASKS -->
         <LinearLayout
@@ -270,9 +319,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- HAIR & MAKEUP TASKS -->
         <LinearLayout
@@ -303,9 +356,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
 
         <!-- BRIDE'S OUTFIT -->
@@ -337,9 +394,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- GROOM'S OUTFIT -->
         <LinearLayout
@@ -370,9 +431,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- TRANSPORTATION TASKS -->
         <LinearLayout
@@ -402,9 +467,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
+=======
+            android:layout_marginBottom="24dp"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- OTHER TASKS -->
         <LinearLayout
@@ -435,8 +504,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+<<<<<<< HEAD
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true"/>
     </LinearLayout>
 
+=======
+            android:layout_marginBottom="24dp"/>
+    </LinearLayout>
+
+</FrameLayout>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00

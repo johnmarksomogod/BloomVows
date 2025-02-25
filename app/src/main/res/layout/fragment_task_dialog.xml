@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+=======
+    app:cardCornerRadius="10dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     android:background="#FAF2F3"
     tools:context=".TaskDialog">
 
@@ -77,8 +81,13 @@
             android:layout_below="@id/taskName"
             android:layout_marginTop="15dp"
             android:spinnerMode="dropdown"
+<<<<<<< HEAD
             android:dropDownHeight="500dp"
             android:popupBackground="@android:color/white"/>
+=======
+        android:dropDownHeight="500dp"
+        android:popupBackground="@android:color/white"/>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- Task Deadline & Checkbox -->
         <LinearLayout

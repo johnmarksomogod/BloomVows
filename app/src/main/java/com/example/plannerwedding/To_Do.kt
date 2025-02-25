@@ -1,12 +1,21 @@
 package com.example.plannerwedding
 
+<<<<<<< HEAD
+=======
+import Task
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+<<<<<<< HEAD
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+=======
+import androidx.fragment.app.Fragment
+import com.example.plannerwedding.TaskDialog
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 import com.google.firebase.database.*
 
 class To_Do : Fragment() {
@@ -16,10 +25,18 @@ class To_Do : Fragment() {
     private lateinit var completedTasksText: TextView
     private lateinit var remainingTasksText: TextView
     private lateinit var addTaskIcon: LinearLayout
+<<<<<<< HEAD
+=======
+
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     private lateinit var database: DatabaseReference
 
     private var totalTasks = 0
     private var completedTasks = 0
+<<<<<<< HEAD
+=======
+    private var remainingTasks = 0
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,12 +44,17 @@ class To_Do : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_to__do, container, false)
 
+<<<<<<< HEAD
+=======
+        // Initialize Views
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         progressBar = view.findViewById(R.id.todoProgress)
         totalTasksText = view.findViewById(R.id.totalTasks)
         completedTasksText = view.findViewById(R.id.completedTasks)
         remainingTasksText = view.findViewById(R.id.remainingTasks)
         addTaskIcon = view.findViewById(R.id.addTaskIcon)
 
+<<<<<<< HEAD
         // Initialize Firebase with custom URL
         database = FirebaseDatabase.getInstance("https://wedding-planner-f8418-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("tasks")
@@ -42,6 +64,17 @@ class To_Do : Fragment() {
         addTaskIcon.setOnClickListener {
             val dialog = TaskDialog()
             dialog.show(parentFragmentManager, "TaskDialog")
+=======
+        // Initialize Firebase Database
+        database = FirebaseDatabase.getInstance().getReference("tasks")
+
+        // Load Tasks from Firebase
+        loadTasksFromFirebase()
+
+        // Add Task Button Click
+        addTaskIcon.setOnClickListener {
+            showTaskDialog()
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         }
 
         return view
@@ -52,6 +85,7 @@ class To_Do : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 totalTasks = 0
                 completedTasks = 0
+<<<<<<< HEAD
 
                 // Reset UI and add tasks
                 clearAllTaskViews()
@@ -69,6 +103,23 @@ class To_Do : Fragment() {
                     }
                 }
                 updateProgress()
+=======
+                remainingTasks = 0
+
+                for (taskSnapshot in snapshot.children) {
+                    val task = taskSnapshot.getValue(Task::class.java)
+                    task?.let {
+                        totalTasks++
+                        if (it.completed) {
+                            completedTasks++
+                        }
+                    }
+                }
+                remainingTasks = totalTasks - completedTasks
+
+                // Update UI
+                updateTaskUI()
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -76,6 +127,7 @@ class To_Do : Fragment() {
             }
         })
     }
+<<<<<<< HEAD
     private fun clearAllTaskViews() {
         val allContainers = listOf(
             R.id.task_priorityContainer,
@@ -224,5 +276,20 @@ class To_Do : Fragment() {
 
         // Update the progress bar after each change
         updateProgress()
+=======
+
+    private fun updateTaskUI() {
+        totalTasksText.text = "Total Tasks: $totalTasks"
+        completedTasksText.text = "Completed: $completedTasks"
+        remainingTasksText.text = "Remaining: $remainingTasks"
+
+        val progress = if (totalTasks > 0) (completedTasks * 100) / totalTasks else 0
+        progressBar.progress = progress
+    }
+
+    private fun showTaskDialog() {
+        val dialog = TaskDialog()
+        dialog.show(parentFragmentManager, "TaskDialog")
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     }
 }

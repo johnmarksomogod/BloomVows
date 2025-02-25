@@ -1,9 +1,13 @@
 package com.example.plannerwedding
 
 import android.os.Bundle
+<<<<<<< HEAD
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MotionEvent
+=======
+import android.view.LayoutInflater
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -21,9 +25,12 @@ class LogIn : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var signUpText: TextView
+<<<<<<< HEAD
     private lateinit var forgotPasswordText: TextView
 
     private var isPasswordVisible = false
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +43,18 @@ class LogIn : Fragment() {
         val view = inflater.inflate(R.layout.fragment_log_in, container, false)
 
         // Set up UI elements
+<<<<<<< HEAD
         emailEditText = view.findViewById(R.id.username)
         passwordEditText = view.findViewById(R.id.password)
         loginButton = view.findViewById(R.id.loginButton)
         signUpText = view.findViewById(R.id.textSignUp)
         forgotPasswordText = view.findViewById(R.id.forgotPassword)
+=======
+        emailEditText = view.findViewById(R.id.username) // Ensure the ID is correct
+        passwordEditText = view.findViewById(R.id.password)
+        loginButton = view.findViewById(R.id.loginButton)
+        signUpText = view.findViewById(R.id.textSignUp)
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         // Login Button Click Listener
         loginButton.setOnClickListener {
@@ -59,6 +73,7 @@ class LogIn : Fragment() {
             findNavController().navigate(R.id.action_login_to_signUpFragment)
         }
 
+<<<<<<< HEAD
         // Navigate to Forgot Password Fragment
         forgotPasswordText.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_forgotPasswordFragment)
@@ -80,6 +95,8 @@ class LogIn : Fragment() {
             false
         }
 
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         return view
     }
 
@@ -87,13 +104,23 @@ class LogIn : Fragment() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+<<<<<<< HEAD
                     Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_login_to_enterDate)
+=======
+                    // Login successful
+                    Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
+
+                    // Navigate to EnterDate Fragment
+                    findNavController().navigate(R.id.action_login_to_enterDate)
+
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 } else {
                     Toast.makeText(context, "Login Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
     }
+<<<<<<< HEAD
 
     private fun togglePasswordVisibility() {
         if (isPasswordVisible) {
@@ -109,4 +136,6 @@ class LogIn : Fragment() {
         // Toggle password visibility flag
         isPasswordVisible = !isPasswordVisible
     }
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 }

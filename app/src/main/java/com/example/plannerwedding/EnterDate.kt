@@ -27,12 +27,16 @@ class EnterDate : Fragment() {
         val dateEditText = view.findViewById<EditText>(R.id.weddingDateInput)
         val nextButton = view.findViewById<Button>(R.id.nextButton)
 
+<<<<<<< HEAD
         val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 0)  // Reset time to midnight
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
+=======
+        val calendar = Calendar.getInstance()
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
         dateEditText.setOnClickListener {
@@ -46,10 +50,13 @@ class EnterDate : Fragment() {
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
             )
+<<<<<<< HEAD
 
             // Prevent the user from selecting past dates
             datePicker.datePicker.minDate = System.currentTimeMillis()
 
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             datePicker.show()
         }
 

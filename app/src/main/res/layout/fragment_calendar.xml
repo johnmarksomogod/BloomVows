@@ -32,18 +32,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+<<<<<<< HEAD
                 android:layout_marginTop="30dp"
                 android:text="Calendar "
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="40sp"
+=======
+                android:layout_marginTop="40dp"
+                android:text="Calendar "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:fontFamily="@font/carattere" />
 
             <!-- Add Event Button -->
             <ImageView
                 android:id="@+id/addEventIcon"
+<<<<<<< HEAD
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+=======
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="35dp"

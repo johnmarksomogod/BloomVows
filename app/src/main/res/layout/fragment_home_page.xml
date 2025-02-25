@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     android:id="@+id/Budget"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -69,9 +73,15 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
+<<<<<<< HEAD
             android:layout_height="wrap_content"
             android:layout_below="@id/header_title"
             android:layout_marginTop="5dp"
+=======
+            android:layout_height="match_parent"
+            android:layout_below="@id/header_title"
+            android:layout_marginTop="10dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:fillViewport="true">
 
             <LinearLayout
@@ -79,7 +89,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
+<<<<<<< HEAD
                 android:padding="20dp">
+=======
+                android:padding="16dp">
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
                 <!-- Title for Budget Overview Section -->
                 <TextView
@@ -87,8 +101,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+<<<<<<< HEAD
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"
+=======
+                    android:layout_marginStart="18dp"
+                    android:layout_marginBottom="10dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                     android:fontFamily="@font/sansita2"
                     android:text="Budget Overview"
                     android:textColor="@color/black"
@@ -96,7 +115,11 @@
 
                 <!-- Blurred container under Budget Overview -->
                 <RelativeLayout
+<<<<<<< HEAD
                     android:layout_width="match_parent"
+=======
+                    android:layout_width="350dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                     android:layout_height="100dp"
                     android:layout_below="@id/budgetTitle"
                     android:layout_centerHorizontal="true"
@@ -170,9 +193,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+<<<<<<< HEAD
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="10dp"
+=======
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                     android:fontFamily="@font/sansita2"
                     android:text="Task Overview"
                     android:textColor="@color/black"
@@ -180,7 +209,11 @@
 
                 <!-- Blurred container under To-Do Overview -->
                 <RelativeLayout
+<<<<<<< HEAD
                     android:layout_width="match_parent"
+=======
+                    android:layout_width="350dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                     android:layout_height="100dp"
                     android:layout_below="@id/todoTitle"
                     android:layout_centerHorizontal="true"
@@ -248,20 +281,32 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+<<<<<<< HEAD
                     android:layout_width="match_parent"
+=======
+                    android:layout_width="350dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                     android:layout_height="250dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/pinkbox"
+<<<<<<< HEAD
                    >
+=======
+                    android:elevation="5dp">
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
                     <!-- CardView 1: Invite Guests -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/inviteguest"
                         android:layout_width="150dp"
                         android:layout_height="100dp"
+<<<<<<< HEAD
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="30dp"
+=======
+                        android:layout_marginStart="20dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                         android:layout_marginTop="20dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="4dp">
@@ -299,10 +344,15 @@
                         android:id="@+id/WeddingTheme"
                         android:layout_width="150dp"
                         android:layout_height="100dp"
+<<<<<<< HEAD
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
+=======
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                         android:layout_toEndOf="@id/inviteguest"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="4dp">
@@ -340,10 +390,13 @@
                         android:id="@+id/wedddingtimeline"
                         android:layout_width="310dp"
                         android:layout_height="100dp"
+<<<<<<< HEAD
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="30dp"
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                         android:layout_below="@id/inviteguest"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
@@ -379,12 +432,20 @@
                     </androidx.cardview.widget.CardView>
                 </RelativeLayout>
                 <RelativeLayout
+<<<<<<< HEAD
                     android:layout_width="match_parent"
+=======
+                    android:layout_width="350dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/yellowbox"
+<<<<<<< HEAD
                    >
+=======
+                    android:elevation="5dp">
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="310dp"
@@ -404,4 +465,8 @@
 
 
     </RelativeLayout>
+<<<<<<< HEAD
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+</FrameLayout>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00

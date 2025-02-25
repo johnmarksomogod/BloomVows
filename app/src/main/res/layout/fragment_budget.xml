@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Budget"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF2F3"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".To_Do">
+    android:background="#FAF2F3"
+    tools:context=".Budget">
 
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <!-- Header Section with Background Image -->
         <RelativeLayout
-            android:id="@+id/headertitletodo"
+            android:id="@+id/header_title"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:background="@drawable/angled_bottom_background"
@@ -25,36 +25,32 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/todopic"
+                android:background="@drawable/budget"
                 android:scaleType="centerCrop"
-                android:src="@drawable/to_do" />
+                android:src="@drawable/budget" />
 
-            <!-- Blurred container under To-Do Overview -->
+            <!-- Blurred container under Budget Overview -->
             <RelativeLayout
                 android:layout_width="350dp"
                 android:layout_height="100dp"
-                android:layout_below="@id/todoTitle"
+                android:layout_below="@id/budgetTitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/pinkblurr"
                 android:elevation="5dp">
 
-                <!-- Task Progress Bar -->
+                <!-- Progress Bar centered in the blurred box -->
                 <ProgressBar
-                    android:id="@+id/todoProgress"
+                    android:id="@+id/budgetProgress"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="300dp"
                     android:layout_height="15dp"
                     android:layout_centerInParent="true"
                     android:max="100"
                     android:progress="10"
-<<<<<<< HEAD
-                    android:progressTint="#EDABAD" />
-=======
                     android:progressTint="#FFB6C1" />
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
-                <!-- Tasks Completed and Remaining -->
+                <!-- Spent and Remaining Budget Texts inside the blurred box -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -64,113 +60,90 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/completedTasks"
+                        android:id="@+id/spentText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:layout_marginEnd="140dp"
-                        android:textStyle="normal"
+                        android:layout_marginEnd="100dp"
                         android:fontFamily="@font/madimi"
-                        android:text="Completed: 5"
+                        android:textStyle="normal"
+                        android:text="Spent: 200.00"
                         android:textColor="@color/black"
                         android:textSize="13sp" />
 
                     <TextView
-                        android:id="@+id/remainingTasks"
+                        android:id="@+id/remainingText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="20dp"
                         android:textStyle="normal"
+                        android:text="Remaining: 19800.00"
                         android:fontFamily="@font/madimi"
-                        android:text="Remaining: 10"
                         android:textColor="@color/black"
                         android:textSize="13sp" />
                 </LinearLayout>
 
-                <!-- Total Tasks Count -->
+                <!-- Total Budget Text inside the blurred box -->
                 <TextView
-                    android:id="@+id/totalTasks"
+                    android:id="@+id/totalBudgetText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="normal"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:textStyle="normal"
                     android:fontFamily="@font/madimi"
-                    android:text="Total Tasks: 15"
+                    android:layout_marginTop="20dp"
+                    android:text="Total budget: 20000.00"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
+
             </RelativeLayout>
 
-            <!-- To-Do Overview Title -->
+            <!-- Budget Overview Title -->
             <TextView
-                android:id="@+id/todoTitle"
+                android:id="@+id/budgetTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
-<<<<<<< HEAD
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/carattere"
-                android:text="To-Do List "
-                android:textColor="@color/black"
-                android:textSize="40sp" />
-=======
                 android:layout_marginTop="60dp"
+                android:textStyle="bold"
                 android:fontFamily="@font/carattere"
-                android:text="To-Do List "
+                android:text="Budget Overview "
                 android:textColor="@color/black"
                 android:textSize="25sp" />
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         </RelativeLayout>
 
-        <!-- Add Task Icon -->
+        <!-- Floating Button -->
         <LinearLayout
-            android:id="@+id/addTaskIcon"
+            android:id="@+id/addBudgetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="50dp"
             android:layout_marginRight="40dp"
-            android:elevation="10dp"
             android:gravity="end|center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-<<<<<<< HEAD
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-=======
                 android:layout_width="40dp"
                 android:layout_height="40dp"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:layout_marginEnd="8dp"
-                android:contentDescription="Add Task Icon"
+                android:contentDescription="User Icon"
                 android:src="@drawable/plus1" />
         </LinearLayout>
 
-        <!-- Scroll View for Task Categories -->
-        <ScrollView
-            android:id="@+id/scrollView_ToDo"
+        <!-- RecyclerView for displaying budget categories -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/budgetRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fillViewport="true"
-            android:layout_below="@id/headertitletodo"
+            android:layout_below="@id/header_title"
             android:layout_marginTop="10dp"
-            android:layout_alignParentBottom="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Include Categories -->
-                <include layout="@layout/fragment_task__category" />
-            </LinearLayout>
-        </ScrollView>
+            android:layout_alignParentBottom="true"
+            android:padding="16dp"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 

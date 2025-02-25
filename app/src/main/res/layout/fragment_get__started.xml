@@ -16,7 +16,11 @@
     <!-- Content Overlay Section with Text and Button -->
     <LinearLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="320dp"
+=======
+        android:layout_height="350dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         android:layout_gravity="bottom"
         android:background="@drawable/blurredeclips"
         android:gravity="center_horizontal"
@@ -27,7 +31,11 @@
         <!-- Wedding Planner Title -->
         <TextView
             android:layout_width="wrap_content"
+<<<<<<< HEAD
             android:layout_height="50dp"
+=======
+            android:layout_height="wrap_content"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_marginTop="30dp"
             android:fontFamily="@font/carattere"
             android:text=" Wedding Planner "

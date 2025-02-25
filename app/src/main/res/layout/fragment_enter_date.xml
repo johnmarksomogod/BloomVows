@@ -15,11 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="600dp"
             android:scaleType="centerCrop"
+<<<<<<< HEAD
             android:src="@drawable/flower" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="500dp"
+=======
+            android:src="@drawable/getstartedpic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_alignParentBottom="true"
             android:gravity="bottom"
             android:orientation="vertical"
@@ -28,7 +36,11 @@
 
             <!-- Wedding Date Text -->
             <TextView
+<<<<<<< HEAD
                 android:layout_width="match_parent"
+=======
+                android:layout_width="wrap_content"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/carattere"
                 android:paddingBottom="8dp"
@@ -41,7 +53,11 @@
             <!-- Wedding Date Input Field as a line with rounded corners and border -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
+<<<<<<< HEAD
                 android:layout_height="wrap_content"
+=======
+                android:layout_height="match_parent"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:hint="Wedding Date"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidth="2dp"
@@ -73,7 +89,10 @@
                 android:gravity="center"
                 android:text="Next"
                 android:elevation="10dp"
+<<<<<<< HEAD
                 android:layout_marginBottom="150dp"
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:textSize="20dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"

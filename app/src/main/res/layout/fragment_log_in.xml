@@ -11,6 +11,7 @@
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="300dp"
         android:scaleType="centerCrop"
         android:src="@drawable/log_in" />
@@ -149,4 +150,138 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+=======
+        android:layout_height="500dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/todopic" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blurred_background"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp" />
+
+            <!-- Log In Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sansita2"
+                android:layout_marginStart="10dp"
+                android:paddingBottom="16dp"
+                android:text="Log In"
+                android:textColor="@android:color/black"
+                android:textSize="30sp" />
+
+            <!-- Username Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:boxBackgroundColor="@android:color/white"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:hintTextAppearance="@style/BoldHintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:padding="12dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/black"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Password Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Password"
+                app:boxBackgroundMode="outline"
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="2dp"
+                app:boxBackgroundColor="@android:color/white"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:hintTextAppearance="@style/BoldHintText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:padding="12dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="#757575"
+                    android:textSize="16sp"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Forgot Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="4dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <!-- Sign In Button -->
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#EDABAD"
+                android:gravity="center"
+                android:elevation="10dp"
+                android:textSize="20dp"
+                android:text="Sign In"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <!-- Sign Up Option -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account? "
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign Up"
+                    android:textColor="#EDABAD"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 </FrameLayout>

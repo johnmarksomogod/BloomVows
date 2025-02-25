@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/getStarted">
 
+<<<<<<< HEAD
     <!-- Get Started Screen (First Screen) -->
+=======
+<!-- Get Started Screen (First Screen) -->
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     <fragment
         android:id="@+id/getStarted"
         android:name="com.example.plannerwedding.Get_Started"
@@ -21,23 +25,34 @@
         android:name="com.example.plannerwedding.LogIn"
         android:label="Login"
         tools:layout="@layout/fragment_log_in">
+<<<<<<< HEAD
         <action
             android:id="@+id/action_login_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
         <action
             android:id="@+id/action_login_to_enterDate"
             app:destination="@id/enterDateFragment" />
+=======
+
+        <action
+            android:id="@+id/action_login_to_enterDate"
+            app:destination="@id/enterDateFragment" />
+
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         <action
             android:id="@+id/action_login_to_signUpFragment"
             app:destination="@id/signUpFragment" />
     </fragment>
 
+<<<<<<< HEAD
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.plannerwedding.ForgotPasswordFragment"
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password" />
 
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     <!-- Sign Up Fragment -->
     <fragment
         android:id="@+id/signUpFragment"
@@ -86,11 +101,16 @@
             app:destination="@id/homeFragment" />
     </fragment>
 
+<<<<<<< HEAD
+=======
+    <!-- Home Fragment (Main App UI after Setup) -->
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.plannerwedding.HomePage"
         android:label="Home"
         tools:layout="@layout/fragment_home_page">
+<<<<<<< HEAD
 
         <!-- Action for navigating to Guest Page -->
         <action
@@ -136,6 +156,16 @@
         android:name="com.example.plannerwedding.BudgetPageFragment"
         android:label="Budget"
         tools:layout="@layout/fragment_budgetpage" />
+=======
+    </fragment>
+
+    <!-- Budget Fragment -->
+    <fragment
+        android:id="@+id/budgetFragment"
+        android:name="com.example.plannerwedding.Budget"
+        android:label="Budget"
+        tools:layout="@layout/fragment_budget" />
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
     <!-- To-Do List Fragment -->
     <fragment
@@ -157,4 +187,8 @@
         android:name="com.example.plannerwedding.Users"
         android:label="User Profile"
         tools:layout="@layout/fragment_users" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 </navigation>

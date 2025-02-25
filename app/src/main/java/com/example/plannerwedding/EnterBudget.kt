@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+<<<<<<< HEAD
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -16,16 +17,24 @@ class EnterBudget : Fragment() {
 
     private lateinit var database: DatabaseReference
 
+=======
+
+class EnterBudget : Fragment() {
+
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_enter_budget, container, false)
 
+<<<<<<< HEAD
         // Initialize Firebase Database reference
         database = FirebaseDatabase.getInstance("https://wedding-planner-f8418-default-rtdb.asia-southeast1.firebasedatabase.app/")
             .getReference("budget")
 
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         val budgetEditText = view.findViewById<EditText>(R.id.budgetAmountEditText)
         val submitButton = view.findViewById<Button>(R.id.submitButton2)
 
@@ -35,12 +44,18 @@ class EnterBudget : Fragment() {
             if (budget.isEmpty()) {
                 Toast.makeText(requireContext(), "Please enter your budget", Toast.LENGTH_SHORT).show()
             } else {
+<<<<<<< HEAD
                 saveBudgetToFirebase(budget)
+=======
+                // Navigate to the EnterVenue fragment
+                findNavController().navigate(R.id.action_enterBudget_to_enterVenue)
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             }
         }
 
         return view
     }
+<<<<<<< HEAD
 
     private fun saveBudgetToFirebase(budget: String) {
         // Create a unique ID for each budget entry (total budget in this case)
@@ -58,4 +73,6 @@ class EnterBudget : Fragment() {
     }
 
     data class TotalBudget(val totalAmount: Double = 0.0, val spentAmount: Double = 0.0)
+=======
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 }

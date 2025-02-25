@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="#EDABAD" android:state_checked="true"/>
+<<<<<<< HEAD
     <item android:color="#808080"
 
         />
 </selector>
 
+=======
+    <item android:color="#808080"/>
+</selector>
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00

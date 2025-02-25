@@ -4,8 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:background="#FAF2F3"
     tools:context=".BudgetDialogFragment">
+=======
+    android:background="@drawable/rounded_dialog_background"
+    tools:context=".BudgetDialog">
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +19,11 @@
 
         <!-- Cancel Button -->
         <TextView
+<<<<<<< HEAD
             android:id="@+id/budgetcancelButton"
+=======
+            android:id="@+id/cancelButton"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
@@ -28,7 +37,11 @@
 
         <!-- Done Button -->
         <TextView
+<<<<<<< HEAD
             android:id="@+id/budgetdoneButton"
+=======
+            android:id="@+id/doneButton"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Done"
@@ -49,7 +62,11 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000"
+<<<<<<< HEAD
             android:layout_below="@id/budgetcancelButton"
+=======
+            android:layout_below="@id/cancelButton"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_marginTop="20dp"
             android:layout_alignParentStart="true"/>
 

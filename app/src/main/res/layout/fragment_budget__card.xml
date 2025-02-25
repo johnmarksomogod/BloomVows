@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -24,6 +25,24 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true" >
+=======
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:background="@color/white">
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- Left side: Item details -->
         <LinearLayout
@@ -46,7 +65,11 @@
                 android:id="@+id/itemCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:text="Cost: ₱20000"
+=======
+                android:text="Cost: $20000"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:textSize="14sp"
                 android:textColor="#000"/>
 
@@ -81,8 +104,13 @@
             <!-- Delete Icon -->
             <ImageView
                 android:id="@+id/deletebudget"
+<<<<<<< HEAD
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+=======
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+>>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:clickable="true"
                 android:focusable="true"
                 android:contentDescription="Delete Task"
