@@ -22,4 +22,10 @@
         <item name="itemIconPadding">0dp</item>
     </style>
 
+    <style name="CalendarTextAppearance" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
 </resources>

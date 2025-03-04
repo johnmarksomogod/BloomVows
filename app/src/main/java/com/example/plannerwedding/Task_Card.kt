@@ -1,100 +1,105 @@
 package com.example.plannerwedding
 
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
-<<<<<<< HEAD
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TaskCard : Fragment() {
 
     private var task: Task? = null
-    private lateinit var database: DatabaseReference
-=======
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Task_Card.newInstance] factory method to
- * create an instance of this fragment.
- */
-class Task_Card : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-<<<<<<< HEAD
         val view = inflater.inflate(R.layout.fragment_task__card, container, false)
 
-        // Initialize Firebase reference
-        database = FirebaseDatabase.getInstance("https://wedding-planner-f8418-default-rtdb.asia-southeast1.firebasedatabase.app/")
-            .getReference("tasks")
+        db = FirebaseFirestore.getInstance()
 
-        // Bind the task data if available
         task?.let { bindTask(view, it) }
 
         val completeTaskIcon = view.findViewById<ImageView>(R.id.completeTaskIcon)
         val deleteTaskIcon = view.findViewById<ImageView>(R.id.deleteTaskIcon)
         val taskCardContainer = view.findViewById<LinearLayout>(R.id.taskCardContainer)
 
-        // Task card click listener (Whole card click event)
+        // When the task card itself is clicked
         taskCardContainer.setOnClickListener {
             task?.let {
-                it.completed = !it.completed  // Toggle completion status
-                bindTask(view, it)  // Rebind the updated task
-                updateTaskStatus(it)
+                it.completed = !it.completed
+                showCompleteConfirmationDialog(view, it) // Show confirmation before marking as complete
             }
         }
 
-        // Heart icon click listener to toggle completion
+        // When the "complete" icon (heart icon) is clicked
         completeTaskIcon.setOnClickListener {
             task?.let {
-                it.completed = !it.completed  // Toggle completion status
-                bindTask(view, it)  // Rebind the updated task
-                updateTaskStatus(it)
+                it.completed = !it.completed
+                showCompleteConfirmationDialog(view, it) // Show confirmation before marking as complete
             }
         }
 
-        // Delete icon click listener to remove task
+        // When the "delete" icon is clicked
         deleteTaskIcon.setOnClickListener {
             task?.let {
-                deleteTask(it, view) // Now passing the view to update it
+                showDeleteConfirmationDialog(view, it) // Show confirmation before deleting
             }
         }
 
         return view
     }
 
-    // Method to bind task data to the view
+    // Confirmation dialog for marking the task as completed or pending
+    private fun showCompleteConfirmationDialog(view: View, task: Task) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setMessage("Are you sure you want to mark this task as ${if (task.completed) "Pending" else "Completed"}?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { _, _ ->
+                bindTask(view, task)
+                updateTaskStatus(task) // Update task status in Firestore
+            }
+            .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+
+        val alert = alertDialogBuilder.create()
+        alert.show()
+
+        val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+    }
+
+    // Confirmation dialog for deleting the task
+    private fun showDeleteConfirmationDialog(view: View, task: Task) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setMessage("Are you sure you want to delete this task?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { _, _ ->
+                deleteTask(task, view) // Proceed with deleting the task
+            }
+            .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+
+        val alert = alertDialogBuilder.create()
+        alert.show()
+
+        val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+    }
+
+    // Bind task data to UI elements (update task view)
     fun bindTask(view: View, task: Task) {
         val title = view.findViewById<TextView>(R.id.taskTitle)
         val deadline = view.findViewById<TextView>(R.id.taskDeadline)
@@ -104,20 +109,23 @@ class Task_Card : Fragment() {
         title.text = task.name
         deadline.text = "Deadline: ${task.deadline}"
         status.text = if (task.completed) {
-            completeTaskIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.heart_filled))  // Heart filled for completed
-            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.green)) // Green for completed
+            completeTaskIcon.setImageResource(R.drawable.heart_filled)
+            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
             "Completed"
         } else {
-            completeTaskIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.heart1))  // Default heart for pending
-            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red)) // Red for pending
+            completeTaskIcon.setImageResource(R.drawable.heart1)
+            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             "Pending"
         }
     }
 
-    // Update task status in Firebase
+    // Update the task status in Firestore
     private fun updateTaskStatus(task: Task) {
         val taskId = task.id ?: return
-        database.child(task.category).child(taskId).setValue(task)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        db.collection("Users").document(userId)
+            .collection("Tasks").document(taskId)
+            .set(task)
             .addOnSuccessListener {
                 Toast.makeText(context, "Task updated successfully!", Toast.LENGTH_SHORT).show()
             }
@@ -126,18 +134,19 @@ class Task_Card : Fragment() {
             }
     }
 
-    // Delete task from Firebase and UI
+    // Delete the task from Firestore and remove it from the UI
     private fun deleteTask(task: Task, view: View) {
         val taskId = task.id ?: return
-        database.child(task.category).child(taskId).removeValue()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        db.collection("Users").document(userId)
+            .collection("Tasks").document(taskId)
+            .delete()
             .addOnSuccessListener {
                 Toast.makeText(context, "Task deleted successfully!", Toast.LENGTH_SHORT).show()
-
-                // Remove task from the UI as well
                 val taskCardContainer = view.findViewById<LinearLayout>(R.id.taskCardContainer)
                 taskCardContainer?.let {
                     val parent = it.parent as? ViewGroup
-                    parent?.removeView(it)  // Remove task view from parent container
+                    parent?.removeView(it)
                 }
             }
             .addOnFailureListener {
@@ -145,35 +154,9 @@ class Task_Card : Fragment() {
             }
     }
 
-    // Set the task to be displayed in the fragment
+    // Set the task object to this fragment
     fun setTask(task: Task) {
         this.task = task
         view?.let { bindTask(it, task) }
     }
 }
-=======
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task__card, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Task_Card.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Task_Card().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-}
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00

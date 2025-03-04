@@ -1,4 +1,3 @@
-
 package com.example.plannerwedding
 
 import android.os.Bundle
@@ -13,10 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
-class SIgnUp : Fragment() {
+class SignUp : Fragment() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     private lateinit var usernameEditText: EditText
     private lateinit var firstNameEditText: EditText
@@ -30,8 +30,9 @@ class SIgnUp : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_s_ign_up, container, false)
@@ -59,12 +60,11 @@ class SIgnUp : Fragment() {
                 Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }
         }
-        // Navigate to SignUp Fragment
+
+        // Navigate to SignIn Fragment
         signInText.setOnClickListener {
-            // Using NavController for navigation (if you use Navigation Component)
             findNavController().navigate(R.id.action_signUp_to_Login)
         }
-
 
         return view
     }
@@ -73,25 +73,20 @@ class SIgnUp : Fragment() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    // Account successfully created
                     val user = auth.currentUser
                     user?.let {
                         val userId = it.uid
-                        val userProfile = UserProfile(username, firstName, lastName, email)
+                        val userProfile = UserProfile(username, firstName, lastName, email, userId)
 
-                        val database = FirebaseDatabase.getInstance().getReference("Users")
-                        database.child(userId).setValue(userProfile).addOnCompleteListener { databaseTask ->
-                            if (databaseTask.isSuccessful) {
+                        // Store user data in Firestore
+                        db.collection("Users").document(userId).set(userProfile)
+                            .addOnSuccessListener {
                                 Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
-                                // Navigate to login page after sign up
-                                val fragment = LogIn()
-                                val transaction = parentFragmentManager.beginTransaction()
-                                transaction.replace(R.id.logIn_container, fragment)
-                                transaction.commit()
-                            } else {
-                                Toast.makeText(context, "Failed to save user info", Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.action_signUp_to_Login)
                             }
-                        }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(context, "Failed to save user info: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
                     }
                 } else {
                     Toast.makeText(context, "Sign Up Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
@@ -103,8 +98,7 @@ class SIgnUp : Fragment() {
         val username: String,
         val firstName: String,
         val lastName: String,
-        val email: String
+        val email: String,
+        val userId: String
     )
 }
-
-

@@ -11,4 +11,15 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <!-- Add the filter options -->
+    <!-- Filter options for the spinner -->
+    <string-array name="filter_options">
+        <item>All Schedules</item>  <!-- Show all schedules -->
+        <item>Upcoming</item>  <!-- Upcoming schedules -->
+        <item>Overdue</item>  <!-- Overdue schedules -->
+        <item>Pending</item>  <!-- Pending schedules -->
+        <item>Completed</item>  <!-- Completed schedules -->
+    </string-array>
+
 </resources>

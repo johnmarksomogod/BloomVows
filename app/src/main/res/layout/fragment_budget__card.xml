@@ -1,18 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/selectableItemBackground"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginBottom="5dp"
-    app:cardElevation="5dp"
-    tools:context=".BudgetCardFragment">
+    app:cardElevation="5dp">
 
-
-<LinearLayout
+    <LinearLayout
         android:id="@+id/budgetCardContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,25 +19,7 @@
         android:orientation="horizontal"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true" >
-=======
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="4dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical"
-        android:background="@color/white">
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+        android:focusableInTouchMode="true">
 
         <!-- Left side: Item details -->
         <LinearLayout
@@ -57,65 +34,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item Name"
+                android:textColor="#000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#000"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/itemCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
                 android:text="Cost: ₱20000"
-=======
-                android:text="Cost: $20000"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
-                android:textSize="14sp"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/paidStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="Unpaid"
                 android:textColor="#B22222"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
         </LinearLayout>
 
         <!-- Right side: Action buttons -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <!-- Paid Icon -->
-            <ImageView
-                android:id="@+id/paidbudget"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginEnd="12dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="Mark as Paid"
-                android:src="@drawable/heart1" />
-
-            <!-- Delete Icon -->
-            <ImageView
-                android:id="@+id/deletebudget"
-<<<<<<< HEAD
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-=======
-                android:layout_width="32dp"
-                android:layout_height="32dp"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="Delete Task"
-                android:src="@drawable/delete1" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="12dp"
+            android:spacing="20dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:spacing="20dp">
+                <ImageView
+                    android:id="@+id/paidbudget"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="20dp"
+                    android:clickable="true"
+                    android:contentDescription="Mark as Completed"
+                    android:src="@drawable/heart1" />
+            </LinearLayout>
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/deletebudget"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:clickable="true"
+            android:contentDescription="Delete Task"
+            android:src="@drawable/delete1" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</FrameLayout>
+

@@ -7,15 +7,16 @@
     android:background="#FAF2F3"
     tools:context=".CalendarFragment">
 
+    <!-- Main RelativeLayout for header and other UI elements -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- Header Section -->
         <RelativeLayout
             android:id="@+id/header_title"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:clipToOutline="true"
             android:outlineProvider="background">
 
@@ -25,87 +26,95 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/budget"
                 android:scaleType="centerCrop"
-                android:src="@drawable/wed28" />
+                android:src="@drawable/log_in" />
 
+            <!-- Calendar Title -->
             <TextView
                 android:id="@+id/calendarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-<<<<<<< HEAD
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/carattere"
                 android:text="Calendar "
-                android:textStyle="bold"
+                android:layout_marginStart="10dp"
                 android:textColor="@color/black"
                 android:textSize="40sp"
-=======
-                android:layout_marginTop="40dp"
-                android:text="Calendar "
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="30sp"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
-                android:fontFamily="@font/carattere" />
-
-            <!-- Add Event Button -->
-            <ImageView
-                android:id="@+id/addEventIcon"
-<<<<<<< HEAD
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-=======
-                android:layout_width="40dp"
-                android:layout_height="40dp"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="35dp"
-                android:src="@drawable/plus1"
-                android:contentDescription="Add Event" />
+                android:textStyle="bold" />
         </RelativeLayout>
 
-        <!-- Calendar View -->
-        <CalendarView
-            android:id="@+id/calendarView"
+    </RelativeLayout>  <!-- End of RelativeLayout -->
+
+    <!-- ScrollView containing everything below the header -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_below="@id/header_title">
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_below="@id/header_title"
-             />
+            android:padding="10dp">
 
-        <!-- Upcoming Events Section -->
-        <ScrollView
-            android:id="@+id/scrollView_Calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/calendarView"
-            android:layout_marginTop="10dp"
-            android:fillViewport="true">
-
-            <LinearLayout
+            <!-- Material Calendar View (Supports Dots) -->
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/materialCalendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:background="@color/white"
+                android:textColor="@color/black"
+                app:mcv_showOtherDates="all"
+                app:mcv_selectionColor="@color/pink"
+                app:mcv_tileSize="50dp"/>
+
+            <!-- Schedule Overview with Add Button -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
 
                 <TextView
-                    android:id="@+id/upcomingTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upcoming Schedules"
+                    android:layout_marginEnd="150dp"
+                    android:fontFamily="@font/sansita1"
+                    android:text="Schedule Overview"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/sansita2"
-                    android:layout_marginBottom="10dp" />
+                    android:textSize="20sp" />
 
-                <LinearLayout
-                    android:id="@+id/upcomingSchedules"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <!-- Events will be added dynamically -->
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/addScheduleButton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/plus1"
+                    android:contentDescription="Add Event"
+                    android:layout_alignParentEnd="true" />
             </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
+
+            <!-- Spinner for filtering schedules -->
+            <Spinner
+                android:id="@+id/filterSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentStart="true"
+                android:entries="@array/filter_options"
+                android:spinnerMode="dropdown"
+                android:drawableEnd="@drawable/baseline_arrow_drop_down_24" />
+
+            <!-- RecyclerView for Upcoming Events -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSchedules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>  <!-- End of LinearLayout -->
+    </ScrollView>  <!-- End of ScrollView -->
+
 </FrameLayout>

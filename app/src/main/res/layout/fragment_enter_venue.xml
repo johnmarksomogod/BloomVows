@@ -16,20 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="600dp"
             android:scaleType="centerCrop"
-<<<<<<< HEAD
             android:src="@drawable/flower" />
-=======
-            android:src="@drawable/venuepic" />
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- Venue Information Layout -->
         <LinearLayout
             android:layout_width="match_parent"
-<<<<<<< HEAD
             android:layout_height="500dp"
-=======
-            android:layout_height="wrap_content"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
             android:layout_alignParentBottom="true"
             android:background="@drawable/blurred_background"
             android:gravity="bottom"
@@ -39,11 +31,7 @@
 
             <!-- Text Description -->
             <TextView
-<<<<<<< HEAD
                 android:layout_width="match_parent"
-=======
-                android:layout_width="wrap_content"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/carattere"
                 android:paddingBottom="8dp"
@@ -59,26 +47,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Venue Name"
-                app:boxStrokeColor="@color/black"
+                app:boxStrokeColor="#EDABAD"
                 app:boxStrokeWidth="2dp"
-                app:hintTextColor="@color/black"
-                app:boxBackgroundColor="#33EDABAD"
+                app:hintTextColor="#EDABAD"
+                app:boxBackgroundColor="@color/white"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusBottomStart="10dp"
-<<<<<<< HEAD
                 app:boxCornerRadiusBottomEnd="10dp"
                 app:hintTextAppearance="@style/BoldHintText">
-=======
-                app:boxCornerRadiusBottomEnd="10dp">
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/venueNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:backgroundTint="#33EDABAD"
-                    android:textColor="@color/black"
+                    android:textColor="#000000"
+                    android:textColorHint="#EDABAD"
                     android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,10 +74,7 @@
                 android:layout_height="60dp"
                 android:backgroundTint="#EDABAD"
                 android:gravity="center"
-<<<<<<< HEAD
                 android:layout_marginBottom="150dp"
-=======
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:text="All Done!"
                 android:textSize="20dp"
                 android:textColor="@android:color/white"

@@ -1,0 +1,81 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF2F3"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Cancel Button -->
+        <TextView
+            android:id="@+id/cancelScheduleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Done Button -->
+        <TextView
+            android:id="@+id/doneScheduleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Schedule Details Title -->
+        <TextView
+            android:id="@+id/scheduleDetailsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Schedule Details"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_below="@id/cancelScheduleButton"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentStart="true"/>
+
+        <!-- Schedule Name Input Field -->
+        <EditText
+            android:id="@+id/scheduleName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_border"
+            android:hint="Schedule Name*"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/scheduleDetailsTitle"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Schedule Date Input Field -->
+        <EditText
+            android:id="@+id/scheduleDate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_border"
+            android:hint="Date (MM/DD/YYYY)"
+            android:inputType="date"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textColorHint="@color/black"
+            android:layout_below="@id/scheduleName"
+            android:layout_marginTop="12dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

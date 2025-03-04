@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,22 +8,6 @@
     tools:context=".BudgetCategoryFragment">
 
 <!-- PRIORITY -->
-=======
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".BudgetCategory">
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <!-- PRIORITY -->
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +32,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_priorityContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,13 +39,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_priorityContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- WEDDING VENUE -->
         <LinearLayout
@@ -90,7 +66,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_weddingVenueContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,13 +73,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_weddingVenueContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- ENTERTAINMENT -->
         <LinearLayout
@@ -131,7 +100,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_entertainmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,13 +107,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_entertainmentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- FOOD & BEVERAGES -->
         <LinearLayout
@@ -172,7 +134,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_foodContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -180,13 +141,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_foodContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- CEREMONY ESSENTIALS TASKS -->
         <LinearLayout
@@ -213,7 +168,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_ceremonyEssentialsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -221,13 +175,6 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_ceremonyEssentialsTaskContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- FAVORS & GIFTS TASKS -->
         <LinearLayout
@@ -254,7 +201,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_favorsGiftsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -262,13 +208,6 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_favorsGiftsTaskContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
 
         <!-- DECORATIONS -->
@@ -296,7 +235,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_decorationsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -304,13 +242,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_entertainmentTaskContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- PHOTOGRAPHY & VIDEOGRAPHY TASKS -->
         <LinearLayout
@@ -337,7 +269,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_photographyContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -345,13 +276,6 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_photographyContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- HAIR & MAKEUP TASKS -->
         <LinearLayout
@@ -378,7 +302,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_hairMakeupContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -386,13 +309,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_hairMakeupContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
 
         <!-- BRIDE'S OUTFIT -->
@@ -420,7 +337,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_brideOutfitContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -428,13 +344,6 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_brideOutfitContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
         <!-- GROOM'S OUTFIT -->
         <LinearLayout
@@ -461,7 +370,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_groomOutfitContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -469,13 +377,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_groomOutfitContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- TRANSPORTATION TASKS -->
         <LinearLayout
@@ -501,7 +403,6 @@
                 android:textColor="#000"/>
         </LinearLayout>
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_transportationContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -509,13 +410,7 @@
             android:layout_marginBottom="24dp"
             android:clickable="true"
             android:focusableInTouchMode="true" />
-=======
-            android:id="@+id/task_transportationContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- OTHER TASKS -->
         <LinearLayout
@@ -542,7 +437,6 @@
         </LinearLayout>
 
         <LinearLayout
-<<<<<<< HEAD
             android:id="@+id/budget_otherContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -552,13 +446,4 @@
             android:focusableInTouchMode="true" />
     </LinearLayout>
 
-=======
-            android:id="@+id/task_otherTasksContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp"/>
-    </LinearLayout>
 
-</FrameLayout>
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00

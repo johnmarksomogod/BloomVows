@@ -9,7 +9,6 @@
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="350dp"
         android:scaleType="centerCrop"
         android:src="@drawable/sign_up" />
@@ -17,15 +16,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="600dp"
-=======
-        android:layout_height="300dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/todo1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         android:layout_gravity="bottom"
         android:gravity="bottom"
         android:background="@drawable/blurred_background"
@@ -41,11 +31,8 @@
             android:layout_marginStart="10dp"
             android:text="Sign Up"
             android:textColor="@android:color/black"
-<<<<<<< HEAD
             android:textSize="35sp" />
-=======
-            android:textSize="30sp" />
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
         <!-- Username Input -->
         <com.google.android.material.textfield.TextInputLayout

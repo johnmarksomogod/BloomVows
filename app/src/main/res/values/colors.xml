@@ -2,15 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-<<<<<<< HEAD
     <color name="red">#B22222</color>
     <color name="pink">#FEE2E3</color>   <!-- For pending status -->
     <!-- For pending status -->
 
         <color name="green">#4CAF50</color>
 
-
-
-=======
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 </resources>

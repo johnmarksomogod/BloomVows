@@ -1,22 +1,14 @@
 package com.example.plannerwedding
 
-<<<<<<< HEAD
-=======
-import Task
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-<<<<<<< HEAD
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-=======
-import androidx.fragment.app.Fragment
-import com.example.plannerwedding.TaskDialog
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
-import com.google.firebase.database.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class To_Do : Fragment() {
 
@@ -25,18 +17,11 @@ class To_Do : Fragment() {
     private lateinit var completedTasksText: TextView
     private lateinit var remainingTasksText: TextView
     private lateinit var addTaskIcon: LinearLayout
-<<<<<<< HEAD
-=======
-
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
-    private lateinit var database: DatabaseReference
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     private var totalTasks = 0
     private var completedTasks = 0
-<<<<<<< HEAD
-=======
-    private var remainingTasks = 0
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,90 +29,58 @@ class To_Do : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_to__do, container, false)
 
-<<<<<<< HEAD
-=======
-        // Initialize Views
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+        db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
         progressBar = view.findViewById(R.id.todoProgress)
         totalTasksText = view.findViewById(R.id.totalTasks)
         completedTasksText = view.findViewById(R.id.completedTasks)
         remainingTasksText = view.findViewById(R.id.remainingTasks)
         addTaskIcon = view.findViewById(R.id.addTaskIcon)
 
-<<<<<<< HEAD
-        // Initialize Firebase with custom URL
-        database = FirebaseDatabase.getInstance("https://wedding-planner-f8418-default-rtdb.asia-southeast1.firebasedatabase.app/")
-            .getReference("tasks")
-
-        loadTasksFromFirebase()
+        loadTasksFromFirestore()
 
         addTaskIcon.setOnClickListener {
             val dialog = TaskDialog()
             dialog.show(parentFragmentManager, "TaskDialog")
-=======
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance().getReference("tasks")
-
-        // Load Tasks from Firebase
-        loadTasksFromFirebase()
-
-        // Add Task Button Click
-        addTaskIcon.setOnClickListener {
-            showTaskDialog()
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         }
 
         return view
     }
 
-    private fun loadTasksFromFirebase() {
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+    private fun loadTasksFromFirestore() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("Users").document(userId)
+            .collection("Tasks")
+            .get()
+            .addOnSuccessListener { snapshot ->
                 totalTasks = 0
                 completedTasks = 0
-<<<<<<< HEAD
 
-                // Reset UI and add tasks
                 clearAllTaskViews()
 
-                for (taskSnapshot in snapshot.children) {
-                    for (categorySnapshot in taskSnapshot.children) {
-                        val task = categorySnapshot.getValue(Task::class.java)
-                        task?.let {
-                            totalTasks++
-                            if (it.completed) {
-                                completedTasks++
-                            }
-                            addTaskToCategory(it)
-                        }
-                    }
+                if (snapshot.isEmpty) {
+                    updateProgress()
                 }
-                updateProgress()
-=======
-                remainingTasks = 0
 
-                for (taskSnapshot in snapshot.children) {
-                    val task = taskSnapshot.getValue(Task::class.java)
+                for (document in snapshot.documents) {
+                    val task = document.toObject(Task::class.java)
                     task?.let {
                         totalTasks++
                         if (it.completed) {
                             completedTasks++
                         }
+                        addTaskToCategory(it)
                     }
                 }
-                remainingTasks = totalTasks - completedTasks
-
-                // Update UI
-                updateTaskUI()
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+                updateProgress()
             }
-
-            override fun onCancelled(error: DatabaseError) {
+            .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load tasks", Toast.LENGTH_SHORT).show()
             }
-        })
     }
-<<<<<<< HEAD
+
     private fun clearAllTaskViews() {
         val allContainers = listOf(
             R.id.task_priorityContainer,
@@ -198,43 +151,36 @@ class To_Do : Fragment() {
             "Pending"
         }
 
-        // Add task to container
         categoryContainer.addView(taskView)
 
-        // Set click listener on the task card to edit the task
         taskView.setOnClickListener {
-            // Pass the task to the TaskDialog for editing
             val dialog = TaskDialog()
             val bundle = Bundle()
-            bundle.putSerializable("task", task) // Pass the task object
+            bundle.putSerializable("task", task)
             dialog.arguments = bundle
             dialog.show(parentFragmentManager, "TaskDialog")
         }
 
-        // Heart icon listener to mark as completed or pending
         heartIcon.setOnClickListener {
             task.completed = !task.completed
-            updateTaskInFirebase(task)
+            updateTaskInFirestore(task)
 
-            // Manually update the heart icon and status after the database update
             bindTask(taskView, task)
 
-            // Update the progress bar after marking the task as completed/undone
-            updateProgress()  // Recalculate the progress and update the UI
+            updateProgress()
         }
 
-        // Delete icon listener to remove the task
         taskView.findViewById<ImageView>(R.id.deleteTaskIcon).setOnClickListener {
             deleteTask(task, taskView)
         }
     }
 
-    private fun updateTaskInFirebase(task: Task) {
-        val taskRef = FirebaseDatabase.getInstance().getReference("tasks")
-            .child(task.category)
-            .child(task.id ?: return)
-        taskRef.setValue(task).addOnSuccessListener {
-            // You don't need to reload tasks, manually update the UI
+    private fun updateTaskInFirestore(task: Task) {
+        val userId = auth.currentUser?.uid ?: return
+        val taskRef = db.collection("Users").document(userId)
+            .collection("Tasks").document(task.id ?: return)
+
+        taskRef.set(task).addOnSuccessListener {
             Toast.makeText(requireContext(), "Task updated successfully!", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "Failed to update task", Toast.LENGTH_SHORT).show()
@@ -243,10 +189,11 @@ class To_Do : Fragment() {
 
     private fun deleteTask(task: Task, taskView: View) {
         val taskId = task.id ?: return
-        database.child(task.category).child(taskId).removeValue()
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("Users").document(userId)
+            .collection("Tasks").document(taskId).delete()
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Task deleted successfully!", Toast.LENGTH_SHORT).show()
-                // Remove task from the UI as well
                 val parent = taskView.parent as? ViewGroup
                 parent?.removeView(taskView)
             }
@@ -255,7 +202,6 @@ class To_Do : Fragment() {
             }
     }
 
-    // Bind task data to the UI (heart icon, status, etc.)
     private fun bindTask(view: View, task: Task) {
         val title = view.findViewById<TextView>(R.id.taskTitle)
         val deadline = view.findViewById<TextView>(R.id.taskDeadline)
@@ -274,22 +220,6 @@ class To_Do : Fragment() {
             "Pending"
         }
 
-        // Update the progress bar after each change
         updateProgress()
-=======
-
-    private fun updateTaskUI() {
-        totalTasksText.text = "Total Tasks: $totalTasks"
-        completedTasksText.text = "Completed: $completedTasks"
-        remainingTasksText.text = "Remaining: $remainingTasks"
-
-        val progress = if (totalTasks > 0) (completedTasks * 100) / totalTasks else 0
-        progressBar.progress = progress
-    }
-
-    private fun showTaskDialog() {
-        val dialog = TaskDialog()
-        dialog.show(parentFragmentManager, "TaskDialog")
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
     }
 }

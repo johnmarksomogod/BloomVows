@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/windowBackground">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/back_icon"
+        android:contentDescription="Back Button"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="start"/>
+
+    <!-- Image Upload Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload Wedding Theme Image"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"/>
+
+    <ImageView
+        android:id="@+id/imageUploadButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/upload"
+        android:layout_gravity="center"
+        android:contentDescription="Upload Image"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Theme Name Input -->
+    <EditText
+        android:id="@+id/themeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Theme Name"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/pink_input_border"/>
+
+    <!-- Theme Description Input -->
+    <EditText
+        android:id="@+id/themeDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Theme Description"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/pink_input_border"/>
+
+    <!-- Color Code Input Section -->
+    <EditText
+        android:id="@+id/colorCodeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Color Code (e.g., #FF5733)"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/pink_input_border"/>
+
+    <!-- GridLayout for Color Picker -->
+    <GridLayout
+        android:id="@+id/colorPickerGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:layout_gravity="center"/>
+
+    <!-- Add Color Button -->
+    <Button
+        android:id="@+id/addColorButton"
+        android:text="Add More Colors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="#EDABAD"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Save Customization Button -->
+    <Button
+        android:id="@+id/saveCustomizationButton"
+        android:text="Save Customization"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#EDABAD"/>
+
+    <!-- Text to indicate customization saved -->
+    <TextView
+        android:id="@+id/savedCustomizationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Customization saved!"
+        android:textColor="#28A745"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:gravity="center"/>
+</LinearLayout>

@@ -48,11 +48,8 @@
                     android:layout_centerInParent="true"
                     android:max="100"
                     android:progress="10"
-<<<<<<< HEAD
                     android:progressTint="#EDABAD" />
-=======
-                    android:progressTint="#FFB6C1" />
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
+
 
                 <!-- Tasks Completed and Remaining -->
                 <LinearLayout
@@ -110,19 +107,11 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:textStyle="bold"
-<<<<<<< HEAD
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/carattere"
                 android:text="To-Do List "
                 android:textColor="@color/black"
                 android:textSize="40sp" />
-=======
-                android:layout_marginTop="60dp"
-                android:fontFamily="@font/carattere"
-                android:text="To-Do List "
-                android:textColor="@color/black"
-                android:textSize="25sp" />
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
         </RelativeLayout>
 
         <!-- Add Task Icon -->
@@ -139,13 +128,8 @@
             android:orientation="horizontal">
 
             <ImageView
-<<<<<<< HEAD
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-=======
-                android:layout_width="40dp"
-                android:layout_height="40dp"
->>>>>>> d47a662892ae575003ab89ada2af2446e000ae00
                 android:layout_marginEnd="8dp"
                 android:contentDescription="Add Task Icon"
                 android:src="@drawable/plus1" />
