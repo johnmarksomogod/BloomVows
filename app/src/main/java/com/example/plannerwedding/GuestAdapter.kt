@@ -7,7 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class GuestAdapter(private val guestList: MutableList<Guest>) : RecyclerView.Adapter<GuestAdapter.GuestViewHolder>() {
+class GuestAdapter(
+    private val guestList: MutableList<Guest>,
+    private val onDeleteClick: (Guest, Int) -> Unit
+) : RecyclerView.Adapter<GuestAdapter.GuestViewHolder>() {
 
     class GuestViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.guestName)
@@ -30,9 +33,7 @@ class GuestAdapter(private val guestList: MutableList<Guest>) : RecyclerView.Ada
         holder.bedroomIcon.visibility = if (guest.accommodationNeeded) View.VISIBLE else View.GONE
 
         holder.deleteGuest.setOnClickListener {
-            guestList.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, guestList.size)
+            onDeleteClick(guest, position) // Trigger the delete action
         }
     }
 

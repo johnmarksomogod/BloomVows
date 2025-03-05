@@ -3,7 +3,10 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="10dp">
+    android:padding="0dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:weightSum="1">
 
     <!-- Dot Container with vertical line below it -->
     <LinearLayout
@@ -23,8 +26,7 @@
             android:id="@+id/timelineLine"
             android:layout_width="1dp"
             android:layout_height="50dp"
-        android:background="#FF4081"
-        />
+            android:background="#FF4081" />
     </LinearLayout>
 
     <!-- Text beside the Dot -->
@@ -35,5 +37,37 @@
         android:text="Sample Activity"
         android:textSize="16sp"
         android:textColor="#000"
+        android:layout_marginStart="10dp"
+        android:layout_weight="0" />
+
+    <EditText
+        android:id="@+id/editActivityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Sample Activity"
+        android:inputType="text"
         android:layout_marginStart="10dp" />
+
+    <ImageView
+        android:id="@+id/editevent"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:clickable="true"
+        android:layout_marginStart="10dp"
+        android:contentDescription="Edit Task"
+        android:src="@drawable/editt" />
+
+    <!-- Move Delete Button to the end by giving it a layout_weight -->
+    <ImageView
+        android:id="@+id/deleteevent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="180dp"
+        android:clickable="true"
+        android:layout_marginEnd="0dp"
+        android:contentDescription="Delete Task"
+        android:layout_weight="1"
+        android:src="@drawable/delete1" />
+
 </LinearLayout>

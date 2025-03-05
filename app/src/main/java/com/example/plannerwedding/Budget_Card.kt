@@ -1,6 +1,5 @@
 package com.example.plannerwedding
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,31 +26,25 @@ class BudgetCard : Fragment() {
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Bind budget item data if available
+        // Bind the budget item data if available
         budgetItem?.let { bindBudgetItem(view, it) }
 
         val paidBudgetIcon = view.findViewById<ImageView>(R.id.paidbudget)
         val deleteBudgetIcon = view.findViewById<ImageView>(R.id.deletebudget)
+        val budgetCardContainer = view.findViewById<LinearLayout>(R.id.budgetCardContainer)
 
-        // Set click listener for toggling paid status
+        // Set click listeners for the icons
         paidBudgetIcon.setOnClickListener {
-            budgetItem?.let { item ->
-                showConfirmationDialog(
-                    "Update Payment Status",
-                    "Are you sure you want to mark this item as ${if (item.paid) "Unpaid" else "Paid"}?",
-                    { updateBudgetItemStatus(item) }
-                )
+            budgetItem?.let {
+                it.paid = !it.paid // Toggle the payment status
+                bindBudgetItem(view, it) // Rebind the updated item
+                updateBudgetItemStatus(it) // Update the Firebase database
             }
         }
 
-        // Set click listener for deleting the item
         deleteBudgetIcon.setOnClickListener {
-            budgetItem?.let { item ->
-                showConfirmationDialog(
-                    "Delete Budget Item",
-                    "Are you sure you want to delete this budget item?",
-                    { deleteBudgetItem(item, view) }
-                )
+            budgetItem?.let {
+                deleteBudgetItem(it, view) // Delete the item from Firebase and the UI
             }
         }
 
@@ -78,15 +71,13 @@ class BudgetCard : Fragment() {
     }
 
     private fun updateBudgetItemStatus(item: BudgetItem) {
-        val userId = auth.currentUser?.uid ?: return
-        item.paid = !item.paid
-
-        db.collection("Users").document(userId).collection("Budget")
-            .document(item.id ?: return)
+        val itemId = item.id ?: return
+        db.collection("Users").document(auth.currentUser?.uid ?: "")
+            .collection("Budget").document(item.category)
+            .collection("Items").document(itemId)
             .set(item)
             .addOnSuccessListener {
                 Toast.makeText(context, "Budget item updated successfully!", Toast.LENGTH_SHORT).show()
-                view?.let { bindBudgetItem(it, item) } // Refresh UI
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Failed to update budget item", Toast.LENGTH_SHORT).show()
@@ -94,10 +85,10 @@ class BudgetCard : Fragment() {
     }
 
     private fun deleteBudgetItem(item: BudgetItem, view: View) {
-        val userId = auth.currentUser?.uid ?: return
-
-        db.collection("Users").document(userId).collection("Budget")
-            .document(item.id ?: return)
+        val itemId = item.id ?: return
+        db.collection("Users").document(auth.currentUser?.uid ?: "")
+            .collection("Budget").document(item.category)
+            .collection("Items").document(itemId)
             .delete()
             .addOnSuccessListener {
                 Toast.makeText(context, "Budget item deleted successfully!", Toast.LENGTH_SHORT).show()
@@ -112,15 +103,6 @@ class BudgetCard : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(context, "Failed to delete budget item", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    private fun showConfirmationDialog(title: String, message: String, onConfirm: () -> Unit) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("Yes") { _, _ -> onConfirm() }
-            .setNegativeButton("Cancel", null)
-            .show()
     }
 
     // Set the budget item to be displayed in the fragment

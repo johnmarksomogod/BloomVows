@@ -1,6 +1,6 @@
 package com.example.plannerwedding
 
 data class TimelineActivity(
-    val title: String,
-    val time: String
+    var title: String,
+    var time: String
 )

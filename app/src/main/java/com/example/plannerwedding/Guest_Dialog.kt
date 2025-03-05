@@ -44,6 +44,7 @@ class GuestDialogFragment(private val onGuestAdded: (Guest) -> Unit) : DialogFra
             val category = guestSpinner.selectedItem.toString()
             val needsAccommodation = accommodationCheckbox.isChecked
 
+            // Check if the required fields are filled
             if (name.isEmpty() || email.isEmpty()) {
                 Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

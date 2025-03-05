@@ -18,7 +18,10 @@ class TimelineDialogFragment(private val onEventAdded: (String, String) -> Unit)
     private lateinit var eventTime: TextView
     private lateinit var doneButton: TextView
     private lateinit var cancelButton: TextView
-    private var lastSelectedTimeInMinutes: Int? = null  // Store last selected time
+    private var lastSelectedTimeInMinutes: Int? = null
+
+    private var currentTitle: String? = null
+    private var currentTime: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +34,13 @@ class TimelineDialogFragment(private val onEventAdded: (String, String) -> Unit)
         doneButton = view.findViewById(R.id.timelineDoneButton)
         cancelButton = view.findViewById(R.id.timelineCancelButton)
 
-        // Time Picker with Restriction
+        // Populate the fields if we are editing an event
+        if (currentTitle != null && currentTime != null) {
+            eventTitle.setText(currentTitle)
+            eventTime.text = currentTime
+        }
+
+        // Time Picker functionality for AM/PM selection
         eventTime.setOnClickListener {
             val calendar = Calendar.getInstance()
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -39,7 +48,8 @@ class TimelineDialogFragment(private val onEventAdded: (String, String) -> Unit)
 
             val timePickerDialog = TimePickerDialog(
                 requireContext(),
-                { _, selectedHour, selectedMinute ->
+                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                    // Convert to 12-hour AM/PM format
                     val isPM = selectedHour >= 12
                     val formattedHour = if (selectedHour % 12 == 0) 12 else selectedHour % 12
                     val formattedTime = String.format(
@@ -48,23 +58,11 @@ class TimelineDialogFragment(private val onEventAdded: (String, String) -> Unit)
                     )
 
                     val selectedTimeInMinutes = (selectedHour * 60) + selectedMinute
-
-                    // Prevent selecting an earlier time
-                    if (lastSelectedTimeInMinutes != null && selectedTimeInMinutes < lastSelectedTimeInMinutes!!) {
-                        Toast.makeText(
-                            requireContext(),
-                            "You cannot select a time earlier than the previous event.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return@TimePickerDialog
-                    }
-
                     eventTime.text = formattedTime
                     lastSelectedTimeInMinutes = selectedTimeInMinutes
                 },
-                hour, minute, false // Use 12-hour format
+                hour, minute, false // false for 12-hour format
             )
-
             timePickerDialog.show()
         }
 
@@ -81,7 +79,7 @@ class TimelineDialogFragment(private val onEventAdded: (String, String) -> Unit)
         }
 
         cancelButton.setOnClickListener {
-            dismiss()
+            dismiss() // Simply dismiss the dialog without making any changes
         }
 
         return view
@@ -93,5 +91,11 @@ class TimelineDialogFragment(private val onEventAdded: (String, String) -> Unit)
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    // Set the event data when editing
+    fun setEventData(title: String, time: String) {
+        currentTitle = title
+        currentTime = time
     }
 }

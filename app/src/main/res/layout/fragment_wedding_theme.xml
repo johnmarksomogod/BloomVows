@@ -1,75 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#FAF2F3"
     android:padding="16dp">
 
-    <!-- Cardview for Customize Wedding Theme -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/customizeWeddingThemeCard"
+    <!-- Top Section with Back Button, Title, and Floating Add Event Button -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:background="@drawable/pink_input_border"
-        android:layout_marginTop="20dp"
-        android:onClick="showCustomizationDialog">
+        android:layout_height="wrap_content">
 
-        <!-- Use ConstraintLayout for better control of positioning -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/WeddingThemeBackbttn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/back_icon"
+            android:contentDescription="Back Button" />
+
+        <!-- Timeline Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/carattere"
+            android:text="Wedding Theme "
+            android:textColor="@color/black"
+            android:textSize="40sp" />
+
+        <!-- Floating Button to Add an Event -->
+        <LinearLayout
+            android:id="@+id/Customizebttn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/pink_input_border"
-            android:padding="16dp">
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
 
-            <!-- Back Button (Start) -->
             <ImageView
-                android:id="@+id/WeddingThemeBackbttn"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/back_icon"
-                android:contentDescription="Back Button"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Add Event Icon"
+                android:src="@drawable/plus1" />
+        </LinearLayout>
 
-            <!-- Customize Wedding Theme Text (Center) -->
-            <TextView
-                android:text="Customize Wedding Theme "
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:fontFamily="@font/carattere"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/WeddingThemeBackbttn"
-                app:layout_constraintEnd_toStartOf="@id/Customizebttn"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:gravity="center"/>
+        <!-- Separator Line Below the Title -->
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="130dp"
+            android:background="#EDABAD"
+            android:foregroundGravity="center" />
 
-            <!-- Customize Button (End) -->
-            <ImageView
-                android:id="@+id/Customizebttn"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/plus1"
-                android:contentDescription="Customize Button"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+    </RelativeLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-
-    <!-- ScrollView -->
+    <!-- ScrollView for Wedding Theme Content -->
     <ScrollView
         android:id="@+id/WeddingThemescrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,7 +80,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Output for Customized Wedding Theme (will be above the ScrollView) -->
+            <!-- Output for Customized Wedding Theme -->
             <LinearLayout
                 android:id="@+id/customizedWeddingThemeContainer"
                 android:layout_width="match_parent"
@@ -98,7 +101,7 @@
 
                 <!-- Custom Wedding Theme Card -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/customWeddingThemeCard"
+                    android:id="@+id/customizeWeddingThemeCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="4dp"
@@ -148,7 +151,7 @@
                             android:layout_marginTop="10dp">
 
                             <TextView
-                                android:text="Color Pallte"
+                                android:text="Color Palette"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
                                 android:textColor="#000"
@@ -216,4 +219,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

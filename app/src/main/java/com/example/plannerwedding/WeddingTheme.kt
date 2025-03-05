@@ -18,10 +18,10 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Customize Wedding Theme CardView
-        val customizeWeddingThemeCard: CardView = view.findViewById(R.id.customizeWeddingThemeCard)
-        customizeWeddingThemeCard.setOnClickListener {
-            // Show customization dialog
+        // Floating button to trigger customization dialog
+        val customizeButton: LinearLayout = view.findViewById(R.id.Customizebttn)
+        customizeButton.setOnClickListener {
+            // Show the customization dialog when the button is clicked
             showCustomizationDialog()
         }
 

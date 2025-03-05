@@ -5,17 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
-import com.google.firebase.firestore.FirebaseFirestore
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class BudgetCategoryFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-
-    private lateinit var categoryContainers: Map<String, LinearLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,34 +21,15 @@ class BudgetCategoryFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_budget_category, container, false)
 
-        // Initialize Firestore and Auth
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Map category names to their UI containers
-        categoryContainers = mapOf(
-            "Priority" to view.findViewById(R.id.budget_priorityContainer),
-            "Wedding Venue" to view.findViewById(R.id.budget_weddingVenueContainer),
-            "Entertainment" to view.findViewById(R.id.budget_entertainmentContainer),
-            "Food & Beverages" to view.findViewById(R.id.budget_foodContainer),
-            "Ceremony Essentials" to view.findViewById(R.id.budget_ceremonyEssentialsContainer),
-            "Favors and Gifts" to view.findViewById(R.id.budget_favorsGiftsContainer),
-            "Decorations" to view.findViewById(R.id.budget_decorationsContainer),
-            "Photography and Videography" to view.findViewById(R.id.budget_photographyContainer),
-            "Hair and Makeup" to view.findViewById(R.id.budget_hairMakeupContainer),
-            "Bride's Outfit" to view.findViewById(R.id.budget_brideOutfitContainer),
-            "Groom's Outfit" to view.findViewById(R.id.budget_groomOutfitContainer),
-            "Transportation" to view.findViewById(R.id.budget_transportationContainer),
-            "Other Expenses" to view.findViewById(R.id.budget_otherContainer)
-        )
-
-        // Load budget items from Firestore
         loadBudgetItemsFromFirestore()
 
         return view
     }
 
-    fun loadBudgetItemsFromFirestore() {
+    private fun loadBudgetItemsFromFirestore() {
         val userId = auth.currentUser?.uid ?: return
 
         db.collection("Users").document(userId).collection("Budget")
@@ -58,11 +37,20 @@ class BudgetCategoryFragment : Fragment() {
             .addOnSuccessListener { snapshot ->
                 clearAllBudgetViews()
 
-                for (document in snapshot.documents) {
-                    val budgetItem = document.toObject(BudgetItem::class.java)
-                    budgetItem?.let {
-                        addBudgetItemToCategory(it)
-                    }
+                for (categorySnapshot in snapshot.documents) {
+                    val category = categorySnapshot.id
+                    categorySnapshot.reference.collection("Items").get()
+                        .addOnSuccessListener { itemSnapshot ->
+                            for (item in itemSnapshot.documents) {
+                                val budgetItem = item.toObject(BudgetItem::class.java)
+                                budgetItem?.let {
+                                    addBudgetItemToCategory(it, category)
+                                }
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Failed to load items", Toast.LENGTH_SHORT).show()
+                        }
                 }
             }
             .addOnFailureListener {
@@ -71,12 +59,41 @@ class BudgetCategoryFragment : Fragment() {
     }
 
     private fun clearAllBudgetViews() {
-        categoryContainers.values.forEach { it.removeAllViews() }
+        val allContainers = listOf(
+            R.id.budget_priorityContainer, R.id.budget_weddingVenueContainer,
+            R.id.budget_entertainmentContainer, R.id.budget_foodContainer,
+            R.id.budget_ceremonyEssentialsContainer, R.id.budget_favorsGiftsContainer,
+            R.id.budget_decorationsContainer, R.id.budget_photographyContainer,
+            R.id.budget_hairMakeupContainer, R.id.budget_brideOutfitContainer,
+            R.id.budget_groomOutfitContainer, R.id.budget_transportationContainer,
+            R.id.budget_otherContainer
+        )
+
+        for (containerId in allContainers) {
+            val container = view?.findViewById<LinearLayout>(containerId)
+            container?.removeAllViews()
+        }
     }
 
-    private fun addBudgetItemToCategory(budgetItem: BudgetItem) {
-        val container = categoryContainers[budgetItem.category] ?: return
-        val budgetView = layoutInflater.inflate(R.layout.fragment_budget__card, container, false)
+    private fun addBudgetItemToCategory(budgetItem: BudgetItem, category: String) {
+        val containerId = when (category) {
+            "Priority" -> R.id.budget_priorityContainer
+            "Wedding Venue" -> R.id.budget_weddingVenueContainer
+            "Entertainment" -> R.id.budget_entertainmentContainer
+            "Food & Beverages" -> R.id.budget_foodContainer
+            "Ceremony Essentials" -> R.id.budget_ceremonyEssentialsContainer
+            "Favors and Gifts" -> R.id.budget_favorsGiftsContainer
+            "Decorations" -> R.id.budget_decorationsContainer
+            "Photography and Videography" -> R.id.budget_photographyContainer
+            "Hair and Makeup" -> R.id.budget_hairMakeupContainer
+            "Bride's Outfit" -> R.id.budget_brideOutfitContainer
+            "Groom's Outfit" -> R.id.budget_groomOutfitContainer
+            "Transportation Tasks" -> R.id.budget_transportationContainer
+            else -> R.id.budget_otherContainer
+        }
+
+        val categoryContainer = view?.findViewById<LinearLayout>(containerId) ?: return
+        val budgetView = layoutInflater.inflate(R.layout.fragment_budget__card, null)
 
         val title = budgetView.findViewById<TextView>(R.id.itemTitle)
         val cost = budgetView.findViewById<TextView>(R.id.itemCost)
@@ -95,9 +112,9 @@ class BudgetCategoryFragment : Fragment() {
             "Unpaid"
         }
 
-        container.addView(budgetView)
+        categoryContainer.addView(budgetView)
 
-        // Set click listener for editing the item
+        // Handle item click
         budgetView.setOnClickListener {
             val dialog = BudgetDialogFragment()
             val bundle = Bundle()
@@ -106,28 +123,21 @@ class BudgetCategoryFragment : Fragment() {
             dialog.show(parentFragmentManager, "BudgetDialog")
         }
 
+        // Handle paid/unpaid status toggle
         paidIcon.setOnClickListener {
             budgetItem.paid = !budgetItem.paid
-            updateBudgetItemInFirestore(budgetItem, paidIcon, status)
+            updateBudgetItemInFirestore(budgetItem)
         }
     }
 
-    private fun updateBudgetItemInFirestore(budgetItem: BudgetItem, paidIcon: ImageView, status: TextView) {
+    private fun updateBudgetItemInFirestore(budgetItem: BudgetItem) {
         val userId = auth.currentUser?.uid ?: return
         db.collection("Users").document(userId).collection("Budget")
-            .document(budgetItem.id ?: return)
+            .document(budgetItem.category)
+            .collection("Items").document(budgetItem.id ?: "")
             .set(budgetItem)
             .addOnSuccessListener {
-                if (budgetItem.paid) {
-                    paidIcon.setImageResource(R.drawable.heart_filled)
-                    status.text = "Paid"
-                    status.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-                } else {
-                    paidIcon.setImageResource(R.drawable.heart1)
-                    status.text = "Unpaid"
-                    status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-                }
-                Toast.makeText(requireContext(), "Budget item updated successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Budget item updated!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()

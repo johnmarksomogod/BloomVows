@@ -42,56 +42,68 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-    </RelativeLayout>  <!-- End of RelativeLayout -->
+    </RelativeLayout>
+    <!-- End of RelativeLayout -->
+
+    <!-- Material Calendar View (Supports Dots) -->
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/materialCalendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="73dp"
+        android:textColor="@color/black"
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="@color/pink"
+        app:mcv_tileSize="45dp"/>
+
+    <!-- Floating Add Schedule Button -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="5dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/addScheduleButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
+            android:contentDescription="Add Event"
+            android:src="@drawable/plus1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- ScrollView containing everything below the header -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="435dp"
         android:layout_below="@id/header_title">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <!-- Material Calendar View (Supports Dots) -->
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/materialCalendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:textColor="@color/black"
-                app:mcv_showOtherDates="all"
-                app:mcv_selectionColor="@color/pink"
-                app:mcv_tileSize="50dp"/>
+            android:paddingTop="10dp">
 
             <!-- Schedule Overview with Add Button -->
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="center">
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="150dp"
                     android:fontFamily="@font/sansita1"
                     android:text="Schedule Overview"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
-
-                <ImageView
-                    android:id="@+id/addScheduleButton"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/plus1"
-                    android:contentDescription="Add Event"
-                    android:layout_alignParentEnd="true" />
             </LinearLayout>
 
             <!-- Spinner for filtering schedules -->
@@ -99,7 +111,6 @@
                 android:id="@+id/filterSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginTop="5dp"
                 android:layout_alignParentStart="true"
                 android:entries="@array/filter_options"
                 android:spinnerMode="dropdown"
@@ -110,8 +121,6 @@
                 android:id="@+id/recyclerViewSchedules"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>  <!-- End of LinearLayout -->
