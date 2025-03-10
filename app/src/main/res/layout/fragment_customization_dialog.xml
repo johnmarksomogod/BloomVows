@@ -1,107 +1,363 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="?android:attr/windowBackground">
+    android:padding="24dp">
 
-    <!-- Back Button -->
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/back_icon"
-        android:contentDescription="Back Button"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="start"/>
-
-    <!-- Image Upload Section -->
-    <TextView
+    <!-- Header with Title and Back Button -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Wedding Theme Image"
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        android:layout_marginBottom="16dp">
 
-    <ImageView
-        android:id="@+id/imageUploadButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/upload"
-        android:layout_gravity="center"
-        android:contentDescription="Upload Image"
-        android:layout_marginBottom="16dp"/>
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back Button"
+            android:padding="4dp"
+            android:src="@drawable/back_icon" />
 
-    <!-- Theme Name Input -->
-    <EditText
-        android:id="@+id/themeName"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/carattere"
+            android:text="Customize Your Theme"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Separator Line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EDABAD"
+        android:layout_marginBottom="16dp" />
+
+    <!-- ScrollView for content -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Theme Name"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/pink_input_border"/>
+        android:layout_weight="1">
 
-    <!-- Theme Description Input -->
-    <EditText
-        android:id="@+id/themeDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Theme Description"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/pink_input_border"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <!-- Color Code Input Section -->
-    <EditText
-        android:id="@+id/colorCodeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Color Code (e.g., #FF5733)"
-        android:padding="12dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/pink_input_border"/>
+            <!-- Category Title Input with Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sansita2"
+                android:text="Theme Name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
 
-    <!-- GridLayout for Color Picker -->
-    <GridLayout
-        android:id="@+id/colorPickerGrid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:orientation="horizontal"
-        android:layout_gravity="center"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:boxStrokeColor="#EDABAD"
+                app:hintTextColor="#EDABAD"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <!-- Add Color Button -->
-    <Button
-        android:id="@+id/addColorButton"
-        android:text="Add More Colors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="#EDABAD"
-        android:layout_marginBottom="16dp"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/categoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:textSize="18sp"
+                    android:hint="Enter a name for your theme"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Category Description Input with Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sansita2"
+                android:text="Theme Description"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:boxStrokeColor="#EDABAD"
+                app:hintTextColor="#EDABAD"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/categoryDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Describe your wedding theme"
+                    android:inputType="textMultiLine"
+                    android:textSize="18sp"
+                    android:minLines="2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Image Upload Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sansita2"
+                android:text="Theme Image"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/selectedImagePreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/uploadPlaceholder"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageUploadButton"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:contentDescription="Upload Image"
+                            android:src="@drawable/upload" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Tap to select an image"
+                            android:textColor="#757575" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Color Palette Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sansita2"
+                android:text="Color Palette"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Color Wheel Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Colors from Wheel"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Color Wheel View -->
+                    <com.skydoves.colorpickerview.ColorPickerView
+                        android:id="@+id/colorPickerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_marginBottom="16dp"
+                        app:alpha_selector="true"
+                        app:alpha_sliderView="@id/alphaSlideBar"
+                        app:brightness_selector="true"
+                        app:brightness_sliderView="@id/brightnessSlideBar"
+                        app:selector="@drawable/color_picker_selector" />
+
+                    <!-- Brightness Slider -->
+                    <com.skydoves.colorpickerview.sliders.BrightnessSlideBar
+                        android:id="@+id/brightnessSlideBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Alpha Slider -->
+                    <com.skydoves.colorpickerview.sliders.AlphaSlideBar
+                        android:id="@+id/alphaSlideBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Current Selected Color Preview -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <View
+                            android:id="@+id/colorPreview"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="#EDABAD"
+                            android:layout_marginEnd="16dp" />
+
+                        <TextView
+                            android:id="@+id/hexCodeText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="#EDABAD"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/sansita2" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/addCurrentColorButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="#EDABAD"
+                            android:text="Add"
+                            android:textAllCaps="false"
+                            app:cornerRadius="20dp"
+                            app:icon="@drawable/plus1"
+                            app:iconGravity="textStart" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Color Code Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:boxStrokeColor="#EDABAD"
+                app:endIconMode="custom"
+                android:textSize="18sp"
+                app:hintTextColor="#EDABAD"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/colorCodeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Color Code (e.g., #FF5733)"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Add Color Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addColorButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:backgroundTint="#EDABAD"
+                android:text="Add Color"
+                android:textAllCaps="false"
+                app:cornerRadius="20dp"
+                app:icon="@drawable/plus1"
+                app:iconGravity="textStart"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Selected Colors Preview -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selected Colors"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="8dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/selectedColorsContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:spacing="8dp">
+
+                    <!-- Color circles will be added here dynamically -->
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- GridLayout for Suggested Color Palette -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Suggested Colors"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="8dp" />
+
+            <GridLayout
+                android:id="@+id/colorPickerGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="5"
+                android:rowCount="2"
+                android:layout_marginBottom="24dp">
+
+                <!-- Predefined color suggestions will be added here -->
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <!-- Save Customization Button -->
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/saveCustomizationButton"
-        android:text="Save Customization"
-        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#EDABAD"
+        android:text="Save Theme"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#EDABAD"/>
+        app:cornerRadius="8dp" />
 
-    <!-- Text to indicate customization saved -->
+    <!-- Success Message -->
     <TextView
         android:id="@+id/savedCustomizationText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customization saved!"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Theme saved successfully!"
         android:textColor="#28A745"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:gravity="center"/>
+        android:textSize="14sp"
+        android:visibility="gone" />
 </LinearLayout>

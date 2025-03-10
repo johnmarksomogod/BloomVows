@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom attributes for ColorPickerView -->
+    <declare-styleable name="ColorPickerView">
+        <attr name="alpha_selector" format="boolean" />
+        <attr name="alpha_sliderView" format="reference" />
+        <attr name="brightness_selector" format="boolean" />
+        <attr name="brightness_sliderView" format="reference" />
+        <attr name="selector" format="reference" />
+    </declare-styleable>
+
+    <!-- Attributes for AlphaSlideBar -->
+    <declare-styleable name="AlphaSlideBar">
+        <attr name="selector_AlphaSlideBar" format="reference" />
+        <attr name="borderColor_AlphaSlideBar" format="color" />
+        <attr name="borderSize_AlphaSlideBar" format="dimension" />
+    </declare-styleable>
+
+    <!-- Attributes for BrightnessSlideBar -->
+    <declare-styleable name="BrightnessSlideBar">
+        <attr name="selector_BrightnessSlider" format="reference" />
+        <attr name="borderColor_BrightnessSlider" format="color" />
+        <attr name="borderSize_BrightnessSlider" format="dimension" />
+    </declare-styleable>
+</resources>

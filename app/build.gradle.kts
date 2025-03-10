@@ -43,6 +43,7 @@ android {
 dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation ("com.github.skydoves:colorpickerview:2.2.4")
 
     // **AndroidX Core & UI Components**
     implementation("androidx.core:core-ktx:1.12.0")
@@ -57,6 +58,8 @@ dependencies {
     // **Navigation Components**
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     // **Lifecycle & ViewModel**
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")

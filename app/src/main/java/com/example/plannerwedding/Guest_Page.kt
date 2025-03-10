@@ -1,5 +1,6 @@
 package com.example.plannerwedding
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -135,6 +136,12 @@ class GuestPage : Fragment() {
 
         val alert = alertDialogBuilder.create()
         alert.show()
+
+        val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
     }
 
     // Delete the guest from Firestore and remove it from the UI

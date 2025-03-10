@@ -52,7 +52,7 @@ data class ScheduleItem(
 
         status = when {
             status == "Completed" -> "Completed"
-            scheduleDateObj.isBefore(currentDate) -> "Expired"
+            scheduleDateObj.isBefore(currentDate) -> "Expired" // Change overdue to expired
             else -> "Pending"
         }
     }

@@ -2,73 +2,265 @@ package com.example.plannerwedding
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.cardview.widget.CardView
-import androidx.appcompat.widget.AppCompatImageView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.bumptech.glide.Glide
 
 class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
 
-    private var imageUri: String? = null
-    private val colorPalette = mutableListOf<Int>()
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+
+    // UI components that need to be accessed throughout the class
+    private lateinit var customizedWeddingThemeContainer: LinearLayout
+    private lateinit var customizedThemeImage: ImageView
+    private lateinit var customizedThemeName: TextView
+    private lateinit var customizedThemeDescription: TextView
+    private lateinit var customizedThemeColorPalette: LinearLayout
+
+    // Theme selection buttons
+    private lateinit var useRusticThemeButton: Button
+    private lateinit var useGardenThemeButton: Button
+    private lateinit var useGlamThemeButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Floating button to trigger customization dialog
-        val customizeButton: LinearLayout = view.findViewById(R.id.Customizebttn)
+        // Initialize Firebase instances
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        // Initialize UI components
+        initializeViews(view)
+
+        // Set click listeners
+        setupClickListeners()
+
+        // Load existing theme data if available
+        loadExistingThemeData()
+    }
+
+    private fun initializeViews(view: View) {
+        // Main UI elements
+        customizedWeddingThemeContainer = view.findViewById(R.id.customizedWeddingThemeContainer)
+        customizedThemeImage = view.findViewById(R.id.customizedThemeImage)
+        customizedThemeName = view.findViewById(R.id.customizedThemeName)
+        customizedThemeDescription = view.findViewById(R.id.customizedThemeDescription)
+        customizedThemeColorPalette = view.findViewById(R.id.customizedThemeColorPalette)
+
+        // Buttons
+        useRusticThemeButton = view.findViewById(R.id.useRusticThemeButton)
+        useGardenThemeButton = view.findViewById(R.id.useGardenThemeButton)
+        useGlamThemeButton = view.findViewById(R.id.useGlamThemeButton)
+    }
+
+    private fun setupClickListeners() {
+        // Customize button click listener
+        val customizeButton: LinearLayout = requireView().findViewById(R.id.Customizebttn)
         customizeButton.setOnClickListener {
-            // Show the customization dialog when the button is clicked
             showCustomizationDialog()
         }
 
-        // Back Button to navigate back to the previous screen
-        val backButton: ImageView = view.findViewById(R.id.WeddingThemeBackbttn)
+        // Back button click listener
+        val backButton: ImageView = requireView().findViewById(R.id.WeddingThemeBackbttn)
         backButton.setOnClickListener {
-            // Navigate back to the previous fragment or activity
             findNavController().navigateUp()
+        }
+
+        // Theme selection button listeners
+        useRusticThemeButton.setOnClickListener {
+            selectPredefinedTheme("Rustic Elegance",
+                "A beautiful blend of natural elements with elegant touches. Features wooden details, burlap accents, and soft floral arrangements.",
+                null, // We'll pass the image URI below
+                listOf(
+                    getColor(R.color.rustic_brown_dark),
+                    getColor(R.color.rustic_brown_medium),
+                    getColor(R.color.rustic_beige),
+                    getColor(R.color.rustic_cream),
+                    getColor(R.color.rustic_brown_deep)
+                )
+            )
+        }
+
+        useGardenThemeButton.setOnClickListener {
+            selectPredefinedTheme("Romantic Garden",
+                "An enchanting garden-inspired theme with lush greenery, delicate flowers, and soft pastel hues. Perfect for outdoor or spring weddings.",
+                null,
+                listOf(
+                    getColor(R.color.garden_green_light),
+                    getColor(R.color.garden_pink_light),
+                    getColor(R.color.garden_green_pale),
+                    getColor(R.color.garden_pink_medium),
+                    getColor(R.color.garden_green_medium)
+                )
+            )
+        }
+
+        useGlamThemeButton.setOnClickListener {
+            selectPredefinedTheme("Elegant Glam",
+                "A luxurious and glamorous theme featuring metallic accents, crystal details, and rich colors. Perfect for evening celebrations and formal venues.",
+                null,
+                listOf(
+                    getColor(R.color.glam_silver),
+                    getColor(R.color.glam_light_gray),
+                    getColor(R.color.glam_gold),
+                    getColor(R.color.glam_dark_gray),
+                    getColor(R.color.glam_platinum)
+                )
+            )
         }
     }
 
+    private fun getColor(colorResId: Int): Int {
+        return requireContext().getColor(colorResId)
+    }
+
+    private fun selectPredefinedTheme(themeName: String, themeDescription: String, imageUri: String?, colorPalette: List<Int>) {
+        // Convert the drawable resource to a URI
+        val imageUriString = imageUri ?: when (themeName) {
+            "Rustic Elegance" -> "android.resource://${requireContext().packageName}/drawable/rustic"
+            "Romantic Garden" -> "android.resource://${requireContext().packageName}/drawable/garden"
+            "Elegant Glam" -> "android.resource://${requireContext().packageName}/drawable/elegant"
+            else -> null // Default case, if needed
+        }
+
+        // Update UI with selected theme
+        updateWeddingThemePage(imageUriString, themeName, themeDescription, colorPalette)
+
+        // Save selection to Firebase
+        saveCustomizationToFirestore(themeName, themeDescription, imageUriString, colorPalette)
+
+        // Show success message
+        Toast.makeText(requireContext(), "$themeName theme selected", Toast.LENGTH_SHORT).show()
+    }
+
     private fun showCustomizationDialog() {
-        // Create and show the dialog (Dialog logic is moved to a separate class)
+        // Create and show the dialog
         CustomizationDialogFragment { themeName, themeDescription, imageUri, colorPalette ->
-            // After customization is done, update the wedding theme UI
+            // After customization is done, update the wedding theme UI and save to Firestore
+            saveCustomizationToFirestore(themeName, themeDescription, imageUri, colorPalette)
             updateWeddingThemePage(imageUri, themeName, themeDescription, colorPalette)
         }.show(childFragmentManager, "CustomizationDialog")
     }
 
     private fun updateWeddingThemePage(imageUri: String?, themeName: String, themeDescription: String, colorPalette: List<Int>) {
-        val customizedWeddingThemeContainer: LinearLayout = requireView().findViewById(R.id.customizedWeddingThemeContainer)
-        val customizedThemeImage: ImageView = requireView().findViewById(R.id.customizedThemeImage)
-        val customizedThemeName: TextView = requireView().findViewById(R.id.customizedThemeName)
-        val customizedThemeDescription: TextView = requireView().findViewById(R.id.customizedThemeDescription)
-        val customizedThemeColorPalette: LinearLayout = requireView().findViewById(R.id.customizedThemeColorPalette)
-
-        // Check if imageUri is not null before trying to set the image
-        if (imageUri != null) {
-            customizedThemeImage.setImageURI(Uri.parse(imageUri))  // Set the image URI
-        } else {
-            customizedThemeImage.setImageResource(R.drawable.budget)  // Use a default image if no image is selected
-        }
-
+        // Update theme name and description
         customizedThemeName.text = themeName
         customizedThemeDescription.text = themeDescription
 
-        // Add selected colors to the color palette
-        customizedThemeColorPalette.removeAllViews()
-        colorPalette.forEach { color ->
-            val colorCircle = ImageView(requireContext()).apply {
-                setImageResource(R.drawable.circle_shape)  // Circle shape for colors
-                setColorFilter(color)
+        // Handle image setting with null safety
+        if (!imageUri.isNullOrEmpty()) {
+            try {
+                // Use Glide for efficient image loading and caching
+                Glide.with(requireContext())
+                    .load(Uri.parse(imageUri))
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.placeholder_image)
+                    .into(customizedThemeImage)
+            } catch (e: Exception) {
+                // Fallback to default image if there's an error
+                customizedThemeImage.setImageResource(R.drawable.placeholder_image)
+                e.printStackTrace()
             }
-            customizedThemeColorPalette.addView(colorCircle)
+        } else {
+            // Use a default image if no image is selected
+            customizedThemeImage.setImageResource(R.drawable.placeholder_image)
         }
 
-        // Show the customized wedding theme container above the ScrollView
+        // Add selected colors to the color palette
+        customizedThemeColorPalette.removeAllViews()
+
+        // Create and add color circles to the palette
+        val layoutParams = LinearLayout.LayoutParams(
+            resources.getDimensionPixelSize(R.dimen.color_circle_size),
+            resources.getDimensionPixelSize(R.dimen.color_circle_size)
+        ).apply {
+            marginEnd = resources.getDimensionPixelSize(R.dimen.color_circle_margin)
+        }
+
+        colorPalette.forEach { color ->
+            val colorView = View(requireContext()).apply {
+                background = resources.getDrawable(R.drawable.circle_shape, null)
+                backgroundTintList = android.content.res.ColorStateList.valueOf(color)
+                this.layoutParams = layoutParams
+            }
+            customizedThemeColorPalette.addView(colorView)
+        }
+
+        // Show the customized wedding theme container
         customizedWeddingThemeContainer.visibility = View.VISIBLE
+    }
+
+    private fun saveCustomizationToFirestore(themeName: String, themeDescription: String, imageUri: String?, colorPalette: List<Int>) {
+        val userId = auth.currentUser?.uid
+
+        if (userId == null) {
+            Toast.makeText(requireContext(), "Please sign in to save your theme", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val userRef = db.collection("Users").document(userId)
+
+        // Convert color integers to longs for Firestore compatibility
+        val colorLongList = colorPalette.map { it.toLong() }
+
+        val themeData = hashMapOf(
+            "themeName" to themeName,
+            "themeDescription" to themeDescription,
+            "imageUri" to (imageUri ?: ""),
+            "colorPalette" to colorLongList,
+            "lastUpdated" to com.google.firebase.Timestamp.now()
+        )
+
+        // Update Firestore with the new theme data
+        userRef.update("weddingTheme", themeData)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Wedding Theme saved successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                // If update fails, the document might not exist, so try to set it instead
+                userRef.set(hashMapOf("weddingTheme" to themeData))
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Wedding Theme saved successfully", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { innerError ->
+                        Toast.makeText(requireContext(), "Failed to save wedding theme: ${innerError.message}", Toast.LENGTH_SHORT).show()
+                        innerError.printStackTrace()
+                    }
+            }
+    }
+
+    private fun loadExistingThemeData() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("Users").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val weddingTheme = document.get("weddingTheme") as? Map<String, Any>
+
+                    if (weddingTheme != null) {
+                        val themeName = weddingTheme["themeName"] as? String ?: "Your Custom Theme"
+                        val themeDescription = weddingTheme["themeDescription"] as? String ?:
+                        "Your personalized wedding theme will appear here after customization."
+                        val imageUri = weddingTheme["imageUri"] as? String
+
+                        // Convert the color palette back to Int list
+                        val colorPaletteLongs = weddingTheme["colorPalette"] as? List<Long> ?: listOf()
+                        val colorPaletteInts = colorPaletteLongs.map { it.toInt() }
+
+                        // Update UI with saved theme data
+                        updateWeddingThemePage(imageUri, themeName, themeDescription, colorPaletteInts)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                e.printStackTrace()
+                // Handle silently - we'll just show the default state
+            }
     }
 }
