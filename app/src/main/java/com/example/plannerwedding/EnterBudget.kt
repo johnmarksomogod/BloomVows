@@ -45,24 +45,29 @@ class EnterBudget : Fragment() {
         val submitButton = view.findViewById<Button>(R.id.submitButton2)
 
         submitButton.setOnClickListener {
-            val budget = budgetEditText.text.toString().trim()
-            if (budget.isEmpty() && user != null) {
+            val budgetString = budgetEditText.text.toString().trim()
+            if (budgetString.isEmpty() && user != null) {
                 Toast.makeText(requireContext(), "Please enter your budget", Toast.LENGTH_SHORT).show()
             } else if (user != null) {
-                val userId = user.uid
-                db.collection("Users").document(userId)
-                    .update("budget", budget)
-                    .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Budget saved successfully!", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_enterBudget_to_enterVenue)
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(requireContext(), "Failed to save budget", Toast.LENGTH_SHORT).show()
-                    }
+                val budgetDouble = budgetString.toDoubleOrNull()
+                if (budgetDouble == null) {
+                    // If the entered value is not a valid double, show an error message
+                    Toast.makeText(requireContext(), "Please enter a valid numeric budget", Toast.LENGTH_SHORT).show()
+                } else {
+                    val userId = user.uid
+                    db.collection("Users").document(userId)
+                        .update("budget", budgetDouble)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Budget saved successfully!", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.action_enterBudget_to_enterVenue)
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Failed to save budget", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
         }
 
         return view
     }
-
 }

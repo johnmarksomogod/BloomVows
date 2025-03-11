@@ -31,7 +31,7 @@
             android:layout_marginTop="50dp"
             android:textStyle="bold"
             android:fontFamily="@font/carattere"
-            android:text="Wedding Theme"
+            android:text="Wedding Theme "
             android:textColor="@color/black"
             android:textSize="40sp" />
 
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/sansita2"
                     android:text="My Wedding Theme"
@@ -163,7 +163,7 @@
                                 android:layout_height="30dp"
                                 android:background="@drawable/circle_shape"
                                 android:backgroundTint="#EDABAD"
-                                android:layout_marginEnd="8dp" />
+                                android:layout_marginEnd="10dp" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/sansita2"
                 android:text="Curated Wedding Themes"

@@ -1,11 +1,11 @@
 package com.example.plannerwedding
-
+//
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.content.ContextCompat
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +14,20 @@ class BudgetCategoryFragment : Fragment() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var budgetPriorityContainer: LinearLayout
+    private lateinit var budgetWeddingVenueContainer: LinearLayout
+    private lateinit var budgetEntertainmentContainer: LinearLayout
+    private lateinit var budgetFoodContainer: LinearLayout
+    private lateinit var budgetCeremonyEssentialsContainer: LinearLayout
+    private lateinit var budgetFavorsGiftsContainer: LinearLayout
+    private lateinit var budgetDecorationsContainer: LinearLayout
+    private lateinit var budgetPhotographyContainer: LinearLayout
+    private lateinit var budgetHairMakeupContainer: LinearLayout
+    private lateinit var budgetBrideOutfitContainer: LinearLayout
+    private lateinit var budgetGroomOutfitContainer: LinearLayout
+    private lateinit var budgetTransportationContainer: LinearLayout
+    private lateinit var budgetOtherContainer: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +38,20 @@ class BudgetCategoryFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
+        budgetPriorityContainer = view.findViewById(R.id.budget_priorityContainer)
+        budgetWeddingVenueContainer = view.findViewById(R.id.budget_weddingVenueContainer)
+        budgetEntertainmentContainer = view.findViewById(R.id.budget_entertainmentContainer)
+        budgetFoodContainer = view.findViewById(R.id.budget_foodContainer)
+        budgetCeremonyEssentialsContainer = view.findViewById(R.id.budget_ceremonyEssentialsContainer)
+        budgetFavorsGiftsContainer = view.findViewById(R.id.budget_favorsGiftsContainer)
+        budgetDecorationsContainer = view.findViewById(R.id.budget_decorationsContainer)
+        budgetPhotographyContainer = view.findViewById(R.id.budget_photographyContainer)
+        budgetHairMakeupContainer = view.findViewById(R.id.budget_hairMakeupContainer)
+        budgetBrideOutfitContainer = view.findViewById(R.id.budget_brideOutfitContainer)
+        budgetGroomOutfitContainer = view.findViewById(R.id.budget_groomOutfitContainer)
+        budgetTransportationContainer = view.findViewById(R.id.budget_transportationContainer)
+        budgetOtherContainer = view.findViewById(R.id.budget_otherContainer)
+
         loadBudgetItemsFromFirestore()
 
         return view
@@ -32,25 +60,19 @@ class BudgetCategoryFragment : Fragment() {
     private fun loadBudgetItemsFromFirestore() {
         val userId = auth.currentUser?.uid ?: return
 
-        db.collection("Users").document(userId).collection("Budget")
+        db.collection("Users").document(userId)
+            .collection("Budget")
             .get()
             .addOnSuccessListener { snapshot ->
-                clearAllBudgetViews()
+                if (snapshot.isEmpty) {
+                    Toast.makeText(requireContext(), "No budget items found", Toast.LENGTH_SHORT).show()
+                }
 
-                for (categorySnapshot in snapshot.documents) {
-                    val category = categorySnapshot.id
-                    categorySnapshot.reference.collection("Items").get()
-                        .addOnSuccessListener { itemSnapshot ->
-                            for (item in itemSnapshot.documents) {
-                                val budgetItem = item.toObject(BudgetItem::class.java)
-                                budgetItem?.let {
-                                    addBudgetItemToCategory(it, category)
-                                }
-                            }
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(requireContext(), "Failed to load items", Toast.LENGTH_SHORT).show()
-                        }
+                for (document in snapshot.documents) {
+                    val budgetItem = document.toObject(BudgetItem::class.java)
+                    budgetItem?.let {
+                        addBudgetItemToCategory(it)
+                    }
                 }
             }
             .addOnFailureListener {
@@ -58,89 +80,27 @@ class BudgetCategoryFragment : Fragment() {
             }
     }
 
-    private fun clearAllBudgetViews() {
-        val allContainers = listOf(
-            R.id.budget_priorityContainer, R.id.budget_weddingVenueContainer,
-            R.id.budget_entertainmentContainer, R.id.budget_foodContainer,
-            R.id.budget_ceremonyEssentialsContainer, R.id.budget_favorsGiftsContainer,
-            R.id.budget_decorationsContainer, R.id.budget_photographyContainer,
-            R.id.budget_hairMakeupContainer, R.id.budget_brideOutfitContainer,
-            R.id.budget_groomOutfitContainer, R.id.budget_transportationContainer,
-            R.id.budget_otherContainer
-        )
-
-        for (containerId in allContainers) {
-            val container = view?.findViewById<LinearLayout>(containerId)
-            container?.removeAllViews()
-        }
-    }
-
-    private fun addBudgetItemToCategory(budgetItem: BudgetItem, category: String) {
-        val containerId = when (category) {
-            "Priority" -> R.id.budget_priorityContainer
-            "Wedding Venue" -> R.id.budget_weddingVenueContainer
-            "Entertainment" -> R.id.budget_entertainmentContainer
-            "Food & Beverages" -> R.id.budget_foodContainer
-            "Ceremony Essentials" -> R.id.budget_ceremonyEssentialsContainer
-            "Favors and Gifts" -> R.id.budget_favorsGiftsContainer
-            "Decorations" -> R.id.budget_decorationsContainer
-            "Photography and Videography" -> R.id.budget_photographyContainer
-            "Hair and Makeup" -> R.id.budget_hairMakeupContainer
-            "Bride's Outfit" -> R.id.budget_brideOutfitContainer
-            "Groom's Outfit" -> R.id.budget_groomOutfitContainer
-            "Transportation Tasks" -> R.id.budget_transportationContainer
-            else -> R.id.budget_otherContainer
+    private fun addBudgetItemToCategory(budgetItem: BudgetItem) {
+        val containerId = when (budgetItem.category) {
+            "Priority" -> budgetPriorityContainer
+            "Wedding Venue" -> budgetWeddingVenueContainer
+            "Entertainment" -> budgetEntertainmentContainer
+            "Food & Beverages" -> budgetFoodContainer
+            "Ceremony Essentials" -> budgetCeremonyEssentialsContainer
+            "Favors and Gifts" -> budgetFavorsGiftsContainer
+            "Decorations" -> budgetDecorationsContainer
+            "Photography and Videography" -> budgetPhotographyContainer
+            "Hair and Makeup" -> budgetHairMakeupContainer
+            "Bride's Outfit" -> budgetBrideOutfitContainer
+            "Groom's Outfit" -> budgetGroomOutfitContainer
+            "Transportation Tasks" -> budgetTransportationContainer
+            else -> budgetOtherContainer
         }
 
-        val categoryContainer = view?.findViewById<LinearLayout>(containerId) ?: return
-        val budgetView = layoutInflater.inflate(R.layout.fragment_budget__card, null)
+        val budgetView = layoutInflater.inflate(R.layout.fragment_budget__card, containerId, false)
+        val budgetCard = budgetView as BudgetCard
+        budgetCard.setBudgetItem(budgetItem)
 
-        val title = budgetView.findViewById<TextView>(R.id.itemTitle)
-        val cost = budgetView.findViewById<TextView>(R.id.itemCost)
-        val status = budgetView.findViewById<TextView>(R.id.paidStatus)
-        val paidIcon = budgetView.findViewById<ImageView>(R.id.paidbudget)
-
-        title.text = budgetItem.name
-        cost.text = "Cost: ₱${budgetItem.amount}"
-        status.text = if (budgetItem.paid) {
-            paidIcon.setImageResource(R.drawable.heart_filled)
-            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            "Paid"
-        } else {
-            paidIcon.setImageResource(R.drawable.heart1)
-            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-            "Unpaid"
-        }
-
-        categoryContainer.addView(budgetView)
-
-        // Handle item click
-        budgetView.setOnClickListener {
-            val dialog = BudgetDialogFragment()
-            val bundle = Bundle()
-            bundle.putSerializable("budgetItem", budgetItem)
-            dialog.arguments = bundle
-            dialog.show(parentFragmentManager, "BudgetDialog")
-        }
-
-        // Handle paid/unpaid status toggle
-        paidIcon.setOnClickListener {
-            budgetItem.paid = !budgetItem.paid
-            updateBudgetItemInFirestore(budgetItem)
-        }
-    }
-
-    private fun updateBudgetItemInFirestore(budgetItem: BudgetItem) {
-        val userId = auth.currentUser?.uid ?: return
-        db.collection("Users").document(userId).collection("Budget")
-            .document(budgetItem.category)
-            .collection("Items").document(budgetItem.id ?: "")
-            .set(budgetItem)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Budget item updated!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()
-            }
+        containerId.addView(budgetView)
     }
 }

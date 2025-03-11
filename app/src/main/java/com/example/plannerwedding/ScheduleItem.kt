@@ -42,18 +42,29 @@ data class ScheduleItem(
 
     // Method to update the status dynamically
     fun updateStatus() {
-        val currentDate = CalendarDay.today()
-        val dateParts = scheduleDate.split("/")
-        val scheduleDateObj = CalendarDay.from(
-            dateParts[2].toInt(),
-            dateParts[0].toInt() - 1,
-            dateParts[1].toInt()
-        )
+        // If already completed, don't change status
+        if (status == "Completed") return
 
-        status = when {
-            status == "Completed" -> "Completed"
-            scheduleDateObj.isBefore(currentDate) -> "Expired" // Change overdue to expired
-            else -> "Pending"
+        try {
+            val currentDate = CalendarDay.today()
+            val dateParts = scheduleDate.split("/")
+
+            if (dateParts.size == 3) {
+                val scheduleMonth = dateParts[0].toInt() - 1 // Calendar months are 0-based
+                val scheduleDay = dateParts[1].toInt()
+                val scheduleYear = dateParts[2].toInt()
+
+                val scheduleDateObj = CalendarDay.from(scheduleYear, scheduleMonth, scheduleDay)
+
+                // Update status based on date comparison
+                status = when {
+                    scheduleDateObj.isBefore(currentDate) -> "Expired"
+                    else -> "Pending"
+                }
+            }
+        } catch (e: Exception) {
+            // Handle any parsing errors gracefully
+            // Keep current status if there's an error
         }
     }
 }

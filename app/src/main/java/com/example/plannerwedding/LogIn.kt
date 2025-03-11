@@ -97,7 +97,8 @@ class LogIn : Fragment() {
                             .addOnSuccessListener { document ->
                                 if (document.exists()) {
                                     val weddingDate = document.getString("weddingDate")
-                                    val budget = document.getString("budget")
+                                    // Change to getDouble to retrieve the budget as a number
+                                    val budget = document.getDouble("budget")  // Corrected this line
                                     val venue = document.getString("venue")
 
                                     navigateToNextScreen(weddingDate, budget, venue)
@@ -115,10 +116,10 @@ class LogIn : Fragment() {
             }
     }
 
-    private fun navigateToNextScreen(weddingDate: String?, budget: String?, venue: String?) {
+    private fun navigateToNextScreen(weddingDate: String?, budget: Double?, venue: String?) {
         when {
             weddingDate.isNullOrEmpty() -> findNavController().navigate(R.id.action_login_to_enterNamesFragment)
-            budget.isNullOrEmpty() -> findNavController().navigate(R.id.action_loginFragment_to_enterBudgetFragment)
+            budget == null -> findNavController().navigate(R.id.action_loginFragment_to_enterBudgetFragment)
             venue.isNullOrEmpty() -> findNavController().navigate(R.id.action_loginFragment_to_enterVenueFragment)
             else -> findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }

@@ -2,7 +2,6 @@ package com.example.plannerwedding
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +38,10 @@ class ScheduleAdapter(
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val schedule = scheduleList[position]
+
+        // Update status before displaying
+        schedule.updateStatus()
+
         holder.scheduleTitle.text = schedule.scheduleName
         holder.scheduleDate.text = "Scheduled Date: ${schedule.scheduleDate}"
 
@@ -49,13 +52,11 @@ class ScheduleAdapter(
                 holder.scheduleStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
                 holder.completeScheduleIcon.setImageResource(R.drawable.heart_filled)
             }
-
             "Expired" -> {
                 holder.scheduleStatus.text = "Expired"
                 holder.scheduleStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
                 holder.completeScheduleIcon.setImageResource(R.drawable.broken_heart)
             }
-
             else -> { // "Pending"
                 holder.scheduleStatus.text = "Pending"
                 holder.scheduleStatus.setTextColor(ContextCompat.getColor(context, R.color.red))
@@ -63,8 +64,14 @@ class ScheduleAdapter(
             }
         }
 
-        holder.completeScheduleIcon.setOnClickListener {
-            showCompletionConfirmationDialog(schedule, position)
+        // Only allow completion for Pending or Expired items
+        if (schedule.status != "Completed") {
+            holder.completeScheduleIcon.setOnClickListener {
+                showCompletionConfirmationDialog(schedule, position)
+            }
+        } else {
+            // If already completed, maybe disable the click or add a different action
+            holder.completeScheduleIcon.isClickable = false
         }
 
         holder.deleteScheduleIcon.setOnClickListener {
@@ -92,7 +99,7 @@ class ScheduleAdapter(
         alertDialogBuilder.setMessage("Are you sure you want to delete this schedule?")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
-                deleteSchedule(schedule, position)
+                onScheduleClickListener.onScheduleDelete(position)
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
@@ -114,7 +121,7 @@ class ScheduleAdapter(
         alertDialogBuilder.setMessage("Are you sure you want to mark this schedule as completed?")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
-                updateScheduleStatus(schedule, "Completed", position)
+                onScheduleClickListener.onScheduleComplete(position)
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
@@ -128,41 +135,5 @@ class ScheduleAdapter(
 
         positiveButton.setTextColor(Color.parseColor("#EDABAD"))
         negativeButton.setTextColor(Color.parseColor("#EDABAD"))
-    }
-
-    private fun updateScheduleStatus(schedule: ScheduleItem, newStatus: String, position: Int) {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            val userId = user.uid
-            val db = FirebaseFirestore.getInstance()
-            db.collection("Users").document(userId).collection("Schedules")
-                .document(schedule.scheduleId)
-                .update("status", newStatus)
-                .addOnSuccessListener {
-                    schedule.status = newStatus
-                    notifyItemChanged(position)
-                }
-        }
-    }
-
-    private fun deleteSchedule(schedule: ScheduleItem, position: Int) {
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            val userId = user.uid
-            val db = FirebaseFirestore.getInstance()
-            db.collection("Users").document(userId).collection("Schedules")
-                .document(schedule.scheduleId)
-                .delete()
-                .addOnSuccessListener {
-                    // ✅ Prevent crash by checking if index exists before removing
-                    if (position >= 0 && position < scheduleList.size) {
-                        scheduleList.removeAt(position)
-                        notifyItemRemoved(position)
-                    }
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Failed to delete schedule.", Toast.LENGTH_SHORT).show()
-                }
-        }
     }
 }

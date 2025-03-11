@@ -14,13 +14,12 @@
 
     <!-- Add the filter options -->
     <!-- Filter options for the spinner -->
-        <string-array name="filter_options">
-            <item>All Schedules</item>
-            <item>Upcoming</item>
-            <item>Pending</item>
-            <item>Completed</item>
-            <item>Expired</item>
-        </string-array>
+    <string-array name="filter_options">
+        <item>All</item>
+        <item>Pending</item>
+        <item>Completed</item>
+        <item>Expired</item>
+    </string-array>
     </resources>
 
 

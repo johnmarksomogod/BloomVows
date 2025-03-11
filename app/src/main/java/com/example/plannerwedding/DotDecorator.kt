@@ -1,23 +1,20 @@
 package com.example.plannerwedding
 
 import android.graphics.Color
-import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.spans.DotSpan
 
 class DotDecorator(private val dates: HashSet<CalendarDay>) : DayViewDecorator {
 
     override fun shouldDecorate(day: CalendarDay): Boolean {
-        return dates.contains(day) // Only decorate the dates that are in the set
+        return dates.contains(day)
     }
 
     override fun decorate(view: DayViewFacade) {
-        // Set the color of the dot to EDABAD
-        view.addSpan(android.text.style.ForegroundColorSpan(Color.parseColor("#EDABAD")))
-
-        // Set the text size to make it slightly bigger (e.g., 18px)
-        view.addSpan(AbsoluteSizeSpan(18, true)) // The second parameter is for scaling relative to the text size (true means scale with screen density)
+        // Add a small dot under the date
+        view.addSpan(DotSpan(10f, Color.parseColor("#EDABAD")))
     }
 }

@@ -21,9 +21,15 @@ class HomePage : Fragment(R.layout.fragment_home_page) {
     private lateinit var totalTasksText: TextView
     private lateinit var completedTasksText: TextView
     private lateinit var remainingTasksText: TextView
+    private lateinit var totalBudgetText: TextView
+    private lateinit var spentText: TextView
+    private lateinit var remainingText: TextView
 
     private var totalTasks = 0
     private var completedTasks = 0
+    private var totalBudget: Double = 0.0
+    private var spentAmount: Double = 0.0
+    private var remainingBudget: Double = 0.0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,12 +45,18 @@ class HomePage : Fragment(R.layout.fragment_home_page) {
         totalTasksText = view.findViewById(R.id.totalTasks)
         completedTasksText = view.findViewById(R.id.completedTasks)
         remainingTasksText = view.findViewById(R.id.remainingTasks)
+        totalBudgetText = view.findViewById(R.id.totalBudgetText)
+        spentText = view.findViewById(R.id.spentText)
+        remainingText = view.findViewById(R.id.remainingText)
 
         // Fetch and display wedding data
         fetchWeddingData()
 
         // Fetch and display task data
         loadTasksFromFirestore()
+
+        // Fetch and display budget data
+        loadBudgetDataFromFirestore()
 
         // CardView navigation
         setupNavigation(view)
@@ -126,14 +138,58 @@ class HomePage : Fragment(R.layout.fragment_home_page) {
             }
     }
 
-    private fun updateProgress() {
-        val remainingTasks = totalTasks - completedTasks
-        val progress = if (totalTasks > 0) (completedTasks * 100) / totalTasks else 0
+    private fun loadBudgetDataFromFirestore() {
+        val userId = auth.currentUser?.uid ?: return
 
-        progressBar.progress = progress
+        db.collection("Users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Fetch the total budget from Firestore
+                    totalBudget = document.getDouble("budget") ?: 0.0
+                    spentAmount = 0.0
+
+                    db.collection("Users").document(userId).collection("Budget")
+                        .get()
+                        .addOnSuccessListener { snapshot ->
+                            for (document in snapshot.documents) {
+                                val budgetItem = document.toObject(BudgetItem::class.java)
+                                budgetItem?.let {
+                                    if (it.paid) spentAmount += it.amount
+                                }
+                            }
+                            updateProgress() // Update the progress after fetching budget data
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Failed to load budget items", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to load total budget", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateProgress() {
+        // Update task progress bar
+        val remainingTasks = totalTasks - completedTasks
+        val taskProgress = if (totalTasks > 0) (completedTasks * 100) / totalTasks else 0
+
+        progressBar.progress = taskProgress
         totalTasksText.text = "Total Tasks: $totalTasks"
         completedTasksText.text = "Completed: $completedTasks"
         remainingTasksText.text = "Remaining: $remainingTasks"
+
+        // Update budget progress
+        remainingBudget = totalBudget - spentAmount
+        val budgetProgress = if (totalBudget > 0) (spentAmount * 100) / totalBudget else 0
+
+        // Update the progress bar for budget and text
+        val budgetProgressBar: ProgressBar = requireView().findViewById(R.id.budgetProgress)  // Corrected view reference
+        budgetProgressBar.progress = budgetProgress.toInt() // Ensure it's an Int, not a Double
+
+        totalBudgetText.text = "Total Budget: ₱${totalBudget.toInt()}" // Using toInt() for rounding the value
+        spentText.text = "Spent: ₱${spentAmount.toInt()}"  // Using toInt() for rounding the value
+        remainingText.text = "Remaining: ₱${remainingBudget.toInt()}"  // Using toInt() for rounding the value
     }
 
     private fun setupNavigation(view: View) {

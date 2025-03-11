@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -20,8 +21,9 @@ class BudgetPageFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
-    private var totalBudget = 0.0
-    private var spentAmount = 0.0
+    private var totalBudget: Double = 0.0
+    private var spentAmount: Double = 0.0
+    private var remainingBudget: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,24 +31,57 @@ class BudgetPageFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_budgetpage, container, false)
 
+        db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
         progressBar = view.findViewById(R.id.budgetProgress)
         totalBudgetText = view.findViewById(R.id.totalBudgetText)
         spentText = view.findViewById(R.id.spentText)
         remainingText = view.findViewById(R.id.remainingText)
         addBudgetButton = view.findViewById(R.id.addBudgetButton)
 
-        // Initialize Firebase Firestore
-        db = FirebaseFirestore.getInstance()
-        auth = FirebaseAuth.getInstance()
-
-        loadBudgetDataFromFirestore()
+        // Load the total budget from Firestore
+        loadTotalBudgetFromFirestore()
 
         addBudgetButton.setOnClickListener {
             val dialog = BudgetDialogFragment()
+            dialog.setDialogDismissListener(object : BudgetDialogFragment.DialogDismissListener {
+                override fun onDialogDismiss() {
+                    // Reload data after the dialog is dismissed
+                    loadBudgetDataFromFirestore()
+                }
+            })
             dialog.show(parentFragmentManager, "BudgetDialog")
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadTotalBudgetFromFirestore()
+    }
+
+    private fun loadTotalBudgetFromFirestore() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("Users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Use getDouble() to get the budget field correctly as a number (Double)
+                    val budgetField = document.getDouble("budget")
+                    totalBudget = budgetField ?: 0.0  // If the budget is null, default to 0.0
+                    // Now load the budget items
+                    loadBudgetDataFromFirestore()
+                } else {
+                    totalBudget = 0.0
+                    updateProgress()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to load total budget", Toast.LENGTH_SHORT).show()
+                loadBudgetDataFromFirestore()
+            }
     }
 
     private fun loadBudgetDataFromFirestore() {
@@ -55,28 +90,22 @@ class BudgetPageFragment : Fragment() {
         db.collection("Users").document(userId).collection("Budget")
             .get()
             .addOnSuccessListener { snapshot ->
-                totalBudget = 0.0
                 spentAmount = 0.0
+
                 clearAllBudgetViews()
 
-                for (categorySnapshot in snapshot.documents) {
-                    val category = categorySnapshot.id
-                    categorySnapshot.reference.collection("Items").get()
-                        .addOnSuccessListener { itemSnapshot ->
-                            for (item in itemSnapshot.documents) {
-                                val budgetItem = item.toObject(BudgetItem::class.java)
-                                budgetItem?.let {
-                                    totalBudget += it.amount
-                                    if (it.paid) spentAmount += it.amount
-                                    addBudgetItemToCategory(it, category)
-                                }
-                            }
-                            updateProgress()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(requireContext(), "Failed to load items", Toast.LENGTH_SHORT).show()
-                        }
+                if (snapshot.isEmpty) {
+                    updateProgress()
                 }
+
+                for (document in snapshot.documents) {
+                    val budgetItem = document.toObject(BudgetItem::class.java)
+                    budgetItem?.let {
+                        if (it.paid) spentAmount += it.amount
+                        addBudgetItemToCategory(it)
+                    }
+                }
+                updateProgress()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load budget items", Toast.LENGTH_SHORT).show()
@@ -84,13 +113,13 @@ class BudgetPageFragment : Fragment() {
     }
 
     private fun updateProgress() {
-        val remainingBudget = totalBudget - spentAmount
+        remainingBudget = totalBudget - spentAmount
         val progress = if (totalBudget > 0) (spentAmount * 100) / totalBudget else 0.0
 
-        progressBar.progress = progress.toInt()
-        spentText.text = "Spent: ₱$spentAmount"
-        remainingText.text = "Remaining: ₱$remainingBudget"
-        totalBudgetText.text = "Total Budget: ₱$totalBudget"
+        progressBar.progress = progress.toInt()  // Cast progress to Int
+        totalBudgetText.text = "Total Budget: ₱${totalBudget.toInt()}"
+        spentText.text = "Spent: ₱${spentAmount.toInt()}"
+        remainingText.text = "Remaining: ₱${remainingBudget.toInt()}"
     }
 
     private fun clearAllBudgetViews() {
@@ -110,8 +139,8 @@ class BudgetPageFragment : Fragment() {
         }
     }
 
-    private fun addBudgetItemToCategory(budgetItem: BudgetItem, category: String) {
-        val containerId = when (category) {
+    private fun addBudgetItemToCategory(budgetItem: BudgetItem) {
+        val containerId = when (budgetItem.category) {
             "Priority" -> R.id.budget_priorityContainer
             "Wedding Venue" -> R.id.budget_weddingVenueContainer
             "Entertainment" -> R.id.budget_entertainmentContainer
@@ -162,21 +191,45 @@ class BudgetPageFragment : Fragment() {
         paidIcon.setOnClickListener {
             budgetItem.paid = !budgetItem.paid
             updateBudgetItemInFirestore(budgetItem)
+
+            bindBudget(budgetView, budgetItem)
+
+            // Update the progress after changing the status
             updateProgress()
         }
     }
 
     private fun updateBudgetItemInFirestore(budgetItem: BudgetItem) {
         val userId = auth.currentUser?.uid ?: return
-        db.collection("Users").document(userId).collection("Budget")
-            .document(budgetItem.category)
-            .collection("Items").document(budgetItem.id ?: "")
-            .set(budgetItem)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Budget item updated!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()
-            }
+        val taskRef = db.collection("Users").document(userId).collection("Budget")
+            .document(budgetItem.id ?: return)
+
+        taskRef.set(budgetItem).addOnSuccessListener {
+            Toast.makeText(requireContext(), "Budget item updated successfully!", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun bindBudget(view: View, budgetItem: BudgetItem) {
+        val title = view.findViewById<TextView>(R.id.itemTitle)
+        val cost = view.findViewById<TextView>(R.id.itemCost)
+        val status = view.findViewById<TextView>(R.id.paidStatus)
+        val paidIcon = view.findViewById<ImageView>(R.id.paidbudget)
+
+        title.text = budgetItem.name
+        cost.text = "Cost: ₱${budgetItem.amount}"
+        status.text = if (budgetItem.paid) {
+            paidIcon.setImageResource(R.drawable.heart_filled)
+            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+            "Paid"
+        } else {
+            paidIcon.setImageResource(R.drawable.heart1)
+            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            "Unpaid"
+        }
+
+        // Update the progress bar after binding the budget item
+        updateProgress()
     }
 }
