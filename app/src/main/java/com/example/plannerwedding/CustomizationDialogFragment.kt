@@ -348,6 +348,7 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
         }
     }
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // Save state for configuration changes

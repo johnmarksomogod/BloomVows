@@ -26,7 +26,7 @@
             android:id="@+id/timelineLine"
             android:layout_width="1dp"
             android:layout_height="50dp"
-            android:background="#FF4081" />
+            android:background="#EDABAD" />
     </LinearLayout>
 
     <!-- Text beside the Dot -->
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="Sample Activity"
         android:textSize="16sp"
-        android:textColor="#000"
+        android:textColor="@color/grey"
         android:layout_marginStart="10dp"
         android:layout_weight="0" />
 

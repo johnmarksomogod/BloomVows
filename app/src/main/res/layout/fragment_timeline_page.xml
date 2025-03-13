@@ -30,8 +30,8 @@
             android:layout_marginTop="50dp"
             android:textStyle="bold"
             android:fontFamily="@font/carattere"
-            android:text="Timeline of Events "
-            android:textColor="@color/black"
+            android:text="Timeline of  Events "
+            android:textColor="@color/grey"
             android:textSize="40sp" />
 
         <!-- Floating Button to Add an Event -->

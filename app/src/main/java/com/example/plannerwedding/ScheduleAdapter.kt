@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
@@ -20,7 +17,7 @@ class ScheduleAdapter(
     private val context: Context,
     private val scheduleList: MutableList<ScheduleItem>,
     private val onScheduleClickListener: OnScheduleClickListener,
-    private val calendarView: MaterialCalendarView,
+    private val calendarView: MaterialCalendarView?,
     private val datesWithSchedules: HashSet<CalendarDay>
 ) : RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>() {
 
@@ -108,11 +105,15 @@ class ScheduleAdapter(
         val alert = alertDialogBuilder.create()
         alert.show()
 
+        // Change the text color of the buttons
         val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
         val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
 
         positiveButton.setTextColor(Color.parseColor("#EDABAD"))
         negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+
+        // Set dialog message text color to black
+        alert.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.BLACK)
     }
 
     private fun showCompletionConfirmationDialog(schedule: ScheduleItem, position: Int) {
@@ -130,10 +131,17 @@ class ScheduleAdapter(
         val alert = alertDialogBuilder.create()
         alert.show()
 
+        // Set background color to white
+        alert.window?.setBackgroundDrawableResource(android.R.color.white)
+
+        // Change the text color of the buttons
         val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
         val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
 
         positiveButton.setTextColor(Color.parseColor("#EDABAD"))
         negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+
+        // Set dialog message text color to black
+        alert.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.BLACK)
     }
 }

@@ -58,6 +58,14 @@ class TaskDialog : DialogFragment() {
         return view
     }
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
     private fun showDatePicker() {
         val datePicker = DatePickerDialog(
             requireContext(),

@@ -1,10 +1,13 @@
 package com.example.plannerwedding
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -162,17 +165,71 @@ class To_Do : Fragment() {
         }
 
         heartIcon.setOnClickListener {
-            task.completed = !task.completed
-            updateTaskInFirestore(task)
-
-            bindTask(taskView, task)
-
-            updateProgress()
+            showCompletionConfirmationDialog(task, taskView)
         }
 
         taskView.findViewById<ImageView>(R.id.deleteTaskIcon).setOnClickListener {
-            deleteTask(task, taskView)
+            showDeleteConfirmationDialog(task, taskView)
         }
+    }
+
+    private fun showCompletionConfirmationDialog(task: Task, taskView: View) {
+        val message = if (task.completed)
+            "Are you sure you want to mark this task as incomplete?"
+        else
+            "Are you sure you want to mark this task as completed?"
+
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setTitle("Confirm Status Change")
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("Yes") { _, _ ->
+                task.completed = !task.completed
+                updateTaskInFirestore(task)
+
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+
+        val alert = alertDialogBuilder.create()
+        alert.show()
+
+        // Change the text color of the buttons
+        val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+
+        // Set dialog message text color to black
+        alert.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.BLACK)
+    }
+
+    private fun showDeleteConfirmationDialog(task: Task, taskView: View) {
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setTitle("Delete Task")
+            .setMessage("Are you sure you want to delete this task? This action cannot be undone.")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { _, _ ->
+                deleteTask(task, taskView)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+
+        val alert = alertDialogBuilder.create()
+        alert.show()
+
+        // Change the text color of the buttons
+        val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+
+        // Set dialog message text color to black
+        alert.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.BLACK)
     }
 
     private fun updateTaskInFirestore(task: Task) {
@@ -194,32 +251,11 @@ class To_Do : Fragment() {
             .collection("Tasks").document(taskId).delete()
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Task deleted successfully!", Toast.LENGTH_SHORT).show()
-                val parent = taskView.parent as? ViewGroup
-                parent?.removeView(taskView)
+                (taskView.parent as? LinearLayout)?.removeView(taskView)
+                updateProgress()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    private fun bindTask(view: View, task: Task) {
-        val title = view.findViewById<TextView>(R.id.taskTitle)
-        val deadline = view.findViewById<TextView>(R.id.taskDeadline)
-        val status = view.findViewById<TextView>(R.id.taskStatus)
-        val completeTaskIcon = view.findViewById<ImageView>(R.id.completeTaskIcon)
-
-        title.text = task.name
-        deadline.text = "Deadline: ${task.deadline}"
-        status.text = if (task.completed) {
-            completeTaskIcon.setImageResource(R.drawable.heart_filled)
-            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            "Completed"
-        } else {
-            completeTaskIcon.setImageResource(R.drawable.heart1)
-            status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-            "Pending"
-        }
-
-        updateProgress()
     }
 }

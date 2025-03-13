@@ -53,8 +53,18 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
 
         // Add listener for calendar date selection
         calendarView.setOnDateChangedListener { _, date, _ ->
-            selectedDateString = "${date.month + 1}/${date.day}/${date.year}" // Format the selected date
-            applyFilters() // Apply both date and status filters
+            val selectedDateString = "${date.month + 1}/${date.day}/${date.year}" // Format the selected date
+
+            // Check if the same date is clicked again
+            if (selectedDateString == this.selectedDateString) {
+                // If the same date is clicked, clear the date filter and show all schedules
+                this.selectedDateString = null
+                applyFilters() // Apply filters (this will show all schedules)
+            } else {
+                // If a new date is selected, apply the date filter
+                this.selectedDateString = selectedDateString
+                applyFilters() // Apply both date and status filters
+            }
         }
 
         // Add listener for filterSpinner changes
@@ -74,6 +84,14 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
                 // Handle the case when no item is selected, if necessary
             }
         })
+
+        // Reset filter when clicking outside the calendar
+        view.findViewById<View>(R.id.fragment_root_view).setOnTouchListener { _, _ ->
+            // Clear the selected date when clicking outside the calendar
+            selectedDateString = null
+            applyFilters() // Apply filters to show all schedules
+            true
+        }
 
         fetchSchedulesFromFirestore()
 

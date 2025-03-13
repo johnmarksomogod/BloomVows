@@ -150,6 +150,8 @@ class TimelineFragment : Fragment() {
         val alert = alertDialogBuilder.create()
         alert.show()
 
+        alert.window?.setBackgroundDrawableResource(android.R.color.white)
+
         val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
         val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
 

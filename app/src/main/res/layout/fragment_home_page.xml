@@ -17,7 +17,7 @@ tools:context=".HomePage">
     <RelativeLayout
         android:id="@+id/header_title"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="220dp"
         android:background="@drawable/angled_bottom_background"
         android:clipToOutline="true"
         android:outlineProvider="background">
@@ -27,16 +27,41 @@ tools:context=".HomePage">
             android:layout_height="match_parent"
             android:background="@drawable/homepic"
             android:scaleType="centerCrop"
-            android:src="@drawable/homepic" />
+            android:src="@drawable/log_in" />
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:text="Welcome"
+            android:textSize="28sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/sansita2"/>
+
+        <!-- Bride and Groom Names -->
+        <TextView
+            android:id="@+id/coupleNamesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeText"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Loading..."
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/sansita2"/>
 
         <RelativeLayout
             android:layout_width="350dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-            android:padding="20dp"
+            android:padding="5dp"
             android:background="@drawable/yellowbox"
             android:elevation="5dp">
+
 
             <!-- Total Budget Text inside the blurred box -->
             <TextView
@@ -47,7 +72,7 @@ tools:context=".HomePage">
                 android:fontFamily="@font/sansita2"
                 android:layout_marginTop="10dp"
                 android:text="4 Days until The Big Day"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="25dp" />
 
             <TextView
@@ -58,7 +83,7 @@ tools:context=".HomePage">
                 android:fontFamily="@font/sansita2"
                 android:layout_marginTop="50dp"
                 android:text="At Boracay"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="18dp" />
 
         </RelativeLayout>
@@ -70,7 +95,6 @@ tools:context=".HomePage">
         android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/header_title"
-    android:layout_marginTop="5dp"
     android:fillViewport="true">
 
     <LinearLayout
@@ -78,7 +102,7 @@ tools:context=".HomePage">
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="10dp">
 
 
     <!-- Title for Budget Overview Section -->
@@ -91,8 +115,8 @@ tools:context=".HomePage">
     android:layout_marginBottom="5dp"
     android:fontFamily="@font/sansita2"
     android:text="Budget Overview"
-    android:textColor="@color/black"
-    android:textSize="15dp" />
+    android:textColor="@color/grey"
+    android:textSize="18dp" />
 
     <!-- Blurred container under Budget Overview -->
     <RelativeLayout
@@ -133,7 +157,7 @@ tools:context=".HomePage">
             android:fontFamily="@font/madimi"
             android:textStyle="normal"
             android:text="Spent: 200.00"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="13sp" />
 
         <TextView
@@ -145,7 +169,7 @@ tools:context=".HomePage">
             android:textStyle="normal"
             android:text="Remaining: 19800.00"
             android:fontFamily="@font/madimi"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -159,7 +183,7 @@ tools:context=".HomePage">
         android:fontFamily="@font/madimi"
         android:layout_marginTop="20dp"
         android:text="Total budget: 20000.00"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:textSize="15sp" />
 
 </RelativeLayout>
@@ -175,8 +199,8 @@ tools:context=".HomePage">
     android:layout_marginTop="10dp"
 android:fontFamily="@font/sansita2"
 android:text="Task Overview"
-android:textColor="@color/black"
-android:textSize="15sp" />
+    android:textColor="@color/grey"
+android:textSize="18sp" />
 
 <!-- Blurred container under To-Do Overview -->
 <RelativeLayout
@@ -217,7 +241,7 @@ android:elevation="5dp">
         android:textStyle="normal"
         android:fontFamily="@font/madimi"
         android:text="Completed: 5"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:textSize="13sp" />
 
     <TextView
@@ -229,7 +253,7 @@ android:elevation="5dp">
         android:textStyle="normal"
         android:fontFamily="@font/madimi"
         android:text="Remaining: 10"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:textSize="13sp" />
 </LinearLayout>
 
@@ -243,7 +267,7 @@ android:elevation="5dp">
     android:layout_marginTop="20dp"
     android:fontFamily="@font/madimi"
     android:text="Total Tasks: 15"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:textSize="15sp" />
 </RelativeLayout>
 
@@ -261,7 +285,8 @@ android:layout_width="match_parent"
     android:layout_width="150dp"
     android:layout_height="100dp"
     android:layout_alignParentStart="true"
-    android:layout_marginStart="30dp"
+    android:layout_marginStart="20dp"
+    android:backgroundTint="@color/white"
 android:layout_marginTop="20dp"
 app:cardCornerRadius="8dp"
 app:cardElevation="4dp">
@@ -288,7 +313,7 @@ app:cardElevation="4dp">
         android:fontFamily="@font/madimi"
         android:gravity="center"
         android:text="Invite Guests"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
         android:textSize="13sp" />
 </LinearLayout>
 
@@ -299,10 +324,11 @@ app:cardElevation="4dp">
 android:id="@+id/WeddingTheme"
 android:layout_width="150dp"
 android:layout_height="100dp"
+    android:backgroundTint="@color/white"
 android:layout_alignParentEnd="true"
 android:layout_marginStart="10dp"
 android:layout_marginTop="20dp"
-android:layout_marginEnd="30dp"
+android:layout_marginEnd="20dp"
     android:layout_toEndOf="@id/inviteguest"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
@@ -329,7 +355,7 @@ android:padding="10dp">
     android:fontFamily="@font/madimi"
     android:gravity="center"
     android:text="Wedding Theme"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:textSize="13sp" />
 </LinearLayout>
 
@@ -340,10 +366,11 @@ android:padding="10dp">
 android:id="@+id/wedddingtimeline"
 android:layout_width="310dp"
 android:layout_height="100dp"
+    android:backgroundTint="@color/white"
 android:layout_alignParentEnd="true"
 android:layout_alignParentStart="true"
-android:layout_marginStart="30dp"
-android:layout_marginEnd="30dp"
+android:layout_marginStart="20dp"
+android:layout_marginEnd="20dp"
     android:layout_below="@id/inviteguest"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="10dp"
@@ -372,7 +399,7 @@ android:padding="10dp">
     android:fontFamily="@font/madimi"
     android:gravity="center"
     android:text="Wedding Timeline"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:textSize="13sp" />
 </LinearLayout>
 
@@ -383,6 +410,7 @@ android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/yellowbox"
     >
 
@@ -391,7 +419,8 @@ android:layout_width="match_parent"
         android:layout_width="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         app:cardCornerRadius="8dp"
@@ -412,7 +441,7 @@ android:layout_width="match_parent"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/sansita1"
                 android:text="Schedule Overview"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="20sp" />
 
             <!-- Filter Spinner for choosing Pending, Completed, etc. -->
@@ -421,18 +450,19 @@ android:layout_width="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/grey"
                 android:entries="@array/filter_options"
                 android:spinnerMode="dropdown"
                 android:drawableEnd="@drawable/baseline_arrow_drop_down_24" />
 
             <!-- RecyclerView for displaying the list of schedules -->
             <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSchedules"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="5dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:id="@+id/recyclerViewSchedules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:scrollbars="vertical" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

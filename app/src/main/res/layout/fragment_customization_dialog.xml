@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/carattere"
             android:text="Customize Your Theme"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="30sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sansita2"
                 android:text="Theme Name"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp" />
 
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sansita2"
                 android:text="Theme Description"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp" />
 
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sansita2"
                 android:text="Theme Image"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp" />
 
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sansita2"
                 android:text="Color Palette"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp" />
 

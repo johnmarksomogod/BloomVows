@@ -1,5 +1,6 @@
 package com.example.plannerwedding
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -100,6 +101,8 @@ class BudgetPageFragment : Fragment() {
 
                 for (document in snapshot.documents) {
                     val budgetItem = document.toObject(BudgetItem::class.java)
+                    // Make sure we set the ID field from the document ID
+                    budgetItem?.id = document.id
                     budgetItem?.let {
                         if (it.paid) spentAmount += it.amount
                         addBudgetItemToCategory(it)
@@ -163,6 +166,7 @@ class BudgetPageFragment : Fragment() {
         val cost = budgetView.findViewById<TextView>(R.id.itemCost)
         val status = budgetView.findViewById<TextView>(R.id.paidStatus)
         val paidIcon = budgetView.findViewById<ImageView>(R.id.paidbudget)
+        val deleteIcon = budgetView.findViewById<ImageView>(R.id.deletebudget)
 
         title.text = budgetItem.name
         cost.text = "Cost: ₱${budgetItem.amount}"
@@ -184,31 +188,140 @@ class BudgetPageFragment : Fragment() {
             val bundle = Bundle()
             bundle.putSerializable("budgetItem", budgetItem)
             dialog.arguments = bundle
+            dialog.setDialogDismissListener(object : BudgetDialogFragment.DialogDismissListener {
+                override fun onDialogDismiss() {
+                    // Reload data after the dialog is dismissed to update UI
+                    loadBudgetDataFromFirestore()
+                }
+            })
             dialog.show(parentFragmentManager, "BudgetDialog")
         }
 
-        // Handle paid/unpaid status toggle
+        // Handle paid/unpaid status toggle with confirmation dialog
         paidIcon.setOnClickListener {
-            budgetItem.paid = !budgetItem.paid
-            updateBudgetItemInFirestore(budgetItem)
+            val message = if (budgetItem.paid)
+                "Are you sure you want to mark this item as unpaid?"
+            else
+                "Are you sure you want to mark this item as paid?"
 
-            bindBudget(budgetView, budgetItem)
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setTitle("Confirm Status Change")
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Yes") { _, _ ->
+                    // Update the paid status in the budgetItem object
+                    budgetItem.paid = !budgetItem.paid
 
-            // Update the progress after changing the status
-            updateProgress()
+                    // Update Firestore
+                    updateBudgetItemInFirestore(budgetItem)
+
+                    // Update UI
+                    if (budgetItem.paid) {
+                        spentAmount += budgetItem.amount
+                    } else {
+                        spentAmount -= budgetItem.amount
+                    }
+
+                    bindBudget(budgetView, budgetItem)
+                    updateProgress()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.cancel()
+                }
+
+            val alert = alertDialogBuilder.create()
+            alert.show()
+
+            // Change the text color of the buttons
+            val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+            val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+            positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+            negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+
+            // Set dialog message text color to black
+            alert.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.BLACK)
         }
+
+        // Add delete functionality with confirmation dialog
+        deleteIcon.setOnClickListener {
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setTitle("Delete Budget Item")
+                .setMessage("Are you sure you want to delete this budget item? This action cannot be undone.")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { _, _ ->
+                    deleteBudgetItem(budgetItem, budgetView, categoryContainer)
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.cancel()
+                }
+
+            val alert = alertDialogBuilder.create()
+            alert.show()
+
+            // Change the text color of the buttons
+            val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+            val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+            positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+            negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+
+            // Set dialog message text color to black
+            alert.findViewById<TextView>(android.R.id.message)?.setTextColor(Color.BLACK)
+        }
+    }
+
+    // Improved delete method to ensure the item is removed properly
+    private fun deleteBudgetItem(budgetItem: BudgetItem, view: View, container: LinearLayout) {
+        val userId = auth.currentUser?.uid ?: return
+
+        // Make sure we have a valid ID for the document
+        if (budgetItem.id.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Error: Budget item has no ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // First, remove the amount from the spent amount if it was paid
+        if (budgetItem.paid) {
+            spentAmount -= budgetItem.amount
+        }
+
+        // Delete from Firestore
+        db.collection("Users").document(userId).collection("Budget")
+            .document(budgetItem.id!!)
+            .delete()
+            .addOnSuccessListener {
+                // Remove view from container
+                container.removeView(view)
+
+                // Update progress
+                updateProgress()
+
+                Toast.makeText(requireContext(), "Budget item deleted successfully!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to delete budget item: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun updateBudgetItemInFirestore(budgetItem: BudgetItem) {
         val userId = auth.currentUser?.uid ?: return
-        val taskRef = db.collection("Users").document(userId).collection("Budget")
-            .document(budgetItem.id ?: return)
 
-        taskRef.set(budgetItem).addOnSuccessListener {
-            Toast.makeText(requireContext(), "Budget item updated successfully!", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener {
-            Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()
+        if (budgetItem.id.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "Error: Budget item has no ID", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        val taskRef = db.collection("Users").document(userId).collection("Budget")
+            .document(budgetItem.id!!)
+
+        taskRef.set(budgetItem)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Budget item updated successfully!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun bindBudget(view: View, budgetItem: BudgetItem) {
@@ -228,8 +341,5 @@ class BudgetPageFragment : Fragment() {
             status.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             "Unpaid"
         }
-
-        // Update the progress bar after binding the budget item
-        updateProgress()
     }
 }

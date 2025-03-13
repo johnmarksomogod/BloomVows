@@ -27,5 +27,33 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!-- styles.xml additions -->
+    <style name="CalendarWidgetHeader" parent="TextAppearance.MaterialCalendarWidget.Header">
+        <item name="android:textColor">#EDABAD</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CalendarWidgetWeekDay" parent="TextAppearance.MaterialCalendarWidget.WeekDay">
+        <item name="android:textColor">#EDABAD</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="CalendarWidgetDay" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:selectableItemBackground">@android:color/white</item> <!-- Remove ripple effect -->
+        <item name="android:selectableItemBackgroundBorderless">@android:color/white</item> <!-- Remove borderless ripple effect -->
+    </style>
+
+    <!-- colors.xml additions -->
+    <color name="rose_gold">#B76E79</color>
+    <color name="light_pink">#FFD6E0</color>
+    <color name="dark_pink">#9E4244</color>
+    <color name="soft_pink">#FFE4E8</color>
+    <color name="dark_gray">#444444</color>
 
 </resources>

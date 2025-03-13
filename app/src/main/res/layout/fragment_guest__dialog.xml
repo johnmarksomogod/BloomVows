@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:textSize="14sp"
-            android:textColor="#000"
+            android:textColor="@color/grey"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true"
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:text="Done"
             android:textSize="14sp"
-            android:textColor="#000"
             android:textStyle="bold"
+            android:textColor="@color/grey"
             android:clickable="true"
             android:focusable="true"
             android:layout_alignParentEnd="true"
@@ -47,7 +47,7 @@
             android:text="Guest Details"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#000"
+            android:textColor="@color/grey"
             android:layout_below="@id/guestcancelButton"
             android:layout_marginTop="20dp"
             android:layout_alignParentStart="true"/>
@@ -61,7 +61,8 @@
             android:hint="Name*"
             android:padding="12dp"
             android:textSize="16sp"
-            android:textColorHint="@color/black"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
             android:layout_below="@id/GuestTitle"
             android:layout_marginTop="12dp"/>
 
@@ -73,7 +74,8 @@
             android:hint="Email Address*"
             android:padding="12dp"
             android:textSize="16sp"
-            android:textColorHint="@color/black"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
             android:layout_below="@id/GuestName"
             android:layout_marginTop="12dp"/>
 
@@ -84,6 +86,7 @@
             android:layout_height="50dp"
             android:background="@drawable/input_border"
             android:padding="12dp"
+            android:textColor="@color/grey"
             android:textSize="16sp"
             android:layout_below="@id/GuestEmail"
             android:layout_marginTop="15dp"/>
@@ -109,7 +112,8 @@
                 android:layout_weight="1"
                 android:hint="Need Accomodation"
                 android:padding="12dp"
-                android:textColorHint="@color/black"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/grey"
                 android:textSize="16sp" />
 
             <!-- Paid Checkbox -->
@@ -117,7 +121,7 @@
                 android:id="@+id/AccomodationCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>

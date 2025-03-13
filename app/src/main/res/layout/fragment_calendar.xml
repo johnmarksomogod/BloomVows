@@ -2,128 +2,132 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF2F3"
+    android:background="#FFF5F7"
     tools:context=".CalendarFragment">
 
-    <!-- Main RelativeLayout for header and other UI elements -->
+    <!-- Main Container -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <!-- Header Section -->
+        <!-- Header Section with Wedding Theme -->
         <RelativeLayout
             android:id="@+id/header_title"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:clipToOutline="true"
-            android:outlineProvider="background">
+            android:layout_height="60dp"
+            >
 
-            <!-- Background Image -->
+            <!-- Background with Gradient -->
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/budget"
                 android:scaleType="centerCrop"
-                android:src="@drawable/log_in" />
+                android:src="@drawable/flower"
+                android:alpha="0.7" />
 
-            <!-- Calendar Title -->
-            <TextView
-                android:id="@+id/calendarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/carattere"
-                android:text="Calendar "
-                android:layout_marginStart="10dp"
-                android:textColor="@color/black"
-                android:textSize="40sp"
-                android:textStyle="bold" />
+            <!-- Title Text -->
         </RelativeLayout>
 
-    </RelativeLayout>
-    <!-- End of RelativeLayout -->
-
-    <!-- Material Calendar View (Supports Dots) -->
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/materialCalendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginTop="73dp"
-        android:textColor="@color/black"
-        app:mcv_showOtherDates="all"
-        app:mcv_selectionColor="@color/pink"
-        app:mcv_tileSize="45dp"/>
-
-    <!-- Floating Add Schedule Button -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="5dp"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/addScheduleButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="80dp"
-            android:contentDescription="Add Event"
-            android:src="@drawable/plus1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- ScrollView containing everything below the header -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="435dp"
-        android:layout_below="@id/header_title">
-
-        <LinearLayout
-            android:orientation="vertical"
+        <!-- Calendar Card View -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/calendar_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp">
+            android:layout_below="@id/header_title"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="4dp">
 
-            <!-- Schedule Overview with Add Button -->
-            <LinearLayout
+            <!-- Material Calendar with Custom Styles -->
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/materialCalendarView"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="320dp"
+                android:background="@color/white"
+                app:mcv_selectionColor="#EDABAD"
+                app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
+                app:mcv_weekDayTextAppearance="@style/CalendarWidgetWeekDay"
+                app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
+                app:mcv_tileSize="40dp" />
+        </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sansita1"
-                    android:text="Schedule Overview"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-            </LinearLayout>
+        <!-- Add Button with Wedding Theme -->
+        <ImageView
+            android:id="@+id/addScheduleButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignEnd="@id/calendar_card"
+            android:layout_alignBottom="@id/calendar_card"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="-20dp"
+            android:contentDescription="Add Event"
+            android:padding="8dp"
+            android:src="@drawable/plus1"
+            android:elevation="4dp" />
 
-            <!-- Spinner for filtering schedules -->
+        <!-- Schedule Overview Section -->
+        <LinearLayout
+            android:id="@+id/schedule_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calendar_card"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/grey"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/sansita1"
+                android:text="Scedules Overview"
+                android:textSize="20sp" />
+
+            <!-- Filter Spinner with Custom Style -->
             <Spinner
                 android:id="@+id/filterSpinner"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentStart="true"
+                android:layout_height="40dp"
                 android:entries="@array/filter_options"
-                android:spinnerMode="dropdown"
-                android:drawableEnd="@drawable/baseline_arrow_drop_down_24" />
+                android:paddingStart="8dp"
+                android:textColor="@color/grey"
+                android:paddingEnd="8dp"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
 
-            <!-- RecyclerView for Upcoming Events -->
+        <!-- Task List Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/schedule_header"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="4dp">
+
+            <!-- RecyclerView for Schedule Items -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewSchedules"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#FFFCFD"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </LinearLayout>  <!-- End of LinearLayout -->
-    </ScrollView>  <!-- End of ScrollView -->
-
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </FrameLayout>

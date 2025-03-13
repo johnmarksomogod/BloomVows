@@ -31,7 +31,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/carattere"
             android:text=" Wedding Planner "
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="40sp" />
 
         <!-- Description Text -->
@@ -44,7 +44,7 @@
             android:paddingBottom="16dp"
             android:text="Where the craft of planning meets the joy of celebration, creating unforgettable wedding moments with every detail."
             android:textAlignment="center"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="16sp" />
 
         <!-- Start Planning Button -->

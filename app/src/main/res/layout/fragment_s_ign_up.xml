@@ -30,7 +30,7 @@
             android:paddingBottom="16dp"
             android:layout_marginStart="10dp"
             android:text="Sign Up"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="35sp" />
 
 
@@ -55,7 +55,7 @@
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,7 @@
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,7 +107,7 @@
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +133,7 @@
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,7 +159,7 @@
                 android:layout_height="60dp"
                 android:backgroundTint="@color/white"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -186,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Already have an account? "
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
 
             <TextView

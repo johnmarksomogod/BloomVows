@@ -60,6 +60,7 @@ class ScheduleDialogFragment : DialogFragment() {
         return view
     }
 
+
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
@@ -95,6 +96,14 @@ class ScheduleDialogFragment : DialogFragment() {
                     Toast.makeText(requireContext(), "Failed to add schedule.", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     private fun showSuccessDialog(scheduleItem: ScheduleItem) {

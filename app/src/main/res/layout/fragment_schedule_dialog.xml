@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:textSize="14sp"
-            android:textColor="#000"
+            android:textColor="@color/grey"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Done"
             android:textSize="14sp"
-            android:textColor="#000"
+            android:textColor="@color/grey"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true"
@@ -45,7 +45,7 @@
             android:text="Schedule Details"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#000"
+            android:textColor="@color/grey"
             android:layout_below="@id/cancelScheduleButton"
             android:layout_marginTop="20dp"
             android:layout_alignParentStart="true"/>
@@ -59,7 +59,8 @@
             android:hint="Schedule Name*"
             android:padding="12dp"
             android:textSize="16sp"
-            android:textColorHint="@color/black"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
             android:layout_below="@id/scheduleDetailsTitle"
             android:layout_marginTop="12dp"/>
 
@@ -73,7 +74,8 @@
             android:inputType="date"
             android:padding="12dp"
             android:textSize="16sp"
-            android:textColorHint="@color/black"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
             android:layout_below="@id/scheduleName"
             android:layout_marginTop="12dp"/>
     </RelativeLayout>

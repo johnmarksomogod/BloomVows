@@ -67,7 +67,7 @@
                         android:fontFamily="@font/madimi"
                         android:textStyle="normal"
                         android:text="Spent: 200.00"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey"
                         android:textSize="13sp" />
 
                     <TextView
@@ -79,7 +79,7 @@
                         android:textStyle="normal"
                         android:text="Remaining: 19800.00"
                         android:fontFamily="@font/madimi"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey"
                         android:textSize="13sp" />
                 </LinearLayout>
 
@@ -93,7 +93,7 @@
                     android:fontFamily="@font/madimi"
                     android:layout_marginTop="20dp"
                     android:text="Total budget: 20000.00"
-                    android:textColor="@color/black"
+                    android:textColor="@color/grey"
                     android:textSize="15sp" />
 
             </RelativeLayout>

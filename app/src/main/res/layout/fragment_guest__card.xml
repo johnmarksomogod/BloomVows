@@ -15,22 +15,29 @@
     <LinearLayout
         android:id="@+id/guestCardContainer"
         android:layout_width="match_parent"
-        android:paddingStart="16dp"
-    android:paddingTop="12dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="12dp"
         android:layout_height="wrap_content"
         android:background="@drawable/white_card_rounded"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
+        <!-- Selection Checkbox (initially hidden) -->
+        <CheckBox
+            android:id="@+id/selectGuestCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#EDABAD"
+            android:visibility="gone"/>
+
         <!-- Left side: Guest details -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical"
@@ -43,7 +50,7 @@
                 android:text="Guest Name"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
 
             <TextView
                 android:id="@+id/guestEmail"
@@ -51,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="Email: guest@example.com"
                 android:textSize="14sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
 
             <TextView
                 android:id="@+id/guestAccommodation"
@@ -59,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:text="Accommodation: Hotel XYZ"
                 android:textSize="14sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
 
         </LinearLayout>
 
@@ -80,7 +87,6 @@
                 android:visibility="gone"
                 android:contentDescription="Bedroom Icon" />
 
-
             <!-- Delete Icon -->
             <ImageView
                 android:id="@+id/deleteGuest"
@@ -88,7 +94,5 @@
                 android:layout_height="20dp"
                 android:src="@drawable/delete1" />
         </LinearLayout>
-
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

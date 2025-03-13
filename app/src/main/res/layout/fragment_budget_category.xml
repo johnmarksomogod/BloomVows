@@ -28,7 +28,8 @@
                 android:fontFamily="@font/poet"
                 android:text="Priority"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -62,7 +63,7 @@
                 android:fontFamily="@font/poet"
                 android:text="Wedding Venue"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +97,7 @@
                 android:text="Entertainment"
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +131,7 @@
                 android:fontFamily="@font/poet"
                 android:text="Food and Beverages"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -164,7 +165,7 @@
                 android:text="Ceremony Essentials"
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -197,7 +198,7 @@
                 android:text="Favors and Gifts"
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -231,7 +232,7 @@
                 android:text="Decorations"
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -265,7 +266,7 @@
                 android:text="Photography and Videography"
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -298,7 +299,7 @@
                 android:text="Hair and Makeup "
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -333,7 +334,7 @@
                 android:text="Bride's Outfit"
                 android:textSize="18sp"
                 android:fontFamily="@font/poet"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -366,7 +367,7 @@
                 android:text="Groom's Outfit"
                 android:textSize="18sp"
                 android:fontFamily="@font/poet"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout
@@ -400,7 +401,7 @@
                 android:text="Transportation Tasks"
                 android:fontFamily="@font/poet"
                 android:textSize="18sp"
-                android:textColor="#000"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/budget_transportationContainer"
@@ -433,7 +434,7 @@
                 android:text="Other Tasks"
                 android:textSize="18sp"
                 android:fontFamily="@font/poet"
-                android:textColor="@color/black"/>
+                android:textColor="@color/grey" />
         </LinearLayout>
 
         <LinearLayout

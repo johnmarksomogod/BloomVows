@@ -73,11 +73,14 @@
     <color name="fairy_periwinkle">#9FA8DA</color>
     <color name="fairy_gold">#FFE082</color>
 
-
+    <color name="wedding_primary_color">#FF6B81</color>
+    <color name="wedding_accent_color">#FF6B81</color>
+    <color name="wedding_text_secondary">#A9A9A9</color>
 
 
     <!-- For pending status -->
-
+    <color name="grey">#444444</color>
+    <color name="bg">#FAF2F3</color>
     <!-- For pending status -->
 
     <color name="green">#4CAF50</color>

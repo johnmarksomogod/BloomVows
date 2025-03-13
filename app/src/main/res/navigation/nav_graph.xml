@@ -130,6 +130,10 @@
         <action
             android:id="@+id/action_homePage_to_weddingThemePage"
             app:destination="@id/weddingThemeFragment" />
+
+        <action
+            android:id="@+id/action_homePage_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
 
     <!-- Wedding Theme Fragment -->

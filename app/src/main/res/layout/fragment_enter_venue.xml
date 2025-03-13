@@ -37,7 +37,7 @@
                 android:paddingBottom="8dp"
                 android:layout_marginTop="25dp"
                 android:text="Add the name of the venue and\n enjoy the rest of the planning process"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey"
                 android:textSize="30dp"
                 android:textAlignment="center" />
 

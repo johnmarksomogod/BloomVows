@@ -34,7 +34,7 @@
                 android:gravity="center"
                 android:layout_marginTop="25dp"
                 android:text="Enter your maximum budget \nto stay on track"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey"
                 android:textSize="35sp"
                 android:textAlignment="center" />
 

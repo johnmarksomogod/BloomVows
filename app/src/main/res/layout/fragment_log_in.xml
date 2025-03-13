@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:paddingBottom="16dp"
             android:text="Log In"
-            android:textColor="@android:color/black"
+            android:textColor="@color/grey"
             android:textSize="35sp" />
 
         <!-- Username Input Field -->
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/grey"
                 android:textColorHint="#EDABAD"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:padding="12dp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey"
                 android:textColorHint="#EDABAD"
                 android:textSize="16sp"
                 android:inputType="textPassword"
@@ -107,7 +107,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="4dp"
             android:text="Forgot Password?"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="16sp" />
 
         <!-- Sign In Button -->
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account? "
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey"
                 android:textSize="16sp" />
 
             <TextView
