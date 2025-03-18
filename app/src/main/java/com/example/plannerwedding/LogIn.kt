@@ -1,18 +1,19 @@
 package com.example.plannerwedding
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LogIn : Fragment() {
@@ -30,52 +31,44 @@ class LogIn : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Initialize Firebase Auth and Firestore
+    ): View {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_log_in, container, false)
 
-        // Set up UI elements
         emailEditText = view.findViewById(R.id.username)
         passwordEditText = view.findViewById(R.id.password)
         loginButton = view.findViewById(R.id.loginButton)
         signUpText = view.findViewById(R.id.textSignUp)
         forgotPasswordText = view.findViewById(R.id.forgotPassword)
 
-        // Login Button Click Listener
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
+                (activity as? MainActivity)?.showLoader()
                 loginUser(email, password)
             } else {
-                Toast.makeText(context, "Please enter both email and password", Toast.LENGTH_SHORT).show()
+                showErrorDialog("Please enter both email and password.")
             }
         }
 
-        // Navigate to SignUp Fragment
         signUpText.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signUpFragment)
         }
 
-        // Navigate to Forgot Password Fragment
         forgotPasswordText.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_forgotPasswordFragment)
         }
 
-        // Set OnTouchListener on the password field to detect click on the eye icon
-        passwordEditText.setOnTouchListener { v, event ->
+        passwordEditText.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 val drawableRight = passwordEditText.compoundDrawablesRelative[2]
-                if (drawableRight != null) {
-                    if (event.rawX >= (passwordEditText.right - drawableRight.bounds.width())) {
-                        togglePasswordVisibility()
-                        return@setOnTouchListener true
-                    }
+                if (drawableRight != null && event.rawX >= (passwordEditText.right - drawableRight.bounds.width())) {
+                    togglePasswordVisibility()
+                    return@setOnTouchListener true
                 }
             }
             false
@@ -87,33 +80,48 @@ class LogIn : Fragment() {
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
+                (activity as? MainActivity)?.hideLoader()
+
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     user?.let {
                         val userId = it.uid
+                        (activity as? MainActivity)?.showLoader()
 
-                        // Fetch user data from Firestore
                         db.collection("Users").document(userId).get()
                             .addOnSuccessListener { document ->
+                                (activity as? MainActivity)?.hideLoader()
                                 if (document.exists()) {
                                     val weddingDate = document.getString("weddingDate")
-                                    // Change to getDouble to retrieve the budget as a number
-                                    val budget = document.getDouble("budget")  // Corrected this line
+                                    val budget = document.getDouble("budget")
                                     val venue = document.getString("venue")
 
                                     navigateToNextScreen(weddingDate, budget, venue)
                                 } else {
-                                    Toast.makeText(context, "User data not found", Toast.LENGTH_SHORT).show()
+                                    showErrorDialog("User data not found.")
                                 }
                             }
                             .addOnFailureListener {
-                                Toast.makeText(context, "Failed to retrieve user data", Toast.LENGTH_SHORT).show()
+                                (activity as? MainActivity)?.hideLoader()
+                                showErrorDialog("Something went wrong. Please try again.")
                             }
                     }
                 } else {
-                    Toast.makeText(context, "Login Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    handleLoginError(task.exception)
                 }
             }
+    }
+
+    private fun handleLoginError(exception: Exception?) {
+        (activity as? MainActivity)?.hideLoader()
+
+        val errorMessage = when (exception) {
+            is FirebaseAuthInvalidUserException -> "No account found with this email. Please sign up."
+            is FirebaseAuthInvalidCredentialsException -> "Incorrect password. Please try again."
+            else -> "Login failed. Please check your email and password."
+        }
+
+        showErrorDialog(errorMessage)
     }
 
     private fun navigateToNextScreen(weddingDate: String?, budget: Double?, venue: String?) {
@@ -135,5 +143,20 @@ class LogIn : Fragment() {
         }
         passwordEditText.setSelection(passwordEditText.text.length)
         isPasswordVisible = !isPasswordVisible
+    }
+
+    private fun showErrorDialog(message: String) {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage(message)
+            .setPositiveButton("OK") { _, _ -> }
+            .create()
+
+        dialog.setOnShowListener {
+            val positiveButton: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(Color.parseColor("#EDABAD")) // ✅ Button color applied
+        }
+
+        dialog.show()
     }
 }

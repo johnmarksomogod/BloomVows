@@ -44,6 +44,9 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
     private var spentAmount: Double = 0.0
     private var remainingBudget: Double = 0.0
 
+    // Loader counter to track simultaneous operations
+    private var loadingOperations = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -72,6 +75,9 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
 
         // Set up filter spinner listener
         setupFilterSpinner()
+
+        // Show loader before starting data fetching
+        showLoader()
 
         // Fetch and display wedding data
         fetchWeddingData()
@@ -116,6 +122,7 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
     }
 
     private fun fetchWeddingData() {
+        incrementLoadingOperations()
         val user = auth.currentUser
         user?.let {
             val userId = it.uid
@@ -150,11 +157,13 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                             daysLeftTextView.text = "No date set"
                         }
                     }
+                    decrementLoadingOperations()
                 }
                 .addOnFailureListener {
                     daysLeftTextView.text = "Error loading data"
                     venueTextView.text = "Error loading venue"
                     coupleNamesTextView.text = "Error loading names"
+                    decrementLoadingOperations()
                 }
         }
     }
@@ -173,7 +182,9 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
         }
     }
 
+
     private fun loadTasksFromFirestore() {
+        incrementLoadingOperations()
         val userId = auth.currentUser?.uid ?: return
 
         db.collection("Users").document(userId)
@@ -197,13 +208,16 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                     }
                 }
                 updateProgress()
+                decrementLoadingOperations()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load tasks", Toast.LENGTH_SHORT).show()
+                decrementLoadingOperations()
             }
     }
 
     private fun loadBudgetDataFromFirestore() {
+        incrementLoadingOperations()
         val userId = auth.currentUser?.uid ?: return
 
         db.collection("Users").document(userId).get()
@@ -213,6 +227,7 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                     totalBudget = document.getDouble("budget") ?: 0.0
                     spentAmount = 0.0
 
+                    incrementLoadingOperations() // For the nested query
                     db.collection("Users").document(userId).collection("Budget")
                         .get()
                         .addOnSuccessListener { snapshot ->
@@ -223,18 +238,23 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                                 }
                             }
                             updateProgress() // Update the progress after fetching budget data
+                            decrementLoadingOperations() // For the nested query
                         }
                         .addOnFailureListener {
                             Toast.makeText(requireContext(), "Failed to load budget items", Toast.LENGTH_SHORT).show()
+                            decrementLoadingOperations() // For the nested query
                         }
                 }
+                decrementLoadingOperations() // For the outer query
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load total budget", Toast.LENGTH_SHORT).show()
+                decrementLoadingOperations() // For the outer query
             }
     }
 
     private fun fetchSchedulesFromFirestore() {
+        incrementLoadingOperations()
         val user = auth.currentUser ?: return
         val userId = user.uid
 
@@ -252,9 +272,11 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
 
                 // Apply filters to show schedules
                 applyFilters()
+                decrementLoadingOperations()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load schedules", Toast.LENGTH_SHORT).show()
+                decrementLoadingOperations()
             }
     }
 
@@ -356,6 +378,7 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
 
         filteredScheduleList.removeAt(position)
 
+        showLoader()
         val user = auth.currentUser
         user?.let {
             db.collection("Users").document(user.uid)
@@ -365,6 +388,10 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                     scheduleAdapter.notifyItemRemoved(position)
                     // Refresh after deletion
                     fetchSchedulesFromFirestore()
+                    hideLoader()
+                }
+                .addOnFailureListener {
+                    hideLoader()
                 }
         }
     }
@@ -375,6 +402,7 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
     }
 
     private fun updateScheduleInFirestore(scheduleItem: ScheduleItem, position: Int) {
+        showLoader()
         val user = auth.currentUser
         user?.let {
             db.collection("Users").document(it.uid)
@@ -387,10 +415,35 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                     if (currentFilter != "All" && currentFilter != scheduleItem.status) {
                         applyFilters()
                     }
+                    hideLoader()
                 }
                 .addOnFailureListener {
                     Toast.makeText(requireContext(), "Failed to update schedule.", Toast.LENGTH_SHORT).show()
+                    hideLoader()
                 }
+        }
+    }
+
+    // Loader handling methods
+    private fun showLoader() {
+        (activity as? MainActivity)?.showLoader()
+    }
+
+    private fun hideLoader() {
+        (activity as? MainActivity)?.hideLoader()
+    }
+
+    // Keep track of concurrent loading operations
+    private fun incrementLoadingOperations() {
+        loadingOperations++
+        showLoader()
+    }
+
+    private fun decrementLoadingOperations() {
+        loadingOperations--
+        if (loadingOperations <= 0) {
+            loadingOperations = 0
+            hideLoader()
         }
     }
 }

@@ -71,4 +71,5 @@ dependencies {
     // **Optional: RecyclerView for smoother scrolling**
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage.ktx)
 }

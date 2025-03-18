@@ -81,6 +81,8 @@ class GuestPage : Fragment() {
         // Show GuestDialogFragment when the "add guest" button is clicked
         addGuestButton.setOnClickListener {
             val guestDialog = GuestDialogFragment { guest ->
+                // Show loader before adding guest
+                (activity as? MainActivity)?.showLoader()
                 addGuestToList(guest)
                 saveGuestToFirestore(guest) // Save guest to Firestore
             }
@@ -107,6 +109,8 @@ class GuestPage : Fragment() {
             }
         }
 
+        // Show loader before loading guests
+        (activity as? MainActivity)?.showLoader()
         loadGuestsFromFirestore()
 
         return view
@@ -143,6 +147,8 @@ class GuestPage : Fragment() {
             .setMessage("Are you sure you want to send invitations to ${selectedGuests.size} guests?")
             .setCancelable(false)
             .setPositiveButton("Send") { _, _ ->
+                // Show loader before sending invitations
+                (activity as? MainActivity)?.showLoader()
                 // Here you would implement sending invitations to the selected guests
                 sendInvitations(selectedGuests)
             }
@@ -185,10 +191,14 @@ class GuestPage : Fragment() {
             // Update Firestore
             userRef.update("guests", updatedGuests)
                 .addOnSuccessListener {
+                    // Hide loader after success
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(context, "Invitations sent successfully!", Toast.LENGTH_SHORT).show()
                     toggleSelectionMode(false) // Exit selection mode
                 }
                 .addOnFailureListener {
+                    // Hide loader after failure
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(context, "Failed to send invitations", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -222,6 +232,13 @@ class GuestPage : Fragment() {
             }
 
             guestAdapter.notifyDataSetChanged()
+
+            // Hide loader after data is loaded
+            (activity as? MainActivity)?.hideLoader()
+        }.addOnFailureListener {
+            // Hide loader if there's an error
+            (activity as? MainActivity)?.hideLoader()
+            Toast.makeText(context, "Failed to load guests", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -247,15 +264,17 @@ class GuestPage : Fragment() {
             // Update Firestore with the new guest list
             userRef.update("guests", updatedGuests)
                 .addOnSuccessListener {
+                    // Hide loader after success
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(context, "Guest added successfully", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
+                    // Hide loader after failure
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(context, "Failed to add guest", Toast.LENGTH_SHORT).show()
                 }
         }
     }
-
-
 
     // Show the delete confirmation dialog
     private fun showDeleteConfirmationDialog(guest: Guest, position: Int) {
@@ -263,6 +282,8 @@ class GuestPage : Fragment() {
         alertDialogBuilder.setMessage("Are you sure you want to delete this guest?")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
+                // Show loader before deleting
+                (activity as? MainActivity)?.showLoader()
                 deleteGuest(guest, position) // Proceed with deleting the guest
             }
             .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
@@ -294,11 +315,15 @@ class GuestPage : Fragment() {
                 // Update Firestore with the new list
                 userRef.update("guests", guests)
                     .addOnSuccessListener {
+                        // Hide loader after success
+                        (activity as? MainActivity)?.hideLoader()
                         Toast.makeText(context, "Guest deleted successfully", Toast.LENGTH_SHORT).show()
                         guestList.removeAt(position) // Remove from UI
                         guestAdapter.notifyItemRemoved(position) // Update RecyclerView
                     }
                     .addOnFailureListener {
+                        // Hide loader after failure
+                        (activity as? MainActivity)?.hideLoader()
                         Toast.makeText(context, "Failed to delete guest", Toast.LENGTH_SHORT).show()
                     }
             }

@@ -58,7 +58,7 @@ tools:context=".HomePage">
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"
-            android:padding="5dp"
+            android:padding="10dp"
             android:background="@drawable/yellowbox"
             android:elevation="5dp">
 
@@ -386,8 +386,8 @@ android:padding="10dp">
 
 <!-- Timeline Image -->
 <ImageView
-    android:layout_width="250dp"
-    android:layout_height="60dp"
+    android:layout_width="300dp"
+    android:layout_height="50dp"
     android:contentDescription="Wedding Timeline"
     android:src="@drawable/timeline" />
 
@@ -410,7 +410,6 @@ android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
     android:background="@drawable/yellowbox"
     >
 
@@ -419,6 +418,7 @@ android:layout_width="match_parent"
         android:layout_width="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:layout_centerHorizontal="true"

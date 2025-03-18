@@ -41,6 +41,9 @@ class BudgetPageFragment : Fragment() {
         remainingText = view.findViewById(R.id.remainingText)
         addBudgetButton = view.findViewById(R.id.addBudgetButton)
 
+        // Show loader while loading initial data
+        (activity as? MainActivity)?.showLoader()
+
         // Load the total budget from Firestore
         loadTotalBudgetFromFirestore()
 
@@ -48,6 +51,8 @@ class BudgetPageFragment : Fragment() {
             val dialog = BudgetDialogFragment()
             dialog.setDialogDismissListener(object : BudgetDialogFragment.DialogDismissListener {
                 override fun onDialogDismiss() {
+                    // Show loader while reloading data
+                    (activity as? MainActivity)?.showLoader()
                     // Reload data after the dialog is dismissed
                     loadBudgetDataFromFirestore()
                 }
@@ -60,6 +65,8 @@ class BudgetPageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // Show loader when returning to the fragment
+        (activity as? MainActivity)?.showLoader()
         loadTotalBudgetFromFirestore()
     }
 
@@ -77,11 +84,15 @@ class BudgetPageFragment : Fragment() {
                 } else {
                     totalBudget = 0.0
                     updateProgress()
+                    // Hide loader when done
+                    (activity as? MainActivity)?.hideLoader()
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load total budget", Toast.LENGTH_SHORT).show()
                 loadBudgetDataFromFirestore()
+                // Hide loader when done
+                (activity as? MainActivity)?.hideLoader()
             }
     }
 
@@ -109,9 +120,13 @@ class BudgetPageFragment : Fragment() {
                     }
                 }
                 updateProgress()
+                // Hide loader when done loading all data
+                (activity as? MainActivity)?.hideLoader()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load budget items", Toast.LENGTH_SHORT).show()
+                // Hide loader in case of failure
+                (activity as? MainActivity)?.hideLoader()
             }
     }
 
@@ -190,6 +205,8 @@ class BudgetPageFragment : Fragment() {
             dialog.arguments = bundle
             dialog.setDialogDismissListener(object : BudgetDialogFragment.DialogDismissListener {
                 override fun onDialogDismiss() {
+                    // Show loader while reloading data
+                    (activity as? MainActivity)?.showLoader()
                     // Reload data after the dialog is dismissed to update UI
                     loadBudgetDataFromFirestore()
                 }
@@ -209,6 +226,9 @@ class BudgetPageFragment : Fragment() {
                 .setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton("Yes") { _, _ ->
+                    // Show loader during the update
+                    (activity as? MainActivity)?.showLoader()
+
                     // Update the paid status in the budgetItem object
                     budgetItem.paid = !budgetItem.paid
 
@@ -224,6 +244,9 @@ class BudgetPageFragment : Fragment() {
 
                     bindBudget(budgetView, budgetItem)
                     updateProgress()
+
+                    // Hide loader when done
+                    (activity as? MainActivity)?.hideLoader()
                 }
                 .setNegativeButton("No") { dialog, _ ->
                     dialog.cancel()
@@ -250,6 +273,8 @@ class BudgetPageFragment : Fragment() {
                 .setMessage("Are you sure you want to delete this budget item? This action cannot be undone.")
                 .setCancelable(false)
                 .setPositiveButton("Yes") { _, _ ->
+                    // Show loader during deletion
+                    (activity as? MainActivity)?.showLoader()
                     deleteBudgetItem(budgetItem, budgetView, categoryContainer)
                 }
                 .setNegativeButton("No") { dialog, _ ->
@@ -278,6 +303,8 @@ class BudgetPageFragment : Fragment() {
         // Make sure we have a valid ID for the document
         if (budgetItem.id.isNullOrEmpty()) {
             Toast.makeText(requireContext(), "Error: Budget item has no ID", Toast.LENGTH_SHORT).show()
+            // Hide loader in case of error
+            (activity as? MainActivity)?.hideLoader()
             return
         }
 
@@ -298,9 +325,14 @@ class BudgetPageFragment : Fragment() {
                 updateProgress()
 
                 Toast.makeText(requireContext(), "Budget item deleted successfully!", Toast.LENGTH_SHORT).show()
+
+                // Hide loader when done
+                (activity as? MainActivity)?.hideLoader()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Failed to delete budget item: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Hide loader in case of failure
+                (activity as? MainActivity)?.hideLoader()
             }
     }
 
@@ -309,6 +341,8 @@ class BudgetPageFragment : Fragment() {
 
         if (budgetItem.id.isNullOrEmpty()) {
             Toast.makeText(requireContext(), "Error: Budget item has no ID", Toast.LENGTH_SHORT).show()
+            // Hide loader in case of error
+            (activity as? MainActivity)?.hideLoader()
             return
         }
 
@@ -318,9 +352,13 @@ class BudgetPageFragment : Fragment() {
         taskRef.set(budgetItem)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Budget item updated successfully!", Toast.LENGTH_SHORT).show()
+                // Hide loader when done
+                (activity as? MainActivity)?.hideLoader()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to update budget item", Toast.LENGTH_SHORT).show()
+                // Hide loader in case of failure
+                (activity as? MainActivity)?.hideLoader()
             }
     }
 

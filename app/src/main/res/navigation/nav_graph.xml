@@ -49,6 +49,13 @@
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password" />
 
+    <!-- Add this to your existing navigation graph -->
+    <action
+        android:id="@+id/action_forgotPasswordFragment_to_login"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="false" />
+
     <!-- Sign Up Fragment -->
     <fragment
         android:id="@+id/signUpFragment"
@@ -202,4 +209,9 @@
         android:name="com.example.plannerwedding.Users"
         android:label="User Profile"
         tools:layout="@layout/fragment_users" />
+
+
+    <action
+        android:id="@+id/action_userFragmaent_to_Login"
+        app:destination="@id/loginFragment" />
 </navigation>

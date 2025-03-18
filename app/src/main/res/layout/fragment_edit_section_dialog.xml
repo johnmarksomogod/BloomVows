@@ -1,14 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditSectionDialog">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="24dp">
 
+        <!-- Cancel Button -->
+        <TextView
+            android:id="@+id/UserCancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textSize="16sp"
+            android:textColor="@color/grey"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Save Button -->
+        <TextView
+            android:id="@+id/UserSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textSize="16sp"
+            android:textColor="#EDABAD"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
+
+        <!-- Section Title -->
+        <TextView
+            android:id="@+id/sectionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Information"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_below="@id/UserCancelButton"
+            android:layout_marginTop="24dp"
+            android:layout_alignParentStart="true"/>
+
+        <!-- TextInputLayout for the input field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Value"
+            app:boxStrokeColor="#EDABAD"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="#EDABAD"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:hintAnimationEnabled="true"
+            android:layout_below="@id/sectionTitle"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sectionInput"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColorHint="#EDABAD"
+                android:textColor="#000000"
+                android:padding="16dp"
+                android:textSize="18sp"
+                android:focusable="true"
+                android:clickable="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
 </FrameLayout>

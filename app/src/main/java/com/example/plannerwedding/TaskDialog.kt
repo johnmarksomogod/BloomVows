@@ -24,6 +24,15 @@ class TaskDialog : DialogFragment() {
     private val calendar = Calendar.getInstance()
 
     private var task: Task? = null
+    private var taskUpdateListener: TaskUpdateListener? = null
+
+    interface TaskUpdateListener {
+        fun onTaskUpdated()
+    }
+
+    fun setTaskUpdateListener(listener: TaskUpdateListener) {
+        this.taskUpdateListener = listener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -109,12 +118,16 @@ class TaskDialog : DialogFragment() {
         val updatedTask = Task(taskId, taskName, category, deadline, completed)
 
         val taskRef = db.collection("Users").document(userId).collection("Tasks").document(taskId)
+        (activity as? MainActivity)?.showLoader()
         taskRef.set(updatedTask)
             .addOnSuccessListener {
+                // Notify the listener that the task was updated
+                taskUpdateListener?.onTaskUpdated()
                 Toast.makeText(requireContext(), "Task saved successfully", Toast.LENGTH_SHORT).show()
                 dismiss()
             }
             .addOnFailureListener {
+                (activity as? MainActivity)?.hideLoader()
                 Toast.makeText(requireContext(), "Failed to save task", Toast.LENGTH_SHORT).show()
             }
     }

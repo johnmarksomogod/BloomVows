@@ -93,6 +93,8 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
             true
         }
 
+        // Show loader and fetch data
+        (activity as? MainActivity)?.showLoader()
         fetchSchedulesFromFirestore()
 
         return view
@@ -103,7 +105,9 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
         val dialog = ScheduleDialogFragment()
         dialog.onScheduleAddedListener = object : ScheduleDialogFragment.OnScheduleAddedListener {
             override fun onScheduleAdded(scheduleItem: ScheduleItem) {
-                addScheduleToFirestore(scheduleItem) // Directly add schedule to Firestore
+                // Show loader before adding to Firestore
+                (activity as? MainActivity)?.showLoader()
+                addScheduleToFirestore(scheduleItem)
             }
         }
         dialog.show(childFragmentManager, "AddScheduleDialog")
@@ -127,8 +131,12 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
                         addDateWithSchedule(scheduleItem.scheduleDate)
                         applyFilters() // Apply filters after adding new item
                     }
+                    // Hide loader after successful addition
+                    (activity as? MainActivity)?.hideLoader()
                 }
                 .addOnFailureListener {
+                    // Hide loader and show error message
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(requireContext(), "Failed to add schedule.", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -176,7 +184,17 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
 
                 // Apply filters based on current selection
                 applyFilters()
+
+                // Hide loader after data is fetched and displayed
+                (activity as? MainActivity)?.hideLoader()
+            }.addOnFailureListener {
+                // Hide loader and show error message
+                (activity as? MainActivity)?.hideLoader()
+                Toast.makeText(requireContext(), "Failed to load schedules.", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            // Hide loader if user is null
+            (activity as? MainActivity)?.hideLoader()
         }
     }
 
@@ -213,6 +231,9 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
     override fun onScheduleComplete(position: Int) {
         val scheduleItem = filteredScheduleList[position]
 
+        // Show loader before updating
+        (activity as? MainActivity)?.showLoader()
+
         // Update the item's status
         scheduleItem.status = "Completed"
 
@@ -227,6 +248,9 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
 
     override fun onScheduleDelete(position: Int) {
         val removedSchedule = filteredScheduleList[position]
+
+        // Show loader before deletion
+        (activity as? MainActivity)?.showLoader()
 
         // Find the position in the original list
         val originalPosition = scheduleList.indexOfFirst { it.scheduleId == removedSchedule.scheduleId }
@@ -243,7 +267,15 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
                 .delete()
                 .addOnSuccessListener {
                     scheduleAdapter.notifyItemRemoved(position)
-                    fetchSchedulesFromFirestore() // Refresh after deletion
+                    // Hide loader after successful deletion
+                    (activity as? MainActivity)?.hideLoader()
+                }
+                .addOnFailureListener {
+                    // Hide loader and show error message
+                    (activity as? MainActivity)?.hideLoader()
+                    Toast.makeText(requireContext(), "Failed to delete schedule.", Toast.LENGTH_SHORT).show()
+                    // Refresh data to ensure consistency
+                    fetchSchedulesFromFirestore()
                 }
         }
     }
@@ -264,14 +296,25 @@ class CalendarFragment : Fragment(), ScheduleAdapter.OnScheduleClickListener {
                 .addOnSuccessListener {
                     scheduleAdapter.notifyItemChanged(position)
 
+                    // Hide loader after successful update
+                    (activity as? MainActivity)?.hideLoader()
+
                     // If the current filter would exclude this item, reapply filters
                     if (currentFilter != "All" && currentFilter != scheduleItem.status) {
                         applyFilters()
                     }
                 }
                 .addOnFailureListener {
+                    // Hide loader and show error message
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(requireContext(), "Failed to update schedule.", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Make sure to hide the loader when leaving the fragment
+        (activity as? MainActivity)?.hideLoader()
     }
 }

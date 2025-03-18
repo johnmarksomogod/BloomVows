@@ -1,5 +1,6 @@
 package com.example.plannerwedding
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUp : Fragment() {
@@ -30,14 +30,11 @@ class SignUp : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_s_ign_up, container, false)
 
-        // Set up UI elements
         usernameEditText = view.findViewById(R.id.username)
         firstNameEditText = view.findViewById(R.id.firstName)
         lastNameEditText = view.findViewById(R.id.lastName)
@@ -46,7 +43,6 @@ class SignUp : Fragment() {
         signUpButton = view.findViewById(R.id.signUpButton)
         signInText = view.findViewById(R.id.textSignIn)
 
-        // Sign Up Button Click Listener
         signUpButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
             val firstName = firstNameEditText.text.toString().trim()
@@ -54,14 +50,18 @@ class SignUp : Fragment() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
+            if (username.isNotEmpty() && firstName.isNotEmpty() && lastName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                try {
+                    (activity as? MainActivity)?.showLoader()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 signUpUser(email, password, username, firstName, lastName)
             } else {
-                Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+                showAlertDialog("Sign Up Failed", "Please fill in all fields.")
             }
         }
 
-        // Navigate to SignIn Fragment
         signInText.setOnClickListener {
             findNavController().navigate(R.id.action_signUp_to_Login)
         }
@@ -72,27 +72,52 @@ class SignUp : Fragment() {
     private fun signUpUser(email: String, password: String, username: String, firstName: String, lastName: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
+                try {
+                    (activity as? MainActivity)?.hideLoader()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     user?.let {
                         val userId = it.uid
                         val userProfile = UserProfile(username, firstName, lastName, email, userId)
 
-                        // Store user data in Firestore
                         db.collection("Users").document(userId).set(userProfile)
                             .addOnSuccessListener {
-                                Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
-                                findNavController().navigate(R.id.action_signUp_to_Login)
+                                showAlertDialog("Sign Up Successful", "Your account has been created.") {
+                                    findNavController().navigate(R.id.action_signUp_to_Login)
+                                }
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(context, "Failed to save user info: ${e.message}", Toast.LENGTH_SHORT).show()
+                                showAlertDialog("Error", "Failed to save user info: ${e.message}")
                             }
                     }
                 } else {
-                    Toast.makeText(context, "Sign Up Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    showAlertDialog("Sign Up Failed", task.exception?.message ?: "Unknown error occurred.")
                 }
             }
     }
+
+    private fun showAlertDialog(title: String, message: String, onDismiss: (() -> Unit)? = null) {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+                onDismiss?.invoke()
+            }
+            .create()
+
+        dialog.setOnShowListener {
+            val button: Button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            button.setTextColor(Color.parseColor("#EDABAD"))
+        }
+
+        dialog.show()
+    }
+
 
     data class UserProfile(
         val username: String,

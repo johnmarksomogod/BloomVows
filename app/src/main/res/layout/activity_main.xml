@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <!-- NavHostFragment for Navigation -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
@@ -25,4 +26,16 @@
         app:itemTextColor="@color/nav_item_color"
         app:menu="@menu/bottom_nav_menu"
         style="@style/BottomNavItemStyle" />
+
+    <!-- Loader (Initially hidden) -->
+    <FrameLayout
+        android:id="@+id/loaderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <!-- Loader layout will be added dynamically here -->
+    </FrameLayout>
+
 </RelativeLayout>

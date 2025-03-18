@@ -1,9 +1,11 @@
 package com.example.plannerwedding
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -73,9 +75,9 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
 
         // Theme selection button listeners
         useRusticThemeButton.setOnClickListener {
-            selectPredefinedTheme("Rustic Elegance",
+            showConfirmationDialog("Rustic Elegance",
                 "A beautiful blend of natural elements with elegant touches. Features wooden details, burlap accents, and soft floral arrangements.",
-                null, // We'll pass the image URI below
+                null,
                 listOf(
                     getColor(R.color.rustic_brown_dark),
                     getColor(R.color.rustic_brown_medium),
@@ -87,7 +89,7 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
         }
 
         useGardenThemeButton.setOnClickListener {
-            selectPredefinedTheme("Romantic Garden",
+            showConfirmationDialog("Romantic Garden",
                 "An enchanting garden-inspired theme with lush greenery, delicate flowers, and soft pastel hues. Perfect for outdoor or spring weddings.",
                 null,
                 listOf(
@@ -101,7 +103,7 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
         }
 
         useGlamThemeButton.setOnClickListener {
-            selectPredefinedTheme("Elegant Glam",
+            showConfirmationDialog("Elegant Glam",
                 "A luxurious and glamorous theme featuring metallic accents, crystal details, and rich colors. Perfect for evening celebrations and formal venues.",
                 null,
                 listOf(
@@ -119,6 +121,29 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
         return requireContext().getColor(colorResId)
     }
 
+    private fun showConfirmationDialog(themeName: String, themeDescription: String, imageUri: String?, colorPalette: List<Int>) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+            .setTitle("Set Wedding Theme")
+            .setMessage("Would you like to use the '$themeName' theme for your wedding?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                dialog.dismiss()
+                (activity as? MainActivity)?.showLoader()
+                selectPredefinedTheme(themeName, themeDescription, imageUri, colorPalette)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
+
+        // Set button colors
+        val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
+    }
+
     private fun selectPredefinedTheme(themeName: String, themeDescription: String, imageUri: String?, colorPalette: List<Int>) {
         // Convert the drawable resource to a URI
         val imageUriString = imageUri ?: when (themeName) {
@@ -128,22 +153,16 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
             else -> null // Default case, if needed
         }
 
-        // Update UI with selected theme
-        updateWeddingThemePage(imageUriString, themeName, themeDescription, colorPalette)
-
-        // Save selection to Firebase
+        // Save selection to Firebase first
         saveCustomizationToFirestore(themeName, themeDescription, imageUriString, colorPalette)
-
-        // Show success message
-        Toast.makeText(requireContext(), "$themeName theme selected", Toast.LENGTH_SHORT).show()
     }
 
     private fun showCustomizationDialog() {
         // Create and show the dialog
         CustomizationDialogFragment { themeName, themeDescription, imageUri, colorPalette ->
-            // After customization is done, update the wedding theme UI and save to Firestore
+            // After customization is done, show loader and save to Firestore
+            (activity as? MainActivity)?.showLoader()
             saveCustomizationToFirestore(themeName, themeDescription, imageUri, colorPalette)
-            updateWeddingThemePage(imageUri, themeName, themeDescription, colorPalette)
         }.show(childFragmentManager, "CustomizationDialog")
     }
 
@@ -193,12 +212,16 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
 
         // Show the customized wedding theme container
         customizedWeddingThemeContainer.visibility = View.VISIBLE
+
+        // Hide loader after UI is updated
+        (activity as? MainActivity)?.hideLoader()
     }
 
     private fun saveCustomizationToFirestore(themeName: String, themeDescription: String, imageUri: String?, colorPalette: List<Int>) {
         val userId = auth.currentUser?.uid
 
         if (userId == null) {
+            (activity as? MainActivity)?.hideLoader()
             Toast.makeText(requireContext(), "Please sign in to save your theme", Toast.LENGTH_SHORT).show()
             return
         }
@@ -219,15 +242,20 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
         // Update Firestore with the new theme data
         userRef.update("weddingTheme", themeData)
             .addOnSuccessListener {
+                // After save is successful, load the theme data to update UI
+                loadExistingThemeData()
                 Toast.makeText(requireContext(), "Wedding Theme saved successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 // If update fails, the document might not exist, so try to set it instead
                 userRef.set(hashMapOf("weddingTheme" to themeData))
                     .addOnSuccessListener {
+                        // After save is successful, load the theme data to update UI
+                        loadExistingThemeData()
                         Toast.makeText(requireContext(), "Wedding Theme saved successfully", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { innerError ->
+                        (activity as? MainActivity)?.hideLoader()
                         Toast.makeText(requireContext(), "Failed to save wedding theme: ${innerError.message}", Toast.LENGTH_SHORT).show()
                         innerError.printStackTrace()
                     }
@@ -255,10 +283,15 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
 
                         // Update UI with saved theme data
                         updateWeddingThemePage(imageUri, themeName, themeDescription, colorPaletteInts)
+                    } else {
+                        (activity as? MainActivity)?.hideLoader()
                     }
+                } else {
+                    (activity as? MainActivity)?.hideLoader()
                 }
             }
             .addOnFailureListener { e ->
+                (activity as? MainActivity)?.hideLoader()
                 e.printStackTrace()
                 // Handle silently - we'll just show the default state
             }

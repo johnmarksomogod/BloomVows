@@ -61,12 +61,16 @@ class TimelineFragment : Fragment() {
         // Add event button
         addEventButton.setOnClickListener {
             val dialog = TimelineDialogFragment { title, time ->
+                // Show loader before adding event
+                (activity as? MainActivity)?.showLoader()
                 val newEvent = TimelineActivity(title, time)
                 saveEventToFirestore(newEvent)
             }
             dialog.show(childFragmentManager, "TimelineDialogFragment")
         }
 
+        // Show loader before loading events
+        (activity as? MainActivity)?.showLoader()
         loadEventsFromFirestore()
 
         return view
@@ -91,6 +95,13 @@ class TimelineFragment : Fragment() {
 
             sortEvents() // Sort events after loading from Firestore
             timelineAdapter.notifyDataSetChanged()
+
+            // Hide loader after data is loaded
+            (activity as? MainActivity)?.hideLoader()
+        }.addOnFailureListener {
+            // Hide loader if there's an error
+            (activity as? MainActivity)?.hideLoader()
+            Toast.makeText(context, "Failed to load events", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -131,9 +142,14 @@ class TimelineFragment : Fragment() {
                 .addOnSuccessListener {
                     timelineList.add(event) // Add the new event to the list
                     sortEvents() // Sort events after adding
-                    timelineAdapter.notifyItemInserted(timelineList.size - 1) // Update the UI
+                    timelineAdapter.notifyDataSetChanged() // Update the UI
+
+                    // Hide loader after success
+                    (activity as? MainActivity)?.hideLoader()
                 }
                 .addOnFailureListener {
+                    // Hide loader after failure
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(requireContext(), "Failed to add event", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -144,7 +160,11 @@ class TimelineFragment : Fragment() {
         val alertDialogBuilder = AlertDialog.Builder(requireContext())
         alertDialogBuilder.setMessage("Are you sure you want to delete this event?")
             .setCancelable(false)
-            .setPositiveButton("Yes") { _, _ -> deleteEvent(event, position) }
+            .setPositiveButton("Yes") { _, _ ->
+                // Show loader before deleting
+                (activity as? MainActivity)?.showLoader()
+                deleteEvent(event, position)
+            }
             .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
 
         val alert = alertDialogBuilder.create()
@@ -174,10 +194,14 @@ class TimelineFragment : Fragment() {
             // Update Firestore with the new list
             userRef.update("timeline", events)
                 .addOnSuccessListener {
+                    // Hide loader after success
+                    (activity as? MainActivity)?.hideLoader()
                     timelineList.removeAt(position) // Remove from UI
                     timelineAdapter.notifyItemRemoved(position) // Update RecyclerView
                 }
                 .addOnFailureListener {
+                    // Hide loader after failure
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(requireContext(), "Failed to delete event", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -200,13 +224,24 @@ class TimelineFragment : Fragment() {
             .setMessage("Are you sure you want to save these changes?")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
+                // Show loader before updating
+                (activity as? MainActivity)?.showLoader()
                 event.title = newTitle
                 event.time = newTime
                 updateEventInFirestore(event, position)
             }
             .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
 
-        alertDialog.create().show()
+        val alert = alertDialog.create()
+        alert.show()
+
+        alert.window?.setBackgroundDrawableResource(android.R.color.white)
+
+        val positiveButton = alert.getButton(AlertDialog.BUTTON_POSITIVE)
+        val negativeButton = alert.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        positiveButton.setTextColor(Color.parseColor("#EDABAD"))
+        negativeButton.setTextColor(Color.parseColor("#EDABAD"))
     }
 
     // Update the event in Firestore after editing
@@ -228,10 +263,14 @@ class TimelineFragment : Fragment() {
             // Update Firestore with the updated list
             userRef.update("timeline", events)
                 .addOnSuccessListener {
+                    // Hide loader after success
+                    (activity as? MainActivity)?.hideLoader()
                     timelineList[position] = event // Update the UI list
                     timelineAdapter.notifyItemChanged(position) // Notify RecyclerView
                 }
                 .addOnFailureListener {
+                    // Hide loader after failure
+                    (activity as? MainActivity)?.hideLoader()
                     Toast.makeText(requireContext(), "Failed to update event", Toast.LENGTH_SHORT).show()
                 }
         }

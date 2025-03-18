@@ -1,6 +1,5 @@
 package com.example.plannerwedding
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,6 +44,12 @@ class To_Do : Fragment() {
 
         addTaskIcon.setOnClickListener {
             val dialog = TaskDialog()
+            dialog.setTaskUpdateListener(object : TaskDialog.TaskUpdateListener {
+                override fun onTaskUpdated() {
+                    (activity as? MainActivity)?.showLoader()
+                    loadTasksFromFirestore()
+                }
+            })
             dialog.show(parentFragmentManager, "TaskDialog")
         }
 
@@ -78,9 +83,11 @@ class To_Do : Fragment() {
                     }
                 }
                 updateProgress()
+                (activity as? MainActivity)?.hideLoader()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Failed to load tasks", Toast.LENGTH_SHORT).show()
+                (activity as? MainActivity)?.hideLoader()
             }
     }
 
@@ -161,6 +168,12 @@ class To_Do : Fragment() {
             val bundle = Bundle()
             bundle.putSerializable("task", task)
             dialog.arguments = bundle
+            dialog.setTaskUpdateListener(object : TaskDialog.TaskUpdateListener {
+                override fun onTaskUpdated() {
+                    (activity as? MainActivity)?.showLoader()
+                    loadTasksFromFirestore()
+                }
+            })
             dialog.show(parentFragmentManager, "TaskDialog")
         }
 
@@ -184,9 +197,9 @@ class To_Do : Fragment() {
             .setMessage(message)
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
+                (activity as? MainActivity)?.showLoader()
                 task.completed = !task.completed
                 updateTaskInFirestore(task)
-
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
@@ -212,6 +225,7 @@ class To_Do : Fragment() {
             .setMessage("Are you sure you want to delete this task? This action cannot be undone.")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
+                (activity as? MainActivity)?.showLoader()
                 deleteTask(task, taskView)
             }
             .setNegativeButton("No") { dialog, _ ->
@@ -238,8 +252,10 @@ class To_Do : Fragment() {
             .collection("Tasks").document(task.id ?: return)
 
         taskRef.set(task).addOnSuccessListener {
+            loadTasksFromFirestore() // Reload all tasks to ensure UI is up to date
             Toast.makeText(requireContext(), "Task updated successfully!", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
+            (activity as? MainActivity)?.hideLoader()
             Toast.makeText(requireContext(), "Failed to update task", Toast.LENGTH_SHORT).show()
         }
     }
@@ -250,11 +266,11 @@ class To_Do : Fragment() {
         db.collection("Users").document(userId)
             .collection("Tasks").document(taskId).delete()
             .addOnSuccessListener {
+                loadTasksFromFirestore() // Reload all tasks to ensure UI is up to date
                 Toast.makeText(requireContext(), "Task deleted successfully!", Toast.LENGTH_SHORT).show()
-                (taskView.parent as? LinearLayout)?.removeView(taskView)
-                updateProgress()
             }
             .addOnFailureListener {
+                (activity as? MainActivity)?.hideLoader()
                 Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show()
             }
     }

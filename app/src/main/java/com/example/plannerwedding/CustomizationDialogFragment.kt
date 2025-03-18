@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.skydoves.colorpickerview.ColorPickerView
@@ -198,11 +196,13 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
                 }
             }
 
+            // Show success message
+            savedCustomizationText.visibility = View.VISIBLE
+
             // Call the callback function to pass data to the parent fragment
             onCustomizationSaved(categoryName, categoryDescription, imageUri, colorPalette)
 
-            // Show success message and dismiss dialog after delay
-            savedCustomizationText.visibility = View.VISIBLE
+            // Dismiss dialog after delay
             dialogView.postDelayed({
                 dismiss()
             }, 1500)
@@ -226,9 +226,9 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
 
             // Update preview
             colorPreview.setBackgroundColor(color)
-            hexCodeText.setText(hexCode)  // Fixed this line
+            hexCodeText.text = hexCode
 
-            // You can also set the color to colorCodeEditText if you want
+            // Update the input field
             colorCodeEditText.setText(hexCode)
         })
     }
