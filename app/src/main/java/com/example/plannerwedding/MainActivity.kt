@@ -43,7 +43,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.getStarted,
                 R.id.loginFragment,
                 R.id.signUpFragment,
-                R.id.forgotPassword,
+                R.id.verificationCodeFragment,
+                R.id.forgotPasswordFragment,
+                R.id.newPasswordFragment,
                 R.id.signUpFragment,
                 R.id.enterDateFragment,
                 R.id.enterBudgetFragment,
@@ -56,39 +58,42 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeHeartAnimation() {
-        heartRunnable = Runnable {
-            if (isLoaderVisible && heartViews.isNotEmpty()) {
-                try {
-                    // Reset previous heart
-                    if (currentHeartIndex > 0) {
-                        heartViews[currentHeartIndex - 1].setImageResource(R.drawable.heart_outline)
-                    }
+        heartRunnable = object : Runnable {
+            override fun run() {
+                if (isLoaderVisible && heartViews.isNotEmpty()) {
+                    try {
+                        // Fill current heart
+                        if (currentHeartIndex < heartViews.size) {
+                            heartViews[currentHeartIndex].setImageResource(R.drawable.heartt)
+                            val pulseAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.heart_pulse)
+                            heartViews[currentHeartIndex].startAnimation(pulseAnimation)
+                            currentHeartIndex++
 
-                    // Fill current heart
-                    if (currentHeartIndex < heartViews.size) {
-                        heartViews[currentHeartIndex].setImageResource(R.drawable.heartt)
-                        val pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.heart_pulse)
-                        heartViews[currentHeartIndex].startAnimation(pulseAnimation)
-                        currentHeartIndex++
-                    }
-
-                    // Reset to first heart when reaching the end
-                    if (currentHeartIndex >= heartViews.size) {
-                        currentHeartIndex = 0
-                        // Reset all hearts to outline
-                        for (heart in heartViews) {
-                            heart.setImageResource(R.drawable.heart_outline)
+                            // Continue animating until the fifth heart is filled
+                            if (currentHeartIndex < heartViews.size) {
+                                handler.postDelayed(this, 800)
+                            } else {
+                                // Reset after all hearts are filled
+                                handler.postDelayed({
+                                    resetHearts()
+                                }, 1000) // Add a short delay before resetting
+                            }
                         }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-
-                    // Continue the animation
-                    handler.postDelayed(heartRunnable, 800)
-                } catch (e: Exception) {
-                    // Handle potential exceptions silently
-                    e.printStackTrace()
                 }
             }
         }
+    }
+
+    private fun resetHearts() {
+        // Reset all hearts to outline
+        for (heart in heartViews) {
+            heart.setImageResource(R.drawable.heart_outline)
+        }
+        currentHeartIndex = 0
+        handler.postDelayed(heartRunnable, 800) // Restart the animation
     }
 
     // Show the loader

@@ -37,7 +37,7 @@ tools:context=".HomePage">
             android:layout_marginStart="20dp"
             android:text="Welcome"
             android:textSize="28sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/grey"
             android:fontFamily="@font/sansita2"/>
 
         <!-- Bride and Groom Names -->
@@ -50,7 +50,7 @@ tools:context=".HomePage">
             android:layout_marginTop="5dp"
             android:text="Loading..."
             android:textSize="18sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/grey"
             android:fontFamily="@font/sansita2"/>
 
         <RelativeLayout

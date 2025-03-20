@@ -71,6 +71,7 @@
             android:layout_height="50dp"
             android:background="@drawable/input_border"
             android:hint="Date (MM/DD/YYYY)"
+            android:drawableEnd="@drawable/ic_calendar"
             android:inputType="date"
             android:padding="12dp"
             android:textSize="16sp"

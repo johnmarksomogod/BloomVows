@@ -23,11 +23,11 @@
         android:label="Login"
         tools:layout="@layout/fragment_log_in">
         <action
-            android:id="@+id/action_login_to_forgotPasswordFragment"
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
         <action
             android:id="@+id/action_login_to_enterNamesFragment"
-            app:destination="@id/enterNamesFragment" /> <!-- Updated -->
+            app:destination="@id/enterNamesFragment" />
         <action
             android:id="@+id/action_login_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -47,14 +47,39 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.plannerwedding.ForgotPasswordFragment"
         android:label="Forgot Password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_verificationCodeFragment"
+            app:destination="@id/verificationCodeFragment" />
+    </fragment>
 
-    <!-- Add this to your existing navigation graph -->
-    <action
-        android:id="@+id/action_forgotPasswordFragment_to_login"
-        app:destination="@id/loginFragment"
-        app:popUpTo="@id/loginFragment"
-        app:popUpToInclusive="false" />
+    <!-- Verification Code Fragment -->
+    <fragment
+        android:id="@+id/verificationCodeFragment"
+        android:name="com.example.plannerwedding.VerificationCodeFragment"
+        android:label="Verification Code"
+        tools:layout="@layout/fragment_verification_code">
+        <action
+            android:id="@+id/action_verificationCodeFragment_to_newPasswordFragment"
+            app:destination="@id/newPasswordFragment" />
+
+        <action
+            android:id="@+id/action_verificationCodeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <!-- New Password Fragment -->
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.example.plannerwedding.NewPasswordFragment"
+        android:label="New Password"
+        tools:layout="@layout/fragment_new_password">
+        <action
+            android:id="@+id/action_newPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <!-- Sign Up Fragment -->
     <fragment
@@ -66,6 +91,7 @@
         <action
             android:id="@+id/action_signUp_to_Login"
             app:destination="@id/loginFragment" />
+
     </fragment>
 
     <!-- Enter Names Fragment (New) -->
@@ -209,7 +235,6 @@
         android:name="com.example.plannerwedding.Users"
         android:label="User Profile"
         tools:layout="@layout/fragment_users" />
-
 
     <action
         android:id="@+id/action_userFragmaent_to_Login"

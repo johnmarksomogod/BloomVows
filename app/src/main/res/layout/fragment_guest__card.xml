@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -29,11 +28,20 @@
 
         <!-- Selection Checkbox (initially hidden) -->
         <CheckBox
-            android:id="@+id/selectGuestCheckbox"
+            android:id="@+id/selectCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#EDABAD"
             android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/bedroomIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/bed"
+            android:visibility="gone"
+            android:contentDescription="Bedroom Icon" />
 
         <!-- Left side: Guest details -->
         <LinearLayout
@@ -61,6 +69,14 @@
                 android:textColor="@color/grey" />
 
             <TextView
+                android:id="@+id/guestCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category: VIP"
+                android:textSize="14sp"
+                android:textColor="@color/grey" />
+
+            <TextView
                 android:id="@+id/guestAccommodation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,6 +84,14 @@
                 android:textSize="14sp"
                 android:textColor="@color/grey" />
 
+            <TextView
+                android:id="@+id/invitedStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Invited"
+                android:textSize="14sp"
+                android:textColor="#4CAF50"
+                android:visibility="gone" />
         </LinearLayout>
 
         <!-- Right side: Action buttons -->
@@ -75,17 +99,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center">
 
             <!-- Bedroom Icon (visible when accommodation is needed) -->
+
+
+            <!-- Invite Button (NEW) -->
             <ImageView
-                android:id="@+id/bedroomIcon"
-                android:layout_width="30dp"
-                android:layout_marginEnd="20dp"
-                android:layout_height="30dp"
-                android:src="@drawable/bed"
-                android:visibility="gone"
-                android:contentDescription="Bedroom Icon" />
+                android:id="@+id/inviteGuest"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/mail"
+                android:contentDescription="Invite Guest" />
 
             <!-- Delete Icon -->
             <ImageView

@@ -43,15 +43,29 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
         // Initialize the ActivityResultLauncher
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
-                try {
-                    // Update the image URI and preview
-                    imageUri = it.toString()
-                    selectedImagePreview.setImageURI(it)
-                    selectedImagePreview.visibility = View.VISIBLE
-                    uploadPlaceholder.visibility = View.GONE
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
-                }
+                handleSelectedImage(it)
+            }
+        }
+    }
+
+    // New function to handle image loading
+    private fun handleSelectedImage(uri: Uri) {
+        try {
+            // Update the image URI
+            imageUri = uri.toString()
+
+            // Make sure we're on the UI thread
+            requireActivity().runOnUiThread {
+                // Set the image to the ImageView
+                selectedImagePreview.setImageURI(uri)
+
+                // Update visibility
+                selectedImagePreview.visibility = View.VISIBLE
+                uploadPlaceholder.visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            requireActivity().runOnUiThread {
+                Toast.makeText(requireContext(), "Failed to load image: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -104,6 +118,7 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
                 } catch (e: Exception) {
                     // Reset if there's an error loading the image
                     imageUri = null
+                    Toast.makeText(requireContext(), "Failed to restore image: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -121,11 +136,6 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
         // Also make the placeholder clickable for better UX
         uploadPlaceholder.setOnClickListener {
             uploadImage()
-        }
-
-        // Add predefined colors if we don't have any
-        if (colorPalette.isEmpty()) {
-            addPredefinedColors()
         }
 
         // Initialize color picker grid and selected colors
@@ -233,29 +243,7 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
         })
     }
 
-    private fun addPredefinedColors() {
-        // Add wedding-themed colors
-        val weddingColors = arrayOf(
-            "#EDABAD",  // Rose pink
-            "#F5E1DA",  // Blush
-            "#D4B2A7",  // Mauve
-            "#998B82",  // Taupe
-            "#F5F5F5",  // White
-            "#D8BFD8",  // Thistle
-            "#87CEFA",  // Light sky blue
-            "#E6E6FA",  // Lavender
-            "#FFD700",  // Gold
-            "#F0E68C"   // Khaki
-        )
 
-        for (colorCode in weddingColors) {
-            try {
-                colorPalette.add(Color.parseColor(colorCode))
-            } catch (e: Exception) {
-                // Skip invalid color
-            }
-        }
-    }
 
     private fun uploadImage() {
         // Use the ActivityResultLauncher to select an image
@@ -277,16 +265,7 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_IMAGE_PICK && resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val uri = data.data ?: return
-
-            try {
-                // Update the image URI and preview
-                imageUri = uri.toString()
-                selectedImagePreview.setImageURI(uri)
-                selectedImagePreview.visibility = View.VISIBLE
-                uploadPlaceholder.visibility = View.GONE
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Failed to load image", Toast.LENGTH_SHORT).show()
-            }
+            handleSelectedImage(uri)
         }
     }
 
@@ -347,7 +326,6 @@ class CustomizationDialogFragment(private val onCustomizationSaved: (String, Str
             selectedColorsContainer.addView(colorCircle)
         }
     }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

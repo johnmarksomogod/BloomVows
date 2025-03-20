@@ -336,8 +336,9 @@ class Users : Fragment() {
                     loadUserData() // This already has loader handling inside
                     Toast.makeText(requireContext(), "Update successful", Toast.LENGTH_SHORT).show()
 
-                    // If we're updating wedding date, try to notify HomePage
+                    // If we're updating wedding date, notify HomePage
                     if (field == "weddingDate") {
+                        // Use Fragment Result API to communicate with HomePage
                         parentFragmentManager.setFragmentResult("WEDDING_DATE_UPDATED", Bundle())
                     }
                 }

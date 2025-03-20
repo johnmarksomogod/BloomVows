@@ -55,33 +55,17 @@
                 android:src="@drawable/plus1" />
         </LinearLayout>
 
-        <!-- Invite Guest Button (Repositioned below the Guest Title) -->
-        <LinearLayout
-            android:id="@+id/inviteGuestButton"
+        <!-- Invite All Button -->
+        <Button
+            android:id="@+id/inviteAllButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/GuestTitle"
-            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="6dp"
-                android:fontFamily="@font/madimi"
-                android:text="Invite"
-                android:textColor="@color/grey"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:contentDescription="Invite Guests"
-                android:src="@drawable/mail" />
-        </LinearLayout>
+            android:backgroundTint="#EDABAD"
+            android:text="Invite All"
+            android:textColor="@android:color/white" />
 
         <View
             android:layout_width="300dp"
@@ -92,7 +76,7 @@
             android:background="#EDABAD"
             android:foregroundGravity="center" />
 
-        <!-- Selection Mode Controls (Moved to bottom and set to gone) -->
+        <!-- Selection Mode Controls (Moved to bottom and initially hidden) -->
         <LinearLayout
             android:id="@+id/selectionControls"
             android:layout_width="match_parent"
@@ -109,6 +93,9 @@
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="#EDABAD"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:enabled="true"
                 android:text="Select All"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
@@ -118,6 +105,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:backgroundTint="#EDABAD"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:enabled="true"
                 android:text="Send Invites"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
@@ -135,12 +125,36 @@
             android:textColor="@color/grey"
             android:textSize="14sp"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/guestCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="147dp"
+            android:text="Total Guests: 0"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/inviteStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="147dp"
+            android:layout_marginEnd="20dp"
+            android:text="Invited: 0"
+            android:textColor="@color/grey"
+            android:textSize="15sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guestRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="180dp"/>
+        android:layout_marginTop="200dp"/>
 
 </FrameLayout>

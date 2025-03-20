@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:background="#FFF5F7"
     android:layout_height="match_parent"
-    tools:context=".ForgotPasswordFragment">
+    tools:context=".VerificationResetFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,10 +38,11 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/instructionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:text="Enter your email address to receive a verification code"
+            android:layout_marginBottom="24dp"
+            android:text="Enter your email to receive a verification code"
             android:textAlignment="center"
             android:textSize="16sp" />
 
@@ -53,7 +54,7 @@
             android:inputType="textEmailAddress"
             android:padding="16dp"
             android:textSize="16sp"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"/>
 
         <Button
             android:id="@+id/sendCodeButton"
@@ -61,9 +62,58 @@
             android:layout_height="wrap_content"
             android:text="Send Verification Code"
             android:textSize="16sp"
-            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="#EDABAD"
             android:textColor="@android:color/white"
             android:textStyle="bold"/>
+
+        <!-- Verification section - initially hidden -->
+        <LinearLayout
+            android:id="@+id/verificationSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/verificationCodeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter verification code"
+                android:inputType="number"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/newPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter new password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/confirmPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm new password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/resetPasswordButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reset Password"
+                android:textSize="16sp"
+                android:backgroundTint="#EDABAD"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -39,7 +39,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"/>
 
-        <!-- Expense Details Title -->
+        <!-- Title -->
         <TextView
             android:id="@+id/GuestTitle"
             android:layout_width="wrap_content"
@@ -66,6 +66,7 @@
             android:layout_below="@id/GuestTitle"
             android:layout_marginTop="12dp"/>
 
+        <!-- Email Input Field -->
         <EditText
             android:id="@+id/GuestEmail"
             android:layout_width="match_parent"
@@ -79,52 +80,39 @@
             android:layout_below="@id/GuestName"
             android:layout_marginTop="12dp"/>
 
-        <!-- Choose Category Dropdown (Spinner) -->
+        <!-- Error Message for Email -->
+        <TextView
+            android:id="@+id/emailError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:layout_below="@id/GuestEmail"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Category Dropdown -->
         <Spinner
             android:id="@+id/GuestSpinner"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/input_border"
             android:padding="12dp"
-            android:textColor="@color/grey"
             android:textSize="16sp"
-            android:layout_below="@id/GuestEmail"
+            android:layout_below="@id/emailError"
             android:layout_marginTop="15dp"/>
 
-
-
-        <!-- Amount Input and Paid Checkbox in One Row -->
-        <LinearLayout
-            android:id="@+id/linearLayout3"
+        <!-- Accommodation Checkbox -->
+        <CheckBox
+            android:id="@+id/AccommodationCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Needs Accommodation"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            android:buttonTint="#EDABAD"
             android:layout_below="@id/GuestSpinner"
-            android:layout_marginTop="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <!-- Amount Input Field -->
-            <TextView
-                android:id="@+id/Accomodation"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:hint="Need Accomodation"
-                android:padding="12dp"
-                android:textColor="@color/grey"
-                android:textColorHint="@color/grey"
-                android:textSize="16sp" />
-
-            <!-- Paid Checkbox -->
-            <CheckBox
-                android:id="@+id/AccomodationCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textSize="16sp" />
-        </LinearLayout>
+            android:layout_marginTop="12dp"/>
     </RelativeLayout>
-
 
 </FrameLayout>

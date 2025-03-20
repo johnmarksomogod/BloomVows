@@ -59,8 +59,9 @@ class LogIn : Fragment() {
             findNavController().navigate(R.id.action_login_to_signUpFragment)
         }
 
+        // Updated: Single method for forgot password
         forgotPasswordText.setOnClickListener {
-            findNavController().navigate(R.id.action_login_to_forgotPasswordFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
 
         passwordEditText.setOnTouchListener { _, event ->

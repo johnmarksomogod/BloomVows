@@ -93,6 +93,23 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
 
         // CardView navigation
         setupNavigation(view)
+
+        // Set up fragment result listener for wedding date updates
+        setupWeddingDateListener()
+    }
+
+    private fun setupWeddingDateListener() {
+        // Listen for wedding date updates from any fragment
+        parentFragmentManager.setFragmentResultListener("WEDDING_DATE_UPDATED", viewLifecycleOwner) { _, _ ->
+            // Refresh wedding data when notified
+            fetchWeddingData()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh wedding data whenever the fragment resumes
+        fetchWeddingData()
     }
 
     private fun setupScheduleRecyclerView() {
@@ -159,29 +176,54 @@ class HomePage : Fragment(R.layout.fragment_home_page), ScheduleAdapter.OnSchedu
                     }
                     decrementLoadingOperations()
                 }
-                .addOnFailureListener {
+                .addOnFailureListener { e ->
                     daysLeftTextView.text = "Error loading data"
                     venueTextView.text = "Error loading venue"
                     coupleNamesTextView.text = "Error loading names"
                     decrementLoadingOperations()
+                    Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
     private fun updateDaysLeft(weddingDateStr: String) {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         try {
-            val weddingDate = dateFormat.parse(weddingDateStr)
-            val currentDate = Calendar.getInstance().time
-            val diff = weddingDate.time - currentDate.time
-            val daysLeft = (diff / (1000 * 60 * 60 * 24)).toInt()
+            // Parse the wedding date using the correct format (dd/MM/yyyy)
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val weddingDate = dateFormat.parse(weddingDateStr) ?: return
 
-            daysLeftTextView.text = "$daysLeft Days until The Big Day"
+            // Get current date with time set to 00:00:00 for accurate day calculation
+            val todayCalendar = Calendar.getInstance()
+            todayCalendar.set(Calendar.HOUR_OF_DAY, 0)
+            todayCalendar.set(Calendar.MINUTE, 0)
+            todayCalendar.set(Calendar.SECOND, 0)
+            todayCalendar.set(Calendar.MILLISECOND, 0)
+
+            // Set wedding date to calendar with time set to 00:00:00
+            val weddingCalendar = Calendar.getInstance()
+            weddingCalendar.time = weddingDate
+            weddingCalendar.set(Calendar.HOUR_OF_DAY, 0)
+            weddingCalendar.set(Calendar.MINUTE, 0)
+            weddingCalendar.set(Calendar.SECOND, 0)
+            weddingCalendar.set(Calendar.MILLISECOND, 0)
+
+            // Calculate the difference in milliseconds and convert to days
+            val diffInMillis = weddingCalendar.timeInMillis - todayCalendar.timeInMillis
+            val daysLeft = (diffInMillis / (1000 * 60 * 60 * 24)).toInt()
+
+            // Update the text view with appropriate message
+            daysLeftTextView.text = when {
+                daysLeft < 0 -> "Wedding day has passed!"
+                daysLeft == 0 -> "Wedding day is today!"
+                daysLeft == 1 -> "1 Day until The Big Day"
+                else -> "$daysLeft Days until The Big Day"
+            }
         } catch (e: Exception) {
+            // If there's an error parsing the date, show an error message
             daysLeftTextView.text = "Invalid date format"
+            e.printStackTrace() // Log the error for debugging
         }
     }
-
 
     private fun loadTasksFromFirestore() {
         incrementLoadingOperations()

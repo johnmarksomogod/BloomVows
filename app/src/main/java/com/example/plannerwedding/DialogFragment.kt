@@ -67,7 +67,7 @@ class EditSectionDialogFragment(
 
     // Show DatePicker dialog when "Wedding Date" field is clicked
     private fun showDatePicker() {
-        val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
 
         val datePicker = DatePickerDialog(
             requireContext(),

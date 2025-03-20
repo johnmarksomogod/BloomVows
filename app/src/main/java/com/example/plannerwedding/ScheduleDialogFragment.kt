@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -19,9 +20,10 @@ import java.util.*
 class ScheduleDialogFragment : DialogFragment() {
 
     private lateinit var scheduleNameEditText: EditText
-    private lateinit var scheduleDateTextView: TextView
+    private lateinit var scheduleDateTextView: EditText
     private lateinit var doneButton: TextView
     private lateinit var cancelButton: TextView
+    private val calendar = Calendar.getInstance()
 
     var onScheduleAddedListener: OnScheduleAddedListener? = null
 
@@ -40,8 +42,16 @@ class ScheduleDialogFragment : DialogFragment() {
         doneButton = view.findViewById(R.id.doneScheduleButton)
         cancelButton = view.findViewById(R.id.cancelScheduleButton)
 
-        scheduleDateTextView.setOnClickListener {
-            showDatePickerDialog()
+        scheduleDateTextView.isFocusable = false
+        scheduleDateTextView.setOnClickListener { showDatePickerDialog() }
+        scheduleDateTextView.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (scheduleDateTextView.right - scheduleDateTextView.compoundPaddingEnd)) {
+                    showDatePickerDialog()
+                    return@setOnTouchListener true
+                }
+            }
+            false
         }
 
         doneButton.setOnClickListener {
@@ -49,7 +59,6 @@ class ScheduleDialogFragment : DialogFragment() {
             val scheduleDate = scheduleDateTextView.text.toString().trim()
 
             if (scheduleName.isNotEmpty() && scheduleDate.isNotEmpty()) {
-                // Show loader before saving
                 (activity as? MainActivity)?.showLoader()
                 saveScheduleToFirestore(scheduleName, scheduleDate)
             } else {
@@ -61,20 +70,17 @@ class ScheduleDialogFragment : DialogFragment() {
             }
         }
 
-        cancelButton.setOnClickListener {
-            dismiss()
-        }
+        cancelButton.setOnClickListener { dismiss() }
 
         return view
     }
 
     private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
                 val selectedDate = "${month + 1}/$dayOfMonth/$year"
-                scheduleDateTextView.text = selectedDate
+                scheduleDateTextView.setText(selectedDate)
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -97,15 +103,12 @@ class ScheduleDialogFragment : DialogFragment() {
             scheduleRef.document(scheduleId)
                 .set(scheduleData)
                 .addOnSuccessListener {
-                    // Hide loader
                     (activity as? MainActivity)?.hideLoader()
                     showSuccessDialog(scheduleData)
                 }
                 .addOnFailureListener {
-                    // Hide loader and show error message
                     (activity as? MainActivity)?.hideLoader()
-                    Toast.makeText(requireContext(), "Failed to add schedule.", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(requireContext(), "Failed to add schedule.", Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -139,7 +142,6 @@ class ScheduleDialogFragment : DialogFragment() {
 
     override fun onPause() {
         super.onPause()
-        // Make sure to hide the loader when dismissing the dialog
         (activity as? MainActivity)?.hideLoader()
     }
 }

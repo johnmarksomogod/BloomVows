@@ -2,7 +2,9 @@ package com.example.plannerwedding
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -26,6 +28,8 @@ class SignUp : Fragment() {
     private lateinit var signUpButton: Button
     private lateinit var signInText: TextView
 
+    private var isPasswordVisible = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +47,23 @@ class SignUp : Fragment() {
         signUpButton = view.findViewById(R.id.signUpButton)
         signInText = view.findViewById(R.id.textSignIn)
 
+        passwordEditText.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val drawableEnd = 2
+                if (event.rawX >= (passwordEditText.right - passwordEditText.compoundDrawables[drawableEnd].bounds.width())) {
+                    isPasswordVisible = !isPasswordVisible
+                    passwordEditText.inputType = if (isPasswordVisible) {
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    } else {
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    }
+                    passwordEditText.setSelection(passwordEditText.text.length)
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
+
         signUpButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
             val firstName = firstNameEditText.text.toString().trim()
@@ -51,12 +72,11 @@ class SignUp : Fragment() {
             val password = passwordEditText.text.toString().trim()
 
             if (username.isNotEmpty() && firstName.isNotEmpty() && lastName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                try {
-                    (activity as? MainActivity)?.showLoader()
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                if (isValidEmail(email)) {
+                    checkEmailExistenceAndSignUp(email, password, username, firstName, lastName)
+                } else {
+                    showAlertDialog("Sign Up Failed", "Please enter a valid email address.")
                 }
-                signUpUser(email, password, username, firstName, lastName)
             } else {
                 showAlertDialog("Sign Up Failed", "Please fill in all fields.")
             }
@@ -69,15 +89,35 @@ class SignUp : Fragment() {
         return view
     }
 
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun checkEmailExistenceAndSignUp(email: String, password: String, username: String, firstName: String, lastName: String) {
+        (activity as? MainActivity)?.showLoader()
+
+        // Check if email already exists in Firestore
+        db.collection("Users").whereEqualTo("email", email).get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    // Email doesn't exist in Firestore, proceed with sign up
+                    signUpUser(email, password, username, firstName, lastName)
+                } else {
+                    // Email already exists in Firestore
+                    (activity as? MainActivity)?.hideLoader()
+                    showAlertDialog("Sign Up Failed", "This email is already registered. Please sign in instead or use a different email.")
+                }
+            }
+            .addOnFailureListener { e ->
+                (activity as? MainActivity)?.hideLoader()
+                showAlertDialog("Error", "Failed to check email existence: ${e.message}")
+            }
+    }
+
     private fun signUpUser(email: String, password: String, username: String, firstName: String, lastName: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
-                try {
-                    (activity as? MainActivity)?.hideLoader()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
+                (activity as? MainActivity)?.hideLoader()
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     user?.let {
@@ -95,7 +135,14 @@ class SignUp : Fragment() {
                             }
                     }
                 } else {
-                    showAlertDialog("Sign Up Failed", task.exception?.message ?: "Unknown error occurred.")
+                    val errorMessage = when {
+                        task.exception?.message?.contains("email address is already in use") == true ->
+                            "This email is already registered with Firebase Authentication. Please sign in instead."
+                        task.exception?.message?.contains("password is invalid") == true ->
+                            "Password should be at least 6 characters."
+                        else -> task.exception?.message ?: "Unknown error occurred."
+                    }
+                    showAlertDialog("Sign Up Failed", errorMessage)
                 }
             }
     }
@@ -117,7 +164,6 @@ class SignUp : Fragment() {
 
         dialog.show()
     }
-
 
     data class UserProfile(
         val username: String,

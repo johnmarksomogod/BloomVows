@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Loading..."
-            android:textColor="#D81B60"
+            android:textColor="#EDABAD"
             android:textSize="18sp"
             android:fontFamily="cursive" />
 

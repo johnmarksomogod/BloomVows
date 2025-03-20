@@ -3,6 +3,7 @@ package com.example.plannerwedding
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -57,6 +58,17 @@ class TaskDialog : DialogFragment() {
 
         deadlineInput.isFocusable = false
         deadlineInput.setOnClickListener { showDatePicker() }
+
+        // Handle click on calendar icon
+        deadlineInput.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (deadlineInput.right - deadlineInput.compoundPaddingEnd)) {
+                    showDatePicker()
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
 
         doneButton.setOnClickListener { saveTask() }
         cancelButton.setOnClickListener { dismiss() }
@@ -121,7 +133,6 @@ class TaskDialog : DialogFragment() {
         (activity as? MainActivity)?.showLoader()
         taskRef.set(updatedTask)
             .addOnSuccessListener {
-                // Notify the listener that the task was updated
                 taskUpdateListener?.onTaskUpdated()
                 Toast.makeText(requireContext(), "Task saved successfully", Toast.LENGTH_SHORT).show()
                 dismiss()

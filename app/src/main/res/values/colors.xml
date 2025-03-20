@@ -73,6 +73,40 @@
     <color name="fairy_periwinkle">#9FA8DA</color>
     <color name="fairy_gold">#FFE082</color>
 
+
+    <!-- Bohemian Theme Colors -->
+    <color name="bohemian_beige">#D7CDA8</color>
+    <color name="bohemian_dusty_rose">#BC8F8F</color>
+    <color name="bohemian_brown">#8D6E63</color>
+    <color name="bohemian_tan">#E6BF99</color>
+    <color name="bohemian_dark_brown">#5C4F43</color>
+
+    <!-- Minimalist Theme Colors -->
+    <color name="minimalist_black">#212121</color>
+    <color name="minimalist_white">#F5F5F5</color>
+    <color name="minimalist_dark_gray">#616161</color>
+    <color name="minimalist_light_gray">#E0E0E0</color>
+    <color name="minimalist_medium_gray">#9E9E9E</color>
+
+    <!-- Coastal Theme Colors -->
+    <color name="coastal_light_blue">#81D4FA</color>
+    <color name="coastal_sand">#E6D7B9</color>
+    <color name="coastal_deep_blue">#0277BD</color>
+    <color name="coastal_white">#FFFFFF</color>
+    <color name="coastal_sky_blue">#4FC3F7</color>
+
+    <!-- Vintage Theme Colors -->
+
+    <color name="vintage_lavender">#B4A7B5</color>
+    <color name="vintage_beige">#E3D3BF</color>
+
+    <!-- Enchanted Forest Theme Colors -->
+    <color name="forest_green">#2E7D32</color>
+    <color name="forest_dark_green">#1B5E20</color>
+    <color name="forest_brown">#4E342E</color>
+    <color name="forest_purple">#7B1FA2</color>
+    <color name="forest_moss">#558B2F</color>
+
     <color name="wedding_primary_color">#FF6B81</color>
     <color name="wedding_accent_color">#FF6B81</color>
     <color name="wedding_text_secondary">#A9A9A9</color>

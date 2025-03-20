@@ -28,6 +28,12 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
     private lateinit var useRusticThemeButton: Button
     private lateinit var useGardenThemeButton: Button
     private lateinit var useGlamThemeButton: Button
+    // Add these with the other theme selection buttons
+    private lateinit var useBohemianThemeButton: Button
+    private lateinit var useMinimalistThemeButton: Button
+    private lateinit var useCoastalThemeButton: Button
+    private lateinit var useVintageThemeButton: Button
+    private lateinit var useForestThemeButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +64,13 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
         useRusticThemeButton = view.findViewById(R.id.useRusticThemeButton)
         useGardenThemeButton = view.findViewById(R.id.useGardenThemeButton)
         useGlamThemeButton = view.findViewById(R.id.useGlamThemeButton)
+        // Add these to your initializeViews() method
+        useBohemianThemeButton = view.findViewById(R.id.useBohemianThemeButton)
+        useMinimalistThemeButton = view.findViewById(R.id.useMinimalistThemeButton)
+        useCoastalThemeButton = view.findViewById(R.id.useCoastalThemeButton)
+        useVintageThemeButton = view.findViewById(R.id.useVintageThemeButton)
+        useForestThemeButton = view.findViewById(R.id.useForestThemeButton)
+
     }
 
     private fun setupClickListeners() {
@@ -115,7 +128,80 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
                 )
             )
         }
+
+        // Add these after the existing button listeners in setupClickListeners() function
+        useBohemianThemeButton.setOnClickListener {
+            showConfirmationDialog("Bohemian Chic",
+                "Free-spirited and unconventional with macramé details, wildflowers, and earthy tones. Perfect for outdoor celebrations and non-traditional couples.",
+                null,
+                listOf(
+                    getColor(R.color.bohemian_beige),
+                    getColor(R.color.bohemian_dusty_rose),
+                    getColor(R.color.bohemian_brown),
+                    getColor(R.color.bohemian_tan),
+                    getColor(R.color.bohemian_dark_brown)
+                )
+            )
+        }
+
+        useMinimalistThemeButton.setOnClickListener {
+            showConfirmationDialog("Minimalist Modern",
+                "Clean lines, simple elegance, and understated sophistication. Features geometric shapes, monochromatic color scheme, and architectural elements.",
+                null,
+                listOf(
+                    getColor(R.color.minimalist_black),
+                    getColor(R.color.minimalist_white),
+                    getColor(R.color.minimalist_dark_gray),
+                    getColor(R.color.minimalist_light_gray),
+                    getColor(R.color.minimalist_medium_gray)
+                )
+            )
+        }
+
+        useCoastalThemeButton.setOnClickListener {
+            showConfirmationDialog("Coastal Beach",
+                "Relaxed seaside charm with ocean blues, sandy neutrals, and nautical accents. Ideal for beach weddings and destination celebrations.",
+                null,
+                listOf(
+                    getColor(R.color.coastal_light_blue),
+                    getColor(R.color.coastal_sand),
+                    getColor(R.color.coastal_deep_blue),
+                    getColor(R.color.coastal_white),
+                    getColor(R.color.coastal_sky_blue)
+                )
+            )
+        }
+
+        useVintageThemeButton.setOnClickListener {
+            showConfirmationDialog("Vintage Romance",
+                "Nostalgic charm inspired by bygone eras with antique elements, lace details, and soft, muted colors. Perfect for historic venues and classic romantics.",
+                null,
+                listOf(
+                    getColor(R.color.vintage_dusty_rose),
+                    getColor(R.color.vintage_cream),
+                    getColor(R.color.vintage_lavender),
+                    getColor(R.color.vintage_mauve),
+                    getColor(R.color.vintage_beige)
+                )
+            )
+        }
+
+        useForestThemeButton.setOnClickListener {
+            showConfirmationDialog("Enchanted Forest",
+                "Whimsical woodland magic with rich greens, deep jewel tones, and natural elements. Features moss accents, fairy lights, and botanical details.",
+                null,
+                listOf(
+                    getColor(R.color.forest_green),
+                    getColor(R.color.forest_dark_green),
+                    getColor(R.color.forest_brown),
+                    getColor(R.color.forest_purple),
+                    getColor(R.color.forest_moss)
+                )
+            )
+        }
     }
+
+
 
     private fun getColor(colorResId: Int): Int {
         return requireContext().getColor(colorResId)
@@ -150,6 +236,11 @@ class WeddingThemeFragment : Fragment(R.layout.fragment_wedding_theme) {
             "Rustic Elegance" -> "android.resource://${requireContext().packageName}/drawable/rustic"
             "Romantic Garden" -> "android.resource://${requireContext().packageName}/drawable/garden"
             "Elegant Glam" -> "android.resource://${requireContext().packageName}/drawable/elegant"
+            "Bohemian Chic" -> "android.resource://${requireContext().packageName}/drawable/bohemian"
+            "Minimalist Modern" -> "android.resource://${requireContext().packageName}/drawable/minimalist"
+            "Coastal Beach" -> "android.resource://${requireContext().packageName}/drawable/coastal"
+            "Vintage Romance" -> "android.resource://${requireContext().packageName}/drawable/vintage"
+            "Enchanted Forest" -> "android.resource://${requireContext().packageName}/drawable/forest"
             else -> null // Default case, if needed
         }
 

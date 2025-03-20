@@ -8,7 +8,6 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/loader_background"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp">
@@ -18,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Loading..."
-            android:textColor="#D81B60"
+            android:textColor="#EDABAD"
             android:textSize="18sp"
             android:fontFamily="cursive" />
 
